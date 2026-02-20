@@ -95,7 +95,7 @@ import { PreviewService } from './preview.service';
             <div class="flex flex-col gap-1 max-h-24 overflow-y-auto">
               <div class="flex items-center justify-between">
                 <span class="text-xs text-white/30">Applied ({{ preview.cssChanges().length }})</span>
-                <button class="text-xs text-white/30 hover:text-white/50" (click)="preview.clearChanges()">Clear</button>
+                <button class="text-xs text-white/30 hover:text-white/50" (click)="clearChanges()">Clear</button>
               </div>
               @for (change of preview.cssChanges(); track change.timestamp) {
                 <div class="text-xs text-white/40 font-mono truncate">
@@ -139,8 +139,14 @@ export class PreviewComponent {
 
   protected async toggleInspector(): Promise<void> {
     const next = !this.inspectorOn();
-    await this.preview.toggleInspector(next);
-    this.inspectorOn.set(next);
+    const success = await this.preview.toggleInspector(next);
+    if (success) {
+      this.inspectorOn.set(next);
+    }
+  }
+
+  protected clearChanges(): void {
+    this.preview.clearChanges();
   }
 
   protected onUrlInput(event: Event): void {

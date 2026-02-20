@@ -27,7 +27,7 @@ export class PreviewService {
       this._url.set(url);
       this._isOpen.set(true);
     } catch (err) {
-      this._error.set(err instanceof Error ? err.message : String(err));
+      this._error.set(String(err));
     } finally {
       this._isLoading.set(false);
     }
@@ -36,8 +36,8 @@ export class PreviewService {
   async closePreview(): Promise<void> {
     try {
       await this.tauri.invoke<void>('close_preview_window');
-    } catch {
-      // best-effort close
+    } catch (err) {
+      this._error.set(String(err));
     }
     this._isOpen.set(false);
     this._url.set('');
@@ -51,15 +51,16 @@ export class PreviewService {
       const change: CssChange = { selector, property, value, timestamp: Date.now() };
       this._cssChanges.update(changes => [...changes, change]);
     } catch (err) {
-      this._error.set(err instanceof Error ? err.message : String(err));
+      this._error.set(String(err));
     }
   }
 
-  async toggleInspector(enable: boolean): Promise<void> {
+  async toggleInspector(enable: boolean): Promise<boolean> {
     try {
       await this.tauri.invoke<void>('inject_inspector', { enable });
+      return true;
     } catch {
-      // best-effort
+      return false;
     }
   }
 
