@@ -74,9 +74,6 @@ export class SnapshotsService {
   }
 
   private async persist(): Promise<void> {
-    try {
-      await this.storage.set(STORE_NAME, STORE_KEY, this._snapshots());
-    } catch {
-    }
+    await this.storage.set(STORE_NAME, STORE_KEY, this._snapshots());
   }
 }
