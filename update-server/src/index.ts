@@ -10,6 +10,8 @@ interface Env {
   GITHUB_REPO: string;
 }
 
+const CORS = { 'Access-Control-Allow-Origin': '*' } as const;
+
 function getPlatformKey(target: string, arch: string): string {
   if (target === 'darwin') {
     return arch === 'aarch64' ? 'aarch64-apple-darwin' : 'x86_64-apple-darwin';
@@ -26,11 +28,12 @@ export default {
     if (parts.length < 3) {
       return new Response(JSON.stringify({ error: 'Usage: /<target>/<arch>/<current_version>' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...CORS },
       });
     }
 
-    const [target, arch] = parts;
+    const [target, arch, currentVersion] = parts;
+    void currentVersion;
     const releaseUrl = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/releases/latest`;
 
     const releaseResp = await fetch(releaseUrl, {
@@ -40,7 +43,7 @@ export default {
     if (!releaseResp.ok) {
       return new Response(JSON.stringify({ error: 'GitHub API error' }), {
         status: 502,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...CORS },
       });
     }
 
@@ -76,7 +79,7 @@ export default {
     return new Response(JSON.stringify(manifest), {
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        ...CORS,
       },
     });
   },
