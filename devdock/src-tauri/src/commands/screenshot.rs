@@ -2,7 +2,7 @@ use base64::{engine::general_purpose, Engine as _};
 use image::{ImageBuffer, Rgba};
 use screenshots::Screen;
 use serde::{Deserialize, Serialize};
-use tauri::AppHandle;
+use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 
 use super::AppError;
 
@@ -89,4 +89,40 @@ pub async fn get_screen_info(_app: AppHandle) -> Result<Vec<ScreenInfo>, AppErro
             scale_factor: s.display_info.scale_factor,
         })
         .collect())
+}
+
+#[tauri::command]
+pub async fn open_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
+    if let Some(existing) = app.get_webview_window("screenshot-overlay") {
+        existing
+            .close()
+            .map_err(|e| AppError::Screenshot(e.to_string()))?;
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
+
+    let _window = WebviewWindowBuilder::new(
+        &app,
+        "screenshot-overlay",
+        WebviewUrl::App("index.html#/screenshot-overlay".into()),
+    )
+    .fullscreen(true)
+    .transparent(true)
+    .decorations(false)
+    .always_on_top(true)
+    .shadow(false)
+    .skip_taskbar(true)
+    .build()
+    .map_err(|e| AppError::Screenshot(e.to_string()))?;
+
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn close_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
+    if let Some(window) = app.get_webview_window("screenshot-overlay") {
+        window
+            .close()
+            .map_err(|e| AppError::Screenshot(e.to_string()))?;
+    }
+    Ok(())
 }

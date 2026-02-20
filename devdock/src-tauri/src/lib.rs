@@ -1,7 +1,7 @@
 pub mod commands;
 pub mod services;
 
-use commands::screenshot::{capture_region, get_screen_info};
+use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_info, open_screenshot_overlay};
 use commands::shell::{execute_shell, open_url};
 use commands::window::{
     get_dock_position, set_always_on_top, set_dock_position, toggle_dock_visibility,
@@ -100,6 +100,8 @@ pub fn run() {
             open_url,
             capture_region,
             get_screen_info,
+            open_screenshot_overlay,
+            close_screenshot_overlay,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
