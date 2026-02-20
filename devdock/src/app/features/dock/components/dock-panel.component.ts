@@ -33,25 +33,53 @@ import { AuthComponent } from '../../auth/auth.component';
           <app-screenshot />
         }
         @case ('PROMPT') {
-          <app-prompt />
+          @defer {
+            <app-prompt />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @case ('VOICE') {
-          <app-voice />
+          @defer {
+            <app-voice />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @case ('AGENTS') {
-          <app-agents />
+          @defer {
+            <app-agents />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @case ('PREVIEW') {
-          <app-preview />
+          @defer {
+            <app-preview />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @case ('SNAPSHOTS') {
-          <app-snapshots />
+          @defer {
+            <app-snapshots />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @case ('SHORTS') {
-          <app-shorts />
+          @defer {
+            <app-shorts />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @case ('AUTH') {
-          <app-auth />
+          @defer {
+            <app-auth />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @default {
           <div class="p-4">
