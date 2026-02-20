@@ -116,15 +116,12 @@ fn get_open_windows_linux() -> Result<Vec<WindowInfo>, AppError> {
 
 #[cfg(target_os = "windows")]
 fn get_open_windows_windows() -> Result<Vec<WindowInfo>, AppError> {
-    use std::sync::Mutex;
     use windows::Win32::Foundation::{BOOL, HWND, LPARAM, RECT};
     use windows::Win32::UI::WindowsAndMessaging::{
         EnumWindows, GetWindowRect, GetWindowTextW, IsWindowVisible,
     };
 
-    static WINDOWS_ACC: Mutex<Vec<WindowInfo>> = Mutex::new(Vec::new());
-
-    unsafe extern "system" fn enum_proc(hwnd: HWND, _: LPARAM) -> BOOL {
+    unsafe extern "system" fn enum_proc(hwnd: HWND, lparam: LPARAM) -> BOOL {
         if !IsWindowVisible(hwnd).as_bool() {
             return BOOL(1);
         }
@@ -139,36 +136,28 @@ fn get_open_windows_windows() -> Result<Vec<WindowInfo>, AppError> {
             let w = rect.right - rect.left;
             let h = rect.bottom - rect.top;
             if w > 10 && h > 10 {
-                if let Ok(mut acc) = WINDOWS_ACC.lock() {
-                    acc.push(WindowInfo {
-                        app_name: String::new(),
-                        title,
-                        x: rect.left,
-                        y: rect.top,
-                        width: w,
-                        height: h,
-                    });
-                }
+                // SAFETY: lparam is a valid *mut Vec<WindowInfo> we own
+                let acc = &mut *(lparam.0 as *mut Vec<WindowInfo>);
+                acc.push(WindowInfo {
+                    app_name: String::new(),
+                    title,
+                    x: rect.left,
+                    y: rect.top,
+                    width: w,
+                    height: h,
+                });
             }
         }
         BOOL(1)
     }
 
-    {
-        let mut acc = WINDOWS_ACC
-            .lock()
-            .map_err(|e| AppError::Window(e.to_string()))?;
-        acc.clear();
-    }
-
+    let mut acc: Vec<WindowInfo> = Vec::new();
+    let ptr = &mut acc as *mut Vec<WindowInfo> as isize;
     unsafe {
-        let _ = EnumWindows(Some(enum_proc), LPARAM(0));
+        EnumWindows(Some(enum_proc), LPARAM(ptr))
+            .map_err(|e| AppError::Window(format!("EnumWindows failed: {e}")))?;
     }
-
-    let acc = WINDOWS_ACC
-        .lock()
-        .map_err(|e| AppError::Window(e.to_string()))?;
-    Ok(acc.clone())
+    Ok(acc)
 }
 
 #[cfg(target_os = "macos")]
@@ -314,8 +303,6 @@ pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppErro
 
     #[cfg(not(target_os = "macos"))]
     {
-        // Window restore via system APIs is not yet implemented for this platform.
-        // Snapshot data is preserved; repositioning is a no-op.
         let _ = snapshot;
     }
 
