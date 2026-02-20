@@ -9,6 +9,7 @@ import {
   OptimizeRequest,
   StructuredPrompt,
 } from './models/prompt.model';
+import { PromptHistoryService } from './services/prompt-history.service';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const MODEL = 'llama-3.3-70b-versatile';
@@ -40,6 +41,7 @@ interface ProjectContext {
 export class PromptService {
   private readonly http = inject(HttpClient);
   private readonly settings = inject(SettingsService);
+  private readonly history = inject(PromptHistoryService);
 
   private readonly _isOptimizing = signal(false);
   private readonly _lastError = signal<string | null>(null);
@@ -92,6 +94,7 @@ export class PromptService {
       const structured = this.parseStructuredResponse(rawJson);
       this._currentResult.set(structured);
       this._responseTime.set(Math.round(performance.now() - startTime));
+      this.history.save(request.rawPrompt, structured).catch(console.error);
       return structured;
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
@@ -109,7 +112,6 @@ export class PromptService {
   }
 
   private getGroqApiKey(): string | undefined {
-    // apiKeys is Readonly<Record<string, string>> — keys stored via updateApiKey(provider, key)
     return this.settings.settings().apiKeys['groq'] || undefined;
   }
 
