@@ -1,4 +1,14 @@
 {
+  "mcpServers": {
+    "tauri-mcp": {
+      "command": "/Users/mariobustosjmz/.nvm/versions/node/v22.22.0/bin/mcp-server-tauri",
+      "args": [],
+      "env": {
+        "MCP_BRIDGE_HOST": "localhost",
+        "MCP_BRIDGE_PORT": "9223"
+      }
+    }
+  },
   "hooks": {
     "postEditFile": {
       "command": "if echo \"$FILE\" | grep -q '\\.ts$'; then npx prettier --write \"$FILE\" 2>/dev/null; fi",

@@ -17,5 +17,12 @@ export const routes: Routes = [
         (m) => m.ActionsComponent,
       ),
   },
+  {
+    path: 'screenshot-overlay',
+    loadComponent: () =>
+      import('./features/screenshot/screenshot-overlay.component').then(
+        (m) => m.ScreenshotOverlayComponent,
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];

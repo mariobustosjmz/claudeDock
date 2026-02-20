@@ -6,15 +6,16 @@ use crate::commands::AppError;
 #[tauri::command]
 pub async fn execute_shell(app: AppHandle, command: String) -> Result<String, AppError> {
     let shell = app.shell();
-    let parts: Vec<&str> = command.splitn(2, ' ').collect();
-    let (cmd, args): (&str, Vec<String>) = if parts.len() == 2 {
-        (parts[0], parts[1].split_whitespace().map(String::from).collect())
-    } else {
-        (parts[0], vec![])
-    };
+    let parts = shlex::split(&command)
+        .ok_or_else(|| AppError::Shell("Invalid command syntax".to_string()))?;
+    let cmd = parts
+        .first()
+        .ok_or_else(|| AppError::Shell("Empty command".to_string()))?
+        .clone();
+    let args = parts[1..].to_vec();
 
     let output = shell
-        .command(cmd)
+        .command(&cmd)
         .args(args)
         .output()
         .await

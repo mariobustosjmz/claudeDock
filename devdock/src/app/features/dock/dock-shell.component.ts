@@ -12,12 +12,8 @@ import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
 import { PanelType } from '../../core/models/dock.model';
 import { DockButtonComponent } from './components/dock-button.component';
 import { DockPanelComponent } from './components/dock-panel.component';
-
-interface DockItem {
-  readonly icon: string;
-  readonly label: string;
-  readonly panel: PanelType;
-}
+import { UpdateBannerComponent } from '../../shared/components/update-banner.component';
+import { DockItem } from './models/dock-item.model';
 
 const DOCK_ITEMS: DockItem[] = [
   { icon: '📷', label: 'Screenshot', panel: PanelType.SCREENSHOT },
@@ -28,19 +24,24 @@ const DOCK_ITEMS: DockItem[] = [
   { icon: '⚡', label: 'Actions', panel: PanelType.ACTIONS },
   { icon: '💾', label: 'Snapshots', panel: PanelType.SNAPSHOTS },
   { icon: '⚙️', label: 'Settings', panel: PanelType.SETTINGS },
+  { icon: '🎬', label: 'Shorts', panel: PanelType.SHORTS },
+  { icon: '👤', label: 'Account', panel: PanelType.AUTH },
 ];
 
 @Component({
   selector: 'app-dock-shell',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DockButtonComponent, DockPanelComponent],
+  imports: [DockButtonComponent, DockPanelComponent, UpdateBannerComponent],
   template: `
     <div
       class="dock-wrapper fixed"
       [class.invisible]="!dockState.isVisible()"
       [class.auto-hide]="isAutoHiding()"
     >
+      <!-- Update notification banner -->
+      <app-update-banner />
+
       <!-- Panel above dock -->
       @if (dockState.activePanel() !== 'NONE') {
         <app-dock-panel [panelType]="dockState.activePanel()" />
@@ -81,9 +82,9 @@ const DOCK_ITEMS: DockItem[] = [
   styles: [`
     .dock-wrapper {
       position: fixed;
-      top: 50%;
+      bottom: 8px;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       width: fit-content;
       z-index: 9999;
       transition: opacity 250ms ease;

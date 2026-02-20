@@ -6,12 +6,20 @@ import {
 import { PanelType } from '../../../core/models/dock.model';
 import { ActionsComponent } from '../../actions/actions.component';
 import { SettingsComponent } from '../../settings/settings.component';
+import { ScreenshotComponent } from '../../screenshot/screenshot.component';
+import { PromptComponent } from '../../prompt/prompt.component';
+import { VoiceComponent } from '../../voice/voice.component';
+import { AgentsComponent } from '../../agents/agents.component';
+import { PreviewComponent } from '../../preview/preview.component';
+import { SnapshotsComponent } from '../../snapshots/snapshots.component';
+import { ShortsComponent } from '../../shorts/shorts.component';
+import { AuthComponent } from '../../auth/auth.component';
 
 @Component({
   selector: 'app-dock-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ActionsComponent, SettingsComponent],
+  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent, AgentsComponent, PreviewComponent, SnapshotsComponent, ShortsComponent, AuthComponent],
   template: `
     <div class="dock-panel rounded-2xl overflow-hidden mb-2">
       @switch (panelType()) {
@@ -20,6 +28,58 @@ import { SettingsComponent } from '../../settings/settings.component';
         }
         @case ('SETTINGS') {
           <app-settings />
+        }
+        @case ('SCREENSHOT') {
+          <app-screenshot />
+        }
+        @case ('PROMPT') {
+          @defer {
+            <app-prompt />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
+        }
+        @case ('VOICE') {
+          @defer {
+            <app-voice />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
+        }
+        @case ('AGENTS') {
+          @defer {
+            <app-agents />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
+        }
+        @case ('PREVIEW') {
+          @defer {
+            <app-preview />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
+        }
+        @case ('SNAPSHOTS') {
+          @defer {
+            <app-snapshots />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
+        }
+        @case ('SHORTS') {
+          @defer {
+            <app-shorts />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
+        }
+        @case ('AUTH') {
+          @defer {
+            <app-auth />
+          } @loading {
+            <div class="p-4 text-center text-xs text-white/30">Loading…</div>
+          }
         }
         @default {
           <div class="p-4">
@@ -38,7 +98,9 @@ import { SettingsComponent } from '../../settings/settings.component';
       -webkit-backdrop-filter: blur(28px) saturate(180%);
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: 0 -4px 24px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
-      min-width: 320px;
+      width: 520px;
+      max-height: 430px;
+      overflow-y: auto;
     }
   `],
 })

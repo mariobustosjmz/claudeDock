@@ -1,0 +1,153 @@
+use arboard::{Clipboard, ImageData};
+use base64::{engine::general_purpose, Engine as _};
+use screenshots::Screen;
+use screenshots::image::ImageFormat;
+use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
+use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
+
+use super::AppError;
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct CaptureResult {
+    pub image_base64: String,
+    pub width: u32,
+    pub height: u32,
+    pub x: i32,
+    pub y: i32,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct ScreenInfo {
+    pub id: u32,
+    pub x: i32,
+    pub y: i32,
+    pub width: u32,
+    pub height: u32,
+    pub scale_factor: f32,
+}
+
+#[tauri::command]
+pub async fn capture_region(
+    _app: AppHandle,
+    x: i32,
+    y: i32,
+    width: u32,
+    height: u32,
+) -> Result<CaptureResult, AppError> {
+    let screens = Screen::all().map_err(|e| AppError::Screenshot(e.to_string()))?;
+
+    let screen = screens
+        .iter()
+        .find(|s| {
+            let info = s.display_info;
+            x >= info.x
+                && y >= info.y
+                && x < info.x + info.width as i32
+                && y < info.y + info.height as i32
+        })
+        .or_else(|| screens.first())
+        .ok_or_else(|| AppError::Screenshot("No screen found".to_string()))?;
+
+    let rgba_image = screen
+        .capture_area(x, y, width, height)
+        .map_err(|e| AppError::Screenshot(e.to_string()))?;
+
+    let img_width = rgba_image.width();
+    let img_height = rgba_image.height();
+
+    let mut png_bytes: Vec<u8> = Vec::new();
+    rgba_image
+        .write_to(
+            &mut std::io::Cursor::new(&mut png_bytes),
+            ImageFormat::Png,
+        )
+        .map_err(|e| AppError::Screenshot(e.to_string()))?;
+
+    let encoded = general_purpose::STANDARD.encode(&png_bytes);
+
+    Ok(CaptureResult {
+        image_base64: encoded,
+        width: img_width,
+        height: img_height,
+        x,
+        y,
+    })
+}
+
+#[tauri::command]
+pub async fn get_screen_info(_app: AppHandle) -> Result<Vec<ScreenInfo>, AppError> {
+    let screens = Screen::all().map_err(|e| AppError::Screenshot(e.to_string()))?;
+
+    Ok(screens
+        .iter()
+        .map(|s| ScreenInfo {
+            id: s.display_info.id,
+            x: s.display_info.x,
+            y: s.display_info.y,
+            width: s.display_info.width,
+            height: s.display_info.height,
+            scale_factor: s.display_info.scale_factor,
+        })
+        .collect())
+}
+
+#[tauri::command]
+pub async fn open_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
+    if let Some(existing) = app.get_webview_window("screenshot-overlay") {
+        existing
+            .close()
+            .map_err(|e| AppError::Screenshot(e.to_string()))?;
+        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+    }
+
+    let _window = WebviewWindowBuilder::new(
+        &app,
+        "screenshot-overlay",
+        WebviewUrl::App("index.html#/screenshot-overlay".into()),
+    )
+    .fullscreen(true)
+    .transparent(true)
+    .decorations(false)
+    .always_on_top(true)
+    .shadow(false)
+    .skip_taskbar(true)
+    .build()
+    .map_err(|e| AppError::Screenshot(e.to_string()))?;
+
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn close_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
+    if let Some(window) = app.get_webview_window("screenshot-overlay") {
+        window
+            .close()
+            .map_err(|e| AppError::Screenshot(e.to_string()))?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+pub async fn copy_image_to_clipboard(image_base64: String) -> Result<(), AppError> {
+    let bytes = general_purpose::STANDARD
+        .decode(&image_base64)
+        .map_err(|e| AppError::Screenshot(format!("base64 decode: {e}")))?;
+
+    let img = image::load_from_memory(&bytes)
+        .map_err(|e| AppError::Screenshot(format!("decode png: {e}")))?
+        .to_rgba8();
+
+    let (width, height) = img.dimensions();
+
+    let mut clipboard = Clipboard::new()
+        .map_err(|e| AppError::Screenshot(format!("clipboard init: {e}")))?;
+
+    clipboard
+        .set_image(ImageData {
+            width: width as usize,
+            height: height as usize,
+            bytes: Cow::from(img.into_vec()),
+        })
+        .map_err(|e| AppError::Screenshot(format!("set image: {e}")))
+}
