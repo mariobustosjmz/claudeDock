@@ -11,12 +11,13 @@ import { PromptComponent } from '../../prompt/prompt.component';
 import { VoiceComponent } from '../../voice/voice.component';
 import { AgentsComponent } from '../../agents/agents.component';
 import { PreviewComponent } from '../../preview/preview.component';
+import { SnapshotsComponent } from '../../snapshots/snapshots.component';
 
 @Component({
   selector: 'app-dock-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent, AgentsComponent, PreviewComponent],
+  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent, AgentsComponent, PreviewComponent, SnapshotsComponent],
   template: `
     <div class="dock-panel rounded-2xl overflow-hidden mb-2">
       @switch (panelType()) {
@@ -40,6 +41,9 @@ import { PreviewComponent } from '../../preview/preview.component';
         }
         @case ('PREVIEW') {
           <app-preview />
+        }
+        @case ('SNAPSHOTS') {
+          <app-snapshots />
         }
         @default {
           <div class="p-4">
