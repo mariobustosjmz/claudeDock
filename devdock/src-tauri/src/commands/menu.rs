@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
-    AppHandle, Emitter, Manager,
+    AppHandle, Manager,
 };
 
 use super::AppError;
@@ -16,12 +16,9 @@ pub struct ContextMenuItemDef {
 
 /// Shows a native OS popup context menu built from the given items.
 ///
-/// Because Tauri v2's `popup_menu` is fire-and-forget (selection arrives via
-/// `MenuEvent`), this command shows the menu and registers a one-time listener
-/// that emits a `context-menu-selected` event back to the frontend with the
-/// chosen item id (or an empty string when dismissed).
-///
-/// The frontend service listens for that event and resolves the promise.
+/// Selection events are handled globally in lib.rs via `app.on_menu_event`,
+/// which emits `context-menu-selected` to the frontend. This command only
+/// builds the menu and calls popup_menu — no per-call listener is registered.
 #[tauri::command]
 pub async fn show_context_menu(
     app: AppHandle,
@@ -46,13 +43,6 @@ pub async fn show_context_menu(
                 .map_err(|e| AppError::Window(e.to_string()))?;
         }
     }
-
-    // Register a per-call menu event listener on the window.
-    // The callback emits `context-menu-selected` back to the frontend.
-    let app_handle = app.clone();
-    window.on_menu_event(move |_win, event| {
-        let _ = app_handle.emit("context-menu-selected", event.id.0.as_str());
-    });
 
     window
         .popup_menu(&menu)

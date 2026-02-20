@@ -146,6 +146,13 @@ pub fn run() {
                 })
                 .build(app)?;
 
+            // Single global handler for context-menu popup events (popup_menu).
+            // Registered once at startup so listeners never accumulate across calls.
+            let app_handle_for_menu = app.handle().clone();
+            app.on_menu_event(move |_app, event| {
+                let _ = app_handle_for_menu.emit("context-menu-selected", event.id().0.as_str());
+            });
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

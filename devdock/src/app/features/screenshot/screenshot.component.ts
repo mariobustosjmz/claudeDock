@@ -72,7 +72,7 @@ import { ContextMenuService } from '../../core/services/context-menu.service';
   `,
 })
 export class ScreenshotComponent {
-  readonly service = inject(ScreenshotService);
+  protected readonly service = inject(ScreenshotService);
   private readonly contextMenu = inject(ContextMenuService);
 
   async capture(): Promise<void> {
