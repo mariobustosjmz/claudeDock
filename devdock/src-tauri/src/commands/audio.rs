@@ -2,7 +2,7 @@ use base64::{engine::general_purpose, Engine as _};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
-use tauri::{AppHandle, State};
+use tauri::{AppHandle, Emitter, State};
 
 use super::AppError;
 
@@ -32,8 +32,25 @@ pub struct AudioResult {
 }
 
 #[tauri::command]
+pub async fn validate_microphone() -> Result<String, AppError> {
+    let host = cpal::default_host();
+    let device = host
+        .default_input_device()
+        .ok_or_else(|| AppError::Audio("No microphone found".to_string()))?;
+    let name = device
+        .name()
+        .unwrap_or_else(|_| "Unknown device".to_string());
+    device
+        .supported_input_configs()
+        .map_err(|e| AppError::Audio(format!("Cannot access microphone: {e}")))?
+        .next()
+        .ok_or_else(|| AppError::Audio("Microphone has no supported formats".to_string()))?;
+    Ok(name)
+}
+
+#[tauri::command]
 pub async fn start_recording(
-    _app: AppHandle,
+    app: AppHandle,
     state: State<'_, RecordingState>,
 ) -> Result<(), AppError> {
     {
@@ -58,6 +75,7 @@ pub async fn start_recording(
     let sample_rate_state = Arc::clone(&state.sample_rate);
     let channels_state = Arc::clone(&state.channels);
 
+    let app_clone = app.clone();
     std::thread::spawn(move || {
         let host = cpal::default_host();
         let device = match host.default_input_device() {
@@ -66,16 +84,18 @@ pub async fn start_recording(
                 if let Ok(mut r) = is_recording_clone.lock() {
                     *r = false;
                 }
+                let _ = app_clone.emit("audio-error", "No microphone found");
                 return;
             }
         };
 
         let config = match device.default_input_config() {
             Ok(c) => c,
-            Err(_) => {
+            Err(e) => {
                 if let Ok(mut r) = is_recording_clone.lock() {
                     *r = false;
                 }
+                let _ = app_clone.emit("audio-error", format!("Microphone config error: {e}"));
                 return;
             }
         };
@@ -89,6 +109,7 @@ pub async fn start_recording(
 
         let samples_inner = Arc::clone(&samples_clone);
         let is_rec_inner = Arc::clone(&is_recording_clone);
+        let app_err = app_clone.clone();
 
         let stream = device.build_input_stream(
             &config.into(),
@@ -102,7 +123,9 @@ pub async fn start_recording(
                     s.extend_from_slice(data);
                 }
             },
-            |_err| {},
+            move |err| {
+                let _ = app_err.emit("audio-error", format!("Stream error: {err}"));
+            },
             None,
         );
 
@@ -119,10 +142,11 @@ pub async fn start_recording(
                     }
                 }
             }
-            Err(_) => {
+            Err(e) => {
                 if let Ok(mut r) = is_recording_clone.lock() {
                     *r = false;
                 }
+                let _ = app_clone.emit("audio-error", format!("Failed to open stream: {e}"));
             }
         }
     });

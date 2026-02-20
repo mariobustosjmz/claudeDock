@@ -24,6 +24,8 @@ pub struct AgentMetrics {
     pub log_lines: Vec<String>,
     pub token_estimate: Option<u64>,
     pub cost_estimate: Option<f64>,
+    pub log_path: Option<String>,
+    pub metrics_available: bool,
 }
 
 #[tauri::command]
@@ -94,19 +96,32 @@ pub async fn get_agent_metrics(
     _app: AppHandle,
     pid: u32,
 ) -> Result<AgentMetrics, AppError> {
-    let log_lines = try_read_agent_logs(pid);
-    let token_estimate = parse_token_count(&log_lines);
-    let cost_estimate = parse_cost(&log_lines);
+    let (log_lines, log_path) = try_read_agent_logs(pid);
+    let metrics_available = !log_lines.is_empty();
+    let token_estimate = if metrics_available {
+        parse_token_count_structured(&log_lines)
+            .or_else(|| parse_token_count_heuristic(&log_lines))
+    } else {
+        None
+    };
+    let cost_estimate = if metrics_available {
+        parse_cost_structured(&log_lines)
+            .or_else(|| parse_cost_heuristic(&log_lines))
+    } else {
+        None
+    };
 
     Ok(AgentMetrics {
         pid,
         log_lines,
         token_estimate,
         cost_estimate,
+        log_path,
+        metrics_available,
     })
 }
 
-fn try_read_agent_logs(pid: u32) -> Vec<String> {
+fn try_read_agent_logs(pid: u32) -> (Vec<String>, Option<String>) {
     let home = std::env::var("HOME").unwrap_or_default();
     let candidates = vec![
         format!("{}/.claude/logs/claude-{}.log", home, pid),
@@ -117,7 +132,7 @@ fn try_read_agent_logs(pid: u32) -> Vec<String> {
 
     for path in candidates {
         if let Ok(content) = std::fs::read_to_string(&path) {
-            return content
+            let lines = content
                 .lines()
                 .rev()
                 .take(50)
@@ -126,40 +141,81 @@ fn try_read_agent_logs(pid: u32) -> Vec<String> {
                 .into_iter()
                 .rev()
                 .collect();
+            return (lines, Some(path));
         }
     }
-    vec![]
+    (vec![], None)
 }
 
-fn parse_token_count(lines: &[String]) -> Option<u64> {
+fn parse_token_count_structured(lines: &[String]) -> Option<u64> {
     for line in lines.iter().rev() {
-        if line.to_lowercase().contains("token") {
-            let num: String = line
-                .chars()
-                .skip_while(|c| !c.is_ascii_digit())
-                .take_while(|c| c.is_ascii_digit())
-                .collect();
-            if let Ok(n) = num.parse::<u64>() {
-                return Some(n);
+        if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
+            if let Some(tokens) = json
+                .get("usage")
+                .and_then(|u| u.get("total_tokens"))
+                .and_then(|t| t.as_u64())
+            {
+                return Some(tokens);
+            }
+            if let Some(tokens) = json
+                .get("tokens")
+                .and_then(|t| t.as_u64())
+            {
+                return Some(tokens);
             }
         }
     }
     None
 }
 
-fn parse_cost(lines: &[String]) -> Option<f64> {
+fn parse_cost_structured(lines: &[String]) -> Option<f64> {
+    for line in lines.iter().rev() {
+        if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
+            if let Some(cost) = json.get("cost").and_then(|c| c.as_f64()) {
+                if cost > 0.0 {
+                    return Some(cost);
+                }
+            }
+        }
+    }
+    None
+}
+
+fn parse_token_count_heuristic(lines: &[String]) -> Option<u64> {
     for line in lines.iter().rev() {
         let lower = line.to_lowercase();
-        if lower.contains("cost") || lower.contains('$') {
+        if lower.contains("token") && (lower.contains("total") || lower.contains("used")) {
+            let num: String = line
+                .chars()
+                .skip_while(|c| !c.is_ascii_digit())
+                .take_while(|c| c.is_ascii_digit() || *c == '_' || *c == ',')
+                .filter(|c| c.is_ascii_digit())
+                .collect();
+            if let Ok(n) = num.parse::<u64>() {
+                if n > 0 && n < 10_000_000 {
+                    return Some(n);
+                }
+            }
+        }
+    }
+    None
+}
+
+fn parse_cost_heuristic(lines: &[String]) -> Option<f64> {
+    for line in lines.iter().rev() {
+        let lower = line.to_lowercase();
+        if lower.contains("cost") && lower.contains('$') {
             let chars: Vec<char> = line.chars().collect();
-            for i in 0..chars.len() {
+            for i in 0..chars.len().saturating_sub(1) {
                 if chars[i] == '$' {
                     let num: String = chars[i + 1..]
                         .iter()
                         .take_while(|&&c| c.is_ascii_digit() || c == '.')
                         .collect();
                     if let Ok(cost) = num.parse::<f64>() {
-                        return Some(cost);
+                        if cost > 0.0 && cost < 1000.0 {
+                            return Some(cost);
+                        }
                     }
                 }
             }

@@ -1,12 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { PermissionsService } from '../../core/services/permissions.service';
 import { StorageService } from '../../core/services/storage.service';
 import { CaptureResult, ScreenRegion, ScreenshotEntry } from './models/screenshot.model';
 
 @Injectable({ providedIn: 'root' })
 export class ScreenshotService {
   private readonly storage = inject(StorageService);
+  private readonly permissions = inject(PermissionsService);
   private readonly STORE_NAME = 'screenshots';
   private readonly STORE_KEY = 'entries';
   private readonly MAX_ENTRIES = 20;
@@ -30,6 +32,11 @@ export class ScreenshotService {
 
   async openOverlay(): Promise<void> {
     this._lastError.set(null);
+    const granted = await this.permissions.ensureScreenRecording();
+    if (!granted) {
+      this._lastError.set('Screen Recording permission required. Please grant it in System Preferences → Privacy & Security.');
+      return;
+    }
     this._isCapturing.set(true);
     try {
       await invoke('open_screenshot_overlay');
@@ -41,7 +48,7 @@ export class ScreenshotService {
 
   async copyToClipboard(entry: ScreenshotEntry): Promise<void> {
     try {
-      await navigator.clipboard.writeText(`data:image/png;base64,${entry.imageBase64}`);
+      await invoke<void>('copy_image_to_clipboard', { imageBase64: entry.imageBase64 });
       this._copied.set(true);
       setTimeout(() => this._copied.set(false), 2000);
     } catch (err) {
