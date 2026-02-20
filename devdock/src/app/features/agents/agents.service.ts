@@ -49,9 +49,10 @@ export class AgentsService implements OnDestroy {
   private async poll(): Promise<void> {
     try {
       const agents = await invoke<AgentProcess[]>('get_running_agents');
+      const previousCount = this._agents().length;
       this._agents.set(agents);
       this._lastError.set(null);
-      if (agents.length > 0) {
+      if (previousCount === 0 && agents.length > 0) {
         this.analytics.track('agent_detected', { count: agents.length });
       }
     } catch (err) {

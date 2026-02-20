@@ -39,7 +39,10 @@ function resolveIngestHost(appKey: string): string | null {
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
   private readonly http = inject(HttpClient);
-  private readonly enabled = environment.production && !!environment.aptabaseKey;
+  private readonly enabled =
+    environment.production &&
+    !!environment.aptabaseKey &&
+    !environment.aptabaseKey.startsWith('__');
   private readonly ingestUrl: string | null;
 
   constructor() {
