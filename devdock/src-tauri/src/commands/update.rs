@@ -5,7 +5,7 @@ use crate::commands::AppError;
 
 pub struct UpdaterEnabled(pub bool);
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub struct UpdateInfo {
     pub version: String,
     pub body: String,

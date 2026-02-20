@@ -6,11 +6,7 @@ import {
 } from '@angular/core';
 import { ShortsService } from './shorts.service';
 import { ShortCategory } from './models/short.model';
-
-interface CategoryFilter {
-  readonly label: string;
-  readonly value: ShortCategory | null;
-}
+import { CategoryFilter } from './models/category-filter.model';
 
 const CATEGORIES: readonly CategoryFilter[] = [
   { label: 'All', value: null },

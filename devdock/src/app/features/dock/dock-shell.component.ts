@@ -13,12 +13,7 @@ import { PanelType } from '../../core/models/dock.model';
 import { DockButtonComponent } from './components/dock-button.component';
 import { DockPanelComponent } from './components/dock-panel.component';
 import { UpdateBannerComponent } from '../../shared/components/update-banner.component';
-
-interface DockItem {
-  readonly icon: string;
-  readonly label: string;
-  readonly panel: PanelType;
-}
+import { DockItem } from './models/dock-item.model';
 
 const DOCK_ITEMS: DockItem[] = [
   { icon: '📷', label: 'Screenshot', panel: PanelType.SCREENSHOT },

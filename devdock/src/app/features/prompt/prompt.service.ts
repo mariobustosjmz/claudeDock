@@ -7,6 +7,7 @@ import {
   GroqRequest,
   GroqResponse,
   OptimizeRequest,
+  ProjectContext,
   StructuredPrompt,
 } from './models/prompt.model';
 import { PromptHistoryService } from './services/prompt-history.service';
@@ -29,13 +30,6 @@ Rules:
 - Infer file paths from context if possible
 - Keep each field under 150 characters
 - Do not include markdown, only raw JSON`;
-
-interface ProjectContext {
-  project_name?: string;
-  current_branch?: string;
-  recent_commits: string[];
-  package_json?: { main_dependencies: string[] };
-}
 
 @Injectable({ providedIn: 'root' })
 export class PromptService {

@@ -24,3 +24,10 @@ export interface GroqRequest {
 export interface GroqResponse {
   choices: Array<{ message: { content: string } }>;
 }
+
+export interface ProjectContext {
+  project_name?: string;
+  current_branch?: string;
+  recent_commits: string[];
+  package_json?: { main_dependencies: string[] };
+}
