@@ -2,6 +2,7 @@ import {
   Component,
   ChangeDetectionStrategy,
   inject,
+  computed,
 } from '@angular/core';
 import { ShortsService } from './shorts.service';
 import { ShortCategory } from './models/short.model';
@@ -33,7 +34,7 @@ const CATEGORIES: readonly CategoryFilter[] = [
         @for (cat of categories; track cat.label) {
           <button
             class="px-2.5 py-1 rounded-full text-xs font-medium transition-all"
-            [class]="shortsService.filterCategory() === cat.value
+            [class]="filterCategory() === cat.value
               ? 'bg-violet-600 text-white'
               : 'bg-white/8 text-white/50 hover:bg-white/12 hover:text-white/80'"
             (click)="setFilter(cat.value)"
@@ -43,14 +44,14 @@ const CATEGORIES: readonly CategoryFilter[] = [
         }
       </div>
 
-      @if (shortsService.currentShort(); as short) {
+      @if (currentShort(); as short) {
         <div class="flex flex-col gap-2 p-3 rounded-xl bg-white/5 border border-white/8">
           <div class="flex items-start justify-between gap-2">
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium text-white leading-snug">{{ short.title }}</p>
               <p class="text-xs text-white/50 mt-0.5 leading-relaxed">{{ short.description }}</p>
             </div>
-            <span class="text-xs text-white/30 shrink-0">{{ formatDuration(short.durationSeconds) }}</span>
+            <span class="text-xs text-white/30 shrink-0">{{ formattedDuration() }}</span>
           </div>
 
           <div class="flex items-center gap-1.5 flex-wrap">
@@ -75,17 +76,17 @@ const CATEGORIES: readonly CategoryFilter[] = [
       <div class="flex items-center justify-between">
         <button
           class="px-3 py-1.5 rounded-lg text-xs bg-white/8 hover:bg-white/12 text-white/60 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-          [disabled]="shortsService.currentIndex() === 0"
+          [disabled]="currentIndex() === 0"
           (click)="prev()"
         >
           ← Prev
         </button>
         <span class="text-xs text-white/30">
-          {{ shortsService.currentIndex() + 1 }} / {{ shortsService.totalCount() }}
+          {{ currentIndex() + 1 }} / {{ totalCount() }}
         </span>
         <button
           class="px-3 py-1.5 rounded-lg text-xs bg-white/8 hover:bg-white/12 text-white/60 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-          [disabled]="shortsService.currentIndex() === shortsService.totalCount() - 1"
+          [disabled]="currentIndex() === totalCount() - 1"
           (click)="next()"
         >
           Next →
@@ -95,8 +96,21 @@ const CATEGORIES: readonly CategoryFilter[] = [
   `,
 })
 export class ShortsComponent {
-  protected readonly shortsService = inject(ShortsService);
+  private readonly shortsService = inject(ShortsService);
   protected readonly categories = CATEGORIES;
+
+  protected readonly filterCategory = this.shortsService.filterCategory;
+  protected readonly currentShort = this.shortsService.currentShort;
+  protected readonly currentIndex = this.shortsService.currentIndex;
+  protected readonly totalCount = this.shortsService.totalCount;
+
+  protected readonly formattedDuration = computed(() => {
+    const s = this.shortsService.currentShort();
+    if (!s) return '';
+    const m = Math.floor(s.durationSeconds / 60);
+    const sec = s.durationSeconds % 60;
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  });
 
   protected setFilter(value: ShortCategory | null): void {
     this.shortsService.setFilter(value);
@@ -108,11 +122,5 @@ export class ShortsComponent {
 
   protected next(): void {
     this.shortsService.next();
-  }
-
-  protected formatDuration(seconds: number): string {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, '0')}`;
   }
 }
