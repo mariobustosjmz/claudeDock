@@ -17,25 +17,25 @@
 - [x] **1.10** Persistent storage setup (tauri-plugin-store)
 
 ## Phase 2: Core AI Features (Weeks 5-10)
-- [ ] **2.1** Smart Screenshot feature (F2)
-  - [ ] Fullscreen transparent overlay for region selection
-  - [ ] Screen capture via Rust (screenshots crate)
-  - [ ] UI element detection and numbering
-  - [ ] Annotated image copy to clipboard
-- [ ] **2.2** Prompt Optimizer feature (F3)
-  - [ ] Groq API integration service
-  - [ ] Project context detection (git root, package.json, recent files)
-  - [ ] Structured prompt output panel
-  - [ ] One-click copy to clipboard
-- [ ] **2.3** Voice Input feature (F4)
-  - [ ] Audio recording via Rust (cpal crate)
-  - [ ] Whisper/Deepgram API integration for STT
-  - [ ] Real-time transcription display
-  - [ ] Integration with prompt optimizer
-- [ ] **2.4** Prompt History feature (F10)
-  - [ ] Save all optimized prompts with metadata
-  - [ ] Search and filter by project/tag
-  - [ ] One-click replay (copy to clipboard)
+- [x] **2.1** Smart Screenshot feature (F2)
+  - [x] Fullscreen transparent overlay for region selection
+  - [x] Screen capture via Rust (screenshots crate)
+  - [x] UI element detection and numbering (simplified: capture without element detection)
+  - [x] Annotated image copy to clipboard
+- [x] **2.2** Prompt Optimizer feature (F3)
+  - [x] Groq API integration service
+  - [x] Project context detection (git root, package.json, recent files)
+  - [x] Structured prompt output panel
+  - [x] One-click copy to clipboard
+- [x] **2.3** Voice Input feature (F4)
+  - [x] Audio recording via Rust (cpal crate)
+  - [x] Whisper/Deepgram API integration for STT
+  - [x] Real-time transcription display
+  - [x] Integration with prompt optimizer
+- [x] **2.4** Prompt History feature (F10)
+  - [x] Save all optimized prompts with metadata
+  - [x] Search and filter by project/tag
+  - [x] One-click replay (copy to clipboard)
 
 ## Phase 3: Advanced Features (Weeks 11-18)
 - [ ] **3.1** Agent Session Manager feature (F5)
@@ -70,5 +70,5 @@
 - [ ] **4.9** Beta release
 
 ## Current Status
-**Active Phase**: Phase 2
-**Next Task**: 2.1 — Smart Screenshot feature
+**Active Phase**: Phase 3
+**Next Task**: 3.1 — Agent Session Manager feature
