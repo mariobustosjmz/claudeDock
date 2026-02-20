@@ -8,12 +8,13 @@ import { ActionsComponent } from '../../actions/actions.component';
 import { SettingsComponent } from '../../settings/settings.component';
 import { ScreenshotComponent } from '../../screenshot/screenshot.component';
 import { PromptComponent } from '../../prompt/prompt.component';
+import { VoiceComponent } from '../../voice/voice.component';
 
 @Component({
   selector: 'app-dock-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent],
+  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent],
   template: `
     <div class="dock-panel rounded-2xl overflow-hidden mb-2">
       @switch (panelType()) {
@@ -28,6 +29,9 @@ import { PromptComponent } from '../../prompt/prompt.component';
         }
         @case ('PROMPT') {
           <app-prompt />
+        }
+        @case ('VOICE') {
+          <app-voice />
         }
         @default {
           <div class="p-4">
