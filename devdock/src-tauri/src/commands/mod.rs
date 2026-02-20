@@ -4,6 +4,7 @@ pub mod preview;
 pub mod process;
 pub mod screenshot;
 pub mod shell;
+pub mod snapshot;
 pub mod window;
 
 use serde::Serialize;

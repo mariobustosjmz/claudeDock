@@ -6,6 +6,7 @@ use commands::context::get_project_context;
 use commands::process::{get_agent_metrics, get_running_agents};
 use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_info, open_screenshot_overlay};
 use commands::preview::{apply_css_change, close_preview_window, inject_inspector, open_preview_window};
+use commands::snapshot::{get_open_windows, restore_snapshot, save_snapshot};
 use commands::shell::{execute_shell, open_url};
 use commands::window::{
     get_dock_position, set_always_on_top, set_dock_position, toggle_dock_visibility,
@@ -116,6 +117,9 @@ pub fn run() {
             close_preview_window,
             inject_inspector,
             apply_css_change,
+            get_open_windows,
+            save_snapshot,
+            restore_snapshot,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
