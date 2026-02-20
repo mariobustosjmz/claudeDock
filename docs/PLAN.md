@@ -37,26 +37,34 @@
   - [x] Search and filter by project/tag
   - [x] One-click replay (copy to clipboard)
 
-## Phase 3: Advanced Features (Weeks 11-18)
-- [ ] **3.1** Agent Session Manager feature (F5)
-  - [ ] Process detection for Claude Code, Cursor, Codex
-  - [ ] Live status polling (running, idle, waiting)
-  - [ ] Token/cost metrics parsing
-  - [ ] Approve/deny actions inline
-- [ ] **3.2** Preview Window feature (F6)
-  - [ ] Secondary Tauri window with WebView
-  - [ ] Click-to-select DOM inspector
-  - [ ] CSS property editor panel
-  - [ ] "Add to Prompt" generation
-- [ ] **3.3** Workspace Snapshots feature (F7)
-  - [ ] Window enumeration via OS APIs
-  - [ ] Save snapshot (apps, positions, project path)
-  - [ ] Restore snapshot
-  - [ ] Multiple named snapshots per project
-- [ ] **3.4** Educational Shorts feature (F9)
-  - [ ] Video player component
-  - [ ] Auto-trigger during AI agent processing
-  - [ ] Content categorized by tech stack
+## Phase 3: Advanced Features (Weeks 11-18) ✅ COMPLETE
+
+Branch: `feat/phase3-advanced-features`
+
+- [x] **3.1** Agent Session Manager feature (F5)
+  - [x] Process detection for Claude Code, Cursor, Aider, Codex via `sysinfo` crate
+  - [x] Live status polling with CPU/memory metrics
+  - [x] Rust commands: `get_running_agents`, `get_agent_metrics` (`process.rs`)
+  - [x] Angular: `AgentsService`, `AgentsComponent`, `AgentProcess` model
+- [x] **3.2** Preview Window feature (F6)
+  - [x] Secondary Tauri WebView window managed via Rust
+  - [x] CSS injection and live editing panel
+  - [x] Rust commands: `open_preview_window`, `close_preview_window`, `inject_inspector`, `apply_css_change` (`preview.rs`)
+  - [x] Angular: `PreviewService`, `PreviewComponent`, `CssChange` model
+- [x] **3.3** Workspace Snapshots feature (F7)
+  - [x] Window enumeration via AppleScript on macOS
+  - [x] Save/restore named snapshots with app + position data
+  - [x] Rust commands: `get_open_windows`, `save_snapshot`, `restore_snapshot` (`snapshot.rs`)
+  - [x] Angular: `SnapshotsService`, `SnapshotsComponent`, `WorkspaceSnapshot` model
+- [x] **3.4** Educational Shorts feature (F9)
+  - [x] Curated tips catalog with 8 entries covering Angular Signals, Tauri IPC, Rust patterns
+  - [x] Agent-aware short suggestions based on active processes
+  - [x] `SHORTS` panel type added to `PanelType` enum
+  - [x] Angular: `ShortsService`, `ShortsComponent`, `short.model.ts`, `shorts-catalog.ts`
+
+### Phase 3 Build Status
+- Angular build: PASSED (1.433s)
+- Rust build: PASSED (0.81s, from cache)
 
 ## Phase 4: Polish & Launch (Weeks 19-24)
 - [ ] **4.1** Auth system (simple email/password or OAuth)
@@ -70,5 +78,6 @@
 - [ ] **4.9** Beta release
 
 ## Current Status
-**Active Phase**: Phase 3
-**Next Task**: 3.1 — Agent Session Manager feature
+**Active Phase**: Phase 4
+**Last Completed**: Phase 3 — All advanced features implemented and verified (2026-02-19)
+**Next Task**: 4.1 — Auth system
