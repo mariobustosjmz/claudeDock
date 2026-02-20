@@ -30,7 +30,7 @@ pub fn run() {
     tauri::Builder::default()
         .manage(RecordingState::default())
         .manage(PendingUpdate(std::sync::Mutex::new(None)))
-        .manage(UpdaterEnabled(false)) // set to true when updater plugin is registered
+        .manage(UpdaterEnabled(true))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_global_shortcut::Builder::default().build())
@@ -41,8 +41,7 @@ pub fn run() {
             None,
         ))
         .plugin(tauri_plugin_notification::init())
-        // updater disabled in dev — enable with a real signing key before release
-        // .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         // .plugin(tauri_plugin_nosleep::init())  — disabled: panics on macOS 15
         .plugin(tauri_plugin_prevent_default::Builder::new().build())
         .setup(|app| {
