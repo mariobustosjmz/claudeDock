@@ -16,10 +16,6 @@
     "autostart:allow-enable",
     "autostart:allow-disable",
     "autostart:allow-is-enabled",
-"macos-permissions:allow-check-screen-recording-permission",
-    "macos-permissions:allow-request-screen-recording-permission",
-    "macos-permissions:allow-check-microphone-permission",
-    "macos-permissions:allow-request-microphone-permission",
-    "mcp-bridge:default"
+"mcp-bridge:default"
   ]
 }

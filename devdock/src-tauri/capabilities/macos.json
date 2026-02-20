@@ -1,0 +1,13 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "macos-capability",
+  "description": "macOS-only permissions for screen recording and microphone access",
+  "platforms": ["macOS"],
+  "windows": ["main"],
+  "permissions": [
+    "macos-permissions:allow-check-screen-recording-permission",
+    "macos-permissions:allow-request-screen-recording-permission",
+    "macos-permissions:allow-check-microphone-permission",
+    "macos-permissions:allow-request-microphone-permission"
+  ]
+}
