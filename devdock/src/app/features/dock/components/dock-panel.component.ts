@@ -9,12 +9,13 @@ import { SettingsComponent } from '../../settings/settings.component';
 import { ScreenshotComponent } from '../../screenshot/screenshot.component';
 import { PromptComponent } from '../../prompt/prompt.component';
 import { VoiceComponent } from '../../voice/voice.component';
+import { AgentsComponent } from '../../agents/agents.component';
 
 @Component({
   selector: 'app-dock-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent],
+  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent, AgentsComponent],
   template: `
     <div class="dock-panel rounded-2xl overflow-hidden mb-2">
       @switch (panelType()) {
@@ -33,6 +34,9 @@ import { VoiceComponent } from '../../voice/voice.component';
         @case ('VOICE') {
           <app-voice />
         }
+        @case ('AGENTS') {
+          <app-agents />
+        }
         @default {
           <div class="p-4">
             <p class="text-sm text-white/50 text-center">
@@ -50,7 +54,9 @@ import { VoiceComponent } from '../../voice/voice.component';
       -webkit-backdrop-filter: blur(28px) saturate(180%);
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: 0 -4px 24px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
-      min-width: 320px;
+      width: 520px;
+      max-height: 430px;
+      overflow-y: auto;
     }
   `],
 })
