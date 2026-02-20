@@ -1,15 +1,13 @@
 -- =============================================================================
 -- DevDock Dev Seed — default Pro user for local/staging testing
--- Run this AFTER applying supabase-schema.sql
 -- =============================================================================
 
--- Fixed UUID so subscriptions FK always matches
 DO $$
 DECLARE
   dev_user_id uuid := 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'::uuid;
 BEGIN
 
-  -- ── 1. Auth user ────────────────────────────────────────────────────────────
+  -- 1. Auth user
   INSERT INTO auth.users (
     id,
     instance_id,
@@ -36,10 +34,11 @@ BEGIN
     'authenticated'
   ) ON CONFLICT (id) DO NOTHING;
 
-  -- ── 2. Auth identity (required for email sign-in) ───────────────────────────
+  -- 2. Auth identity (required for email sign-in)
   INSERT INTO auth.identities (
     id,
     user_id,
+    provider_id,
     identity_data,
     provider,
     last_sign_in_at,
@@ -48,14 +47,15 @@ BEGIN
   ) VALUES (
     dev_user_id,
     dev_user_id,
+    'mariobustosjmz@gmail.com',
     jsonb_build_object('sub', dev_user_id::text, 'email', 'mariobustosjmz@gmail.com'),
     'email',
     now(),
     now(),
     now()
-  ) ON CONFLICT (provider, id) DO NOTHING;
+  ) ON CONFLICT DO NOTHING;
 
-  -- ── 3. Pro subscription ──────────────────────────────────────────────────────
+  -- 3. Pro subscription (trigger may insert 'free' first; upsert to 'pro')
   INSERT INTO public.subscriptions (
     user_id,
     tier,

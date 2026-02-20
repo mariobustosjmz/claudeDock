@@ -3,6 +3,8 @@ use tauri::{AppHandle, Manager};
 use tauri_plugin_updater::UpdaterExt;
 use crate::commands::AppError;
 
+pub struct UpdaterEnabled(pub bool);
+
 #[derive(serde::Serialize)]
 pub struct UpdateInfo {
     pub version: String,
@@ -13,6 +15,9 @@ pub struct PendingUpdate(pub Mutex<Option<tauri_plugin_updater::Update>>);
 
 #[tauri::command]
 pub async fn check_update(app: AppHandle) -> Result<Option<UpdateInfo>, AppError> {
+    if !app.state::<UpdaterEnabled>().0 {
+        return Ok(None);
+    }
     let update = app
         .updater()
         .map_err(|e| AppError::Updater(e.to_string()))?
