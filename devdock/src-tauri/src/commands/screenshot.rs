@@ -1,6 +1,6 @@
 use base64::{engine::general_purpose, Engine as _};
-use image::{ImageBuffer, Rgba};
 use screenshots::Screen;
+use screenshots::image::ImageFormat;
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 
@@ -47,19 +47,18 @@ pub async fn capture_region(
         .or_else(|| screens.first())
         .ok_or_else(|| AppError::Screenshot("No screen found".to_string()))?;
 
-    let image = screen
+    let rgba_image = screen
         .capture_area(x, y, width, height)
         .map_err(|e| AppError::Screenshot(e.to_string()))?;
 
-    let rgba_image: ImageBuffer<Rgba<u8>, Vec<u8>> =
-        ImageBuffer::from_raw(image.width(), image.height(), image.rgba().to_vec())
-            .ok_or_else(|| AppError::Screenshot("Failed to create image buffer".to_string()))?;
+    let img_width = rgba_image.width();
+    let img_height = rgba_image.height();
 
     let mut png_bytes: Vec<u8> = Vec::new();
     rgba_image
         .write_to(
             &mut std::io::Cursor::new(&mut png_bytes),
-            image::ImageFormat::Png,
+            ImageFormat::Png,
         )
         .map_err(|e| AppError::Screenshot(e.to_string()))?;
 
@@ -67,8 +66,8 @@ pub async fn capture_region(
 
     Ok(CaptureResult {
         image_base64: encoded,
-        width: image.width(),
-        height: image.height(),
+        width: img_width,
+        height: img_height,
         x,
         y,
     })

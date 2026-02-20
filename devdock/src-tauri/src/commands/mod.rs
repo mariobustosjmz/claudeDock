@@ -1,3 +1,4 @@
+pub mod audio;
 pub mod context;
 pub mod screenshot;
 pub mod shell;
@@ -16,6 +17,8 @@ pub enum AppError {
     Io(String),
     #[error("Screenshot operation failed: {0}")]
     Screenshot(String),
+    #[error("Audio operation failed: {0}")]
+    Audio(String),
 }
 
 impl From<std::io::Error> for AppError {

@@ -1,6 +1,7 @@
 pub mod commands;
 pub mod services;
 
+use commands::audio::RecordingState;
 use commands::context::get_project_context;
 use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_info, open_screenshot_overlay};
 use commands::shell::{execute_shell, open_url};
@@ -17,6 +18,7 @@ use tauri::{
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .manage(RecordingState::default())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_global_shortcut::Builder::default().build())
@@ -104,6 +106,8 @@ pub fn run() {
             open_screenshot_overlay,
             close_screenshot_overlay,
             get_project_context,
+            commands::audio::start_recording,
+            commands::audio::stop_recording,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
