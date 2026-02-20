@@ -30,3 +30,4 @@ base64 = "0.22"
 image = { version = "0.25", features = ["png"] }
 tokio = { version = "1", features = ["time"] }
 sysinfo = "0.33"
+url = "2"

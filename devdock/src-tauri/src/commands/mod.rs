@@ -1,5 +1,6 @@
 pub mod audio;
 pub mod context;
+pub mod preview;
 pub mod process;
 pub mod screenshot;
 pub mod shell;
