@@ -8,6 +8,7 @@ interface GitHubRelease {
 interface Env {
   GITHUB_OWNER: string;
   GITHUB_REPO: string;
+  GITHUB_TOKEN?: string;
 }
 
 const CORS = { 'Access-Control-Allow-Origin': '*' } as const;
@@ -33,12 +34,13 @@ export default {
     }
 
     const [target, arch, currentVersion] = parts;
-    void currentVersion;
     const releaseUrl = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/releases/latest`;
 
-    const releaseResp = await fetch(releaseUrl, {
-      headers: { 'User-Agent': 'devdock-updater/1.0' },
-    });
+    const githubHeaders: Record<string, string> = { 'User-Agent': 'devdock-updater/1.0' };
+    if (env.GITHUB_TOKEN) {
+      githubHeaders['Authorization'] = `Bearer ${env.GITHUB_TOKEN}`;
+    }
+    const releaseResp = await fetch(releaseUrl, { headers: githubHeaders });
 
     if (!releaseResp.ok) {
       return new Response(JSON.stringify({ error: 'GitHub API error' }), {
@@ -48,6 +50,13 @@ export default {
     }
 
     const release: GitHubRelease = await releaseResp.json();
+    const latestVersion = release.tag_name.replace(/^v/, '');
+
+    const normalizedCurrent = currentVersion.replace(/^v/, '');
+    if (normalizedCurrent === latestVersion) {
+      return new Response(null, { status: 204 });
+    }
+
     const platformKey = getPlatformKey(target, arch);
 
     const asset = release.assets.find(
@@ -62,10 +71,16 @@ export default {
     }
 
     const sigResp = await fetch(sigAsset.browser_download_url);
+    if (!sigResp.ok) {
+      return new Response(JSON.stringify({ error: 'Failed to fetch signature' }), {
+        status: 502,
+        headers: { 'Content-Type': 'application/json', ...CORS },
+      });
+    }
     const signature = (await sigResp.text()).trim();
 
     const manifest = {
-      version: release.tag_name.replace(/^v/, ''),
+      version: latestVersion,
       notes: release.body ?? '',
       pub_date: release.published_at,
       platforms: {
