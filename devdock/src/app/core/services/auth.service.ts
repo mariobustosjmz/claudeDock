@@ -97,11 +97,13 @@ export class AuthService {
   }
 
   async refreshSubscription(): Promise<void> {
+    const userId = this._user()?.id;
+    if (!userId) return;
     try {
       const { data, error } = await this.supabase
         .from('subscriptions')
         .select('tier, valid_until')
-        .eq('user_id', this._user()?.id)
+        .eq('user_id', userId)
         .maybeSingle();
       if (error) return;
       const rawTier = data?.tier;
