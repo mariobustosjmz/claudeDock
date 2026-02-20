@@ -7,12 +7,13 @@ import { PanelType } from '../../../core/models/dock.model';
 import { ActionsComponent } from '../../actions/actions.component';
 import { SettingsComponent } from '../../settings/settings.component';
 import { ScreenshotComponent } from '../../screenshot/screenshot.component';
+import { PromptComponent } from '../../prompt/prompt.component';
 
 @Component({
   selector: 'app-dock-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent],
+  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent],
   template: `
     <div class="dock-panel rounded-2xl overflow-hidden mb-2">
       @switch (panelType()) {
@@ -24,6 +25,9 @@ import { ScreenshotComponent } from '../../screenshot/screenshot.component';
         }
         @case ('SCREENSHOT') {
           <app-screenshot />
+        }
+        @case ('PROMPT') {
+          <app-prompt />
         }
         @default {
           <div class="p-4">
