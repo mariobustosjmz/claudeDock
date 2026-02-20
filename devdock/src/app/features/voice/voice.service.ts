@@ -3,6 +3,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { firstValueFrom } from 'rxjs';
+import { AnalyticsService } from '../../core/services/analytics.service';
 import { PermissionsService } from '../../core/services/permissions.service';
 import { SettingsService } from '../settings/settings.service';
 import { AudioResult, RecordingState } from './models/voice.model';
@@ -11,6 +12,7 @@ const WHISPER_URL = 'https://api.openai.com/v1/audio/transcriptions';
 
 @Injectable({ providedIn: 'root' })
 export class VoiceService {
+  private readonly analytics = inject(AnalyticsService);
   private readonly http = inject(HttpClient);
   private readonly settings = inject(SettingsService);
   private readonly permissions = inject(PermissionsService);
@@ -86,6 +88,7 @@ export class VoiceService {
       const text = await this.transcribeAudio(audioResult.wav_base64, apiKey);
       this._transcription.set(text);
       this._state.set('done');
+      this.analytics.track('voice_transcribed', { duration_seconds: audioResult.duration_seconds });
     } catch (err) {
       this._lastError.set(String(err));
       this._state.set('idle');

@@ -1,12 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { AnalyticsService } from '../../core/services/analytics.service';
 import { PermissionsService } from '../../core/services/permissions.service';
 import { StorageService } from '../../core/services/storage.service';
 import { CaptureResult, ScreenRegion, ScreenshotEntry } from './models/screenshot.model';
 
 @Injectable({ providedIn: 'root' })
 export class ScreenshotService {
+  private readonly analytics = inject(AnalyticsService);
   private readonly storage = inject(StorageService);
   private readonly permissions = inject(PermissionsService);
   private readonly STORE_NAME = 'screenshots';
@@ -92,6 +94,7 @@ export class ScreenshotService {
 
       this._screenshots.update((list) => [entry, ...list].slice(0, this.MAX_ENTRIES));
       this.persistToStorage();
+      this.analytics.track('screenshot_taken');
       await this.copyToClipboard(entry);
     } catch (err) {
       this._lastError.set(String(err));

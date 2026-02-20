@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
 import { firstValueFrom } from 'rxjs';
+import { AnalyticsService } from '../../core/services/analytics.service';
 import { SettingsService } from '../settings/settings.service';
 import {
   GroqRequest,
@@ -33,6 +34,7 @@ Rules:
 
 @Injectable({ providedIn: 'root' })
 export class PromptService {
+  private readonly analytics = inject(AnalyticsService);
   private readonly http = inject(HttpClient);
   private readonly settings = inject(SettingsService);
   private readonly history = inject(PromptHistoryService);
@@ -89,6 +91,7 @@ export class PromptService {
       this._currentResult.set(structured);
       this._responseTime.set(Math.round(performance.now() - startTime));
       this.history.save(request.rawPrompt, structured).catch(console.error);
+      this.analytics.track('prompt_optimized');
       return structured;
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
