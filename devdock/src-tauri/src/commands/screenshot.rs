@@ -1,7 +1,9 @@
+use arboard::{Clipboard, ImageData};
 use base64::{engine::general_purpose, Engine as _};
 use screenshots::Screen;
 use screenshots::image::ImageFormat;
 use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
 use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 
 use super::AppError;
@@ -124,4 +126,28 @@ pub async fn close_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
             .map_err(|e| AppError::Screenshot(e.to_string()))?;
     }
     Ok(())
+}
+
+#[tauri::command]
+pub async fn copy_image_to_clipboard(image_base64: String) -> Result<(), AppError> {
+    let bytes = general_purpose::STANDARD
+        .decode(&image_base64)
+        .map_err(|e| AppError::Screenshot(format!("base64 decode: {e}")))?;
+
+    let img = image::load_from_memory(&bytes)
+        .map_err(|e| AppError::Screenshot(format!("decode png: {e}")))?
+        .to_rgba8();
+
+    let (width, height) = img.dimensions();
+
+    let mut clipboard = Clipboard::new()
+        .map_err(|e| AppError::Screenshot(format!("clipboard init: {e}")))?;
+
+    clipboard
+        .set_image(ImageData {
+            width: width as usize,
+            height: height as usize,
+            bytes: Cow::from(img.into_vec()),
+        })
+        .map_err(|e| AppError::Screenshot(format!("set image: {e}")))
 }

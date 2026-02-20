@@ -4,7 +4,7 @@ pub mod services;
 use commands::audio::RecordingState;
 use commands::context::get_project_context;
 use commands::process::{get_agent_metrics, get_running_agents};
-use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_info, open_screenshot_overlay};
+use commands::screenshot::{capture_region, close_screenshot_overlay, copy_image_to_clipboard, get_screen_info, open_screenshot_overlay};
 use commands::preview::{apply_css_change, close_preview_window, inject_inspector, open_preview_window};
 use commands::snapshot::{get_open_windows, restore_snapshot, save_snapshot};
 use commands::shell::{execute_shell, open_url};
@@ -18,6 +18,12 @@ use tauri::{
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
     Emitter, Manager,
 };
+
+#[cfg(target_os = "macos")]
+use tauri_nspanel::WebviewWindowExt as NsPanelExt;
+#[cfg(target_os = "macos")]
+#[allow(deprecated)]
+use tauri_nspanel::cocoa::appkit::NSWindowCollectionBehavior;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -34,7 +40,33 @@ pub fn run() {
         ))
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_nosleep::init())
+        .plugin(tauri_plugin_prevent_default::Builder::new().build())
         .setup(|app| {
+            #[cfg(target_os = "macos")]
+            #[allow(deprecated)]
+            {
+                app.handle().plugin(tauri_plugin_macos_permissions::init())?;
+                app.handle().plugin(tauri_nspanel::init())?;
+
+                let _ = app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
+                if let Some(window) = app.get_webview_window("main") {
+                    if let Ok(panel) = window.to_panel() {
+                        // NSFloatingWindowLevel = 5
+                        panel.set_level(5);
+                        // NSNonactivatingPanelMask = 128 (1 << 7)
+                        panel.set_style_mask(128);
+                        panel.set_collection_behaviour(
+                            NSWindowCollectionBehavior::NSWindowCollectionBehaviorFullScreenAuxiliary
+                                | NSWindowCollectionBehavior::NSWindowCollectionBehaviorMoveToActiveSpace
+                                | NSWindowCollectionBehavior::NSWindowCollectionBehaviorCanJoinAllSpaces,
+                        );
+                        panel.set_hides_on_deactivate(false);
+                    }
+                }
+            }
+
             let toggle_item = MenuItem::with_id(app, "toggle", "Show / Hide Dock", true, None::<&str>)?;
             let settings_item = MenuItem::with_id(app, "settings", "Settings", true, None::<&str>)?;
             let quit_item = MenuItem::with_id(app, "quit", "Quit DevDock", true, None::<&str>)?;
@@ -112,6 +144,7 @@ pub fn run() {
             open_screenshot_overlay,
             close_screenshot_overlay,
             get_project_context,
+            commands::audio::validate_microphone,
             commands::audio::start_recording,
             commands::audio::stop_recording,
             get_running_agents,
@@ -123,6 +156,7 @@ pub fn run() {
             get_open_windows,
             save_snapshot,
             restore_snapshot,
+            copy_image_to_clipboard,
             check_update,
             install_update,
         ])
