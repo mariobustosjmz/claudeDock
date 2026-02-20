@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 import { SnapshotsService } from './snapshots.service';
 import { WorkspaceSnapshot } from './models/snapshot.model';
 
@@ -57,10 +58,11 @@ import { WorkspaceSnapshot } from './models/snapshot.model';
               <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   class="px-2 py-1 rounded text-xs bg-violet-600/80 hover:bg-violet-500 text-white"
-                  [disabled]="isRestoring()"
+                  [disabled]="!isPro() || isRestoring()"
+                  [title]="isPro() ? 'Restore this layout' : 'Pro required'"
                   (click)="restore(snap)"
                 >
-                  Restore
+                  {{ isPro() ? 'Restore' : '🔒' }}
                 </button>
                 <button
                   class="px-2 py-1 rounded text-xs bg-white/10 hover:bg-red-600/60 text-white/60 hover:text-white"
@@ -78,12 +80,14 @@ import { WorkspaceSnapshot } from './models/snapshot.model';
 })
 export class SnapshotsComponent implements OnInit {
   private readonly snapshotsService = inject(SnapshotsService);
+  private readonly authService = inject(AuthService);
   protected readonly isCapturing = this.snapshotsService.isCapturing;
   protected readonly isRestoring = this.snapshotsService.isRestoring;
   protected readonly error = this.snapshotsService.error;
   protected readonly count = this.snapshotsService.count;
   protected readonly snapshotList = this.snapshotsService.snapshots;
   protected readonly snapName = signal('');
+  protected readonly isPro = this.authService.isPro;
 
   ngOnInit(): void {
     void this.snapshotsService.loadSnapshots();

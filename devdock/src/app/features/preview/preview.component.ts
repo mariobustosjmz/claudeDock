@@ -4,12 +4,15 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { AuthService } from '../../core/services/auth.service';
 import { PreviewService } from './preview.service';
+import { UpgradePromptComponent } from '../../shared/components/upgrade-prompt.component';
 
 @Component({
   selector: 'app-preview',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [UpgradePromptComponent],
   template: `
     <div class="preview-panel p-3 flex flex-col gap-3">
       <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">Preview Window</div>
@@ -49,73 +52,79 @@ import { PreviewService } from './preview.service';
 
       <!-- CSS Editor (shown when preview is open) -->
       @if (preview.isOpen()) {
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center justify-between">
-            <span class="text-xs text-white/40">Live CSS</span>
-            <button
-              class="text-xs text-violet-400 hover:text-violet-300"
-              (click)="toggleInspector()"
-            >
-              {{ inspectorOn() ? 'Hide Inspector' : 'Show Inspector' }}
-            </button>
-          </div>
-
-          <div class="flex gap-2">
-            <input
-              class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
-              placeholder="selector (e.g. h1)"
-              [value]="cssSelector()"
-              (input)="onCssSelectorInput($event)"
-            />
-          </div>
-          <div class="flex gap-2">
-            <input
-              class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
-              placeholder="property (e.g. color)"
-              [value]="cssProperty()"
-              (input)="onCssPropertyInput($event)"
-            />
-            <input
-              class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
-              placeholder="value (e.g. red)"
-              [value]="cssValue()"
-              (input)="onCssValueInput($event)"
-            />
-            <button
-              class="px-2 py-1.5 rounded text-xs font-medium bg-violet-600/80 hover:bg-violet-500 text-white transition-all"
-              [disabled]="!cssSelector() || !cssProperty() || !cssValue()"
-              (click)="applyChange()"
-            >
-              Apply
-            </button>
-          </div>
-
-          <!-- Applied changes -->
-          @if (preview.hasChanges()) {
-            <div class="flex flex-col gap-1 max-h-24 overflow-y-auto">
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-white/30">Applied ({{ preview.cssChanges().length }})</span>
-                <button class="text-xs text-white/30 hover:text-white/50" (click)="clearChanges()">Clear</button>
-              </div>
-              @for (change of preview.cssChanges(); track change.timestamp) {
-                <div class="text-xs text-white/40 font-mono truncate">
-                  {{ change.selector }} → {{ change.property }}: {{ change.value }}
-                </div>
-              }
+        @if (isPro()) {
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-white/40">Live CSS</span>
+              <button
+                class="text-xs text-violet-400 hover:text-violet-300"
+                (click)="toggleInspector()"
+              >
+                {{ inspectorOn() ? 'Hide Inspector' : 'Show Inspector' }}
+              </button>
             </div>
-          }
-        </div>
+
+            <div class="flex gap-2">
+              <input
+                class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
+                placeholder="selector (e.g. h1)"
+                [value]="cssSelector()"
+                (input)="onCssSelectorInput($event)"
+              />
+            </div>
+            <div class="flex gap-2">
+              <input
+                class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
+                placeholder="property (e.g. color)"
+                [value]="cssProperty()"
+                (input)="onCssPropertyInput($event)"
+              />
+              <input
+                class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
+                placeholder="value (e.g. red)"
+                [value]="cssValue()"
+                (input)="onCssValueInput($event)"
+              />
+              <button
+                class="px-2 py-1.5 rounded text-xs font-medium bg-violet-600/80 hover:bg-violet-500 text-white transition-all"
+                [disabled]="!cssSelector() || !cssProperty() || !cssValue()"
+                (click)="applyChange()"
+              >
+                Apply
+              </button>
+            </div>
+
+            <!-- Applied changes -->
+            @if (preview.hasChanges()) {
+              <div class="flex flex-col gap-1 max-h-24 overflow-y-auto">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-white/30">Applied ({{ preview.cssChanges().length }})</span>
+                  <button class="text-xs text-white/30 hover:text-white/50" (click)="clearChanges()">Clear</button>
+                </div>
+                @for (change of preview.cssChanges(); track change.timestamp) {
+                  <div class="text-xs text-white/40 font-mono truncate">
+                    {{ change.selector }} → {{ change.property }}: {{ change.value }}
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        } @else {
+          <app-upgrade-prompt />
+        }
       }
     </div>
   `,
 })
 export class PreviewComponent {
   protected readonly preview = inject(PreviewService);
+  private readonly authService = inject(AuthService);
   protected readonly urlInput = signal('');
   protected readonly cssSelector = signal('');
   protected readonly cssProperty = signal('');
   protected readonly cssValue = signal('');
   protected readonly inspectorOn = signal(false);
+  protected readonly isPro = this.authService.isPro;
 
   protected async openPreview(): Promise<void> {
     const url = this.urlInput().trim();
