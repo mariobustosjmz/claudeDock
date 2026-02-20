@@ -27,9 +27,11 @@ pub async fn get_project_context(
     _app: AppHandle,
     path: Option<String>,
 ) -> Result<ProjectContext, AppError> {
-    let start_path = path
-        .map(PathBuf::from)
-        .unwrap_or_else(|| std::env::current_dir().unwrap_or_default());
+    let start_path = match path {
+        Some(p) => PathBuf::from(p),
+        None => std::env::current_dir()
+            .map_err(|e| AppError::Io(e.to_string()))?,
+    };
 
     let git_root = find_git_root(&start_path);
 

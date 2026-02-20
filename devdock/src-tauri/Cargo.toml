@@ -28,3 +28,4 @@ cpal = "0.15"
 hound = "3.5"
 base64 = "0.22"
 image = { version = "0.25", features = ["png"] }
+tokio = { version = "1", features = ["time"] }

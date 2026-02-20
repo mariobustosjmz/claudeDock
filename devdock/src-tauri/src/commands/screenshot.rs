@@ -96,7 +96,7 @@ pub async fn open_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
         existing
             .close()
             .map_err(|e| AppError::Screenshot(e.to_string()))?;
-        std::thread::sleep(std::time::Duration::from_millis(100));
+        tokio::time::sleep(std::time::Duration::from_millis(100)).await;
     }
 
     let _window = WebviewWindowBuilder::new(

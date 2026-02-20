@@ -15,6 +15,7 @@ export class ScreenshotService {
   private readonly _isCapturing = signal(false);
   private readonly _lastError = signal<string | null>(null);
   private readonly _copied = signal(false);
+  private readonly unlisteners: Array<() => void> = [];
 
   readonly screenshots = this._screenshots.asReadonly();
   readonly isCapturing = this._isCapturing.asReadonly();
@@ -56,11 +57,11 @@ export class ScreenshotService {
   private listenForRegionSelection(): void {
     listen<ScreenRegion>('screenshot-region-selected', async (event) => {
       await this.captureRegion(event.payload);
-    });
+    }).then(unlisten => this.unlisteners.push(unlisten));
 
     listen('screenshot-region-cancelled', () => {
       this._isCapturing.set(false);
-    });
+    }).then(unlisten => this.unlisteners.push(unlisten));
   }
 
   private async captureRegion(region: ScreenRegion): Promise<void> {

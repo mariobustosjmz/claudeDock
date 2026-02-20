@@ -143,7 +143,7 @@ pub async fn stop_recording(
         *is_rec = false;
     }
 
-    std::thread::sleep(std::time::Duration::from_millis(200));
+    tokio::time::sleep(std::time::Duration::from_millis(200)).await;
 
     let samples = state
         .samples

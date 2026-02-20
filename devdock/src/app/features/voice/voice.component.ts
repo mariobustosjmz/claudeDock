@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PromptService } from '../prompt/prompt.service';
 import { VoiceService } from './voice.service';
 
@@ -66,6 +66,11 @@ import { VoiceService } from './voice.service';
               (click)="service.clearTranscription()"
             >Clear</button>
           </div>
+          @if (sentToOptimizer()) {
+            <p class="text-xs text-green-400 bg-green-400/10 rounded px-2 py-1 w-full text-center">
+              ✓ Sent to Optimizer! Switch to the Prompt tab to see the result.
+            </p>
+          }
         </div>
       }
     </div>
@@ -74,6 +79,8 @@ import { VoiceService } from './voice.service';
 export class VoiceComponent {
   readonly service = inject(VoiceService);
   private readonly promptService = inject(PromptService);
+  private readonly _sentToOptimizer = signal(false);
+  readonly sentToOptimizer = this._sentToOptimizer.asReadonly();
 
   buttonClass(): string {
     switch (this.service.state()) {
@@ -98,7 +105,11 @@ export class VoiceComponent {
   async sendToOptimizer(): Promise<void> {
     const text = this.service.transcription();
     if (!text.trim()) return;
-    await this.promptService.optimize({ rawPrompt: text });
-    this.service.clearTranscription();
+    const result = await this.promptService.optimize({ rawPrompt: text });
+    if (result) {
+      this._sentToOptimizer.set(true);
+      this.service.clearTranscription();
+      setTimeout(() => this._sentToOptimizer.set(false), 2000);
+    }
   }
 }
