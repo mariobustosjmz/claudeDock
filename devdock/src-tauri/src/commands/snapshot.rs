@@ -56,6 +56,15 @@ pub async fn get_open_windows() -> Result<Vec<WindowInfo>, AppError> {
     Ok(windows)
 }
 
+fn sanitize_applescript_string(s: &str) -> Result<String, AppError> {
+    if s.contains('"') || s.contains('\n') || s.contains('\r') || s.contains('\\') {
+        return Err(AppError::Window(
+            format!("Invalid characters in window identifier: rejected")
+        ));
+    }
+    Ok(s.to_string())
+}
+
 fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
     let mut windows = Vec::new();
     if output.is_empty() {
@@ -69,7 +78,11 @@ fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
     while i + 5 < values.len() {
         let app_name = values[i].trim_matches('{').trim().to_string();
         let title = values[i + 1].trim().to_string();
-        let Ok(x) = values[i + 2].trim().parse::<i32>() else { i += 6; continue; };
+        let Ok(x) = values[i + 2].trim().parse::<i32>() else {
+            log::warn!("parse_applescript_windows: skipping record at index {i}, field parse failed");
+            i += 6;
+            continue;
+        };
         let Ok(y) = values[i + 3].trim().parse::<i32>() else { i += 6; continue; };
         let Ok(width) = values[i + 4].trim().parse::<i32>() else { i += 6; continue; };
         let Ok(height) = values[i + 5].trim_matches('}').trim().parse::<i32>() else { i += 6; continue; };
@@ -93,7 +106,10 @@ pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<Wor
         .map_err(|e| AppError::Window(e.to_string()))?
         .as_secs();
 
-    let id = format!("snapshot-{created_at}");
+    let id = format!("snapshot-{}", SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map_err(|e| AppError::Window(e.to_string()))?
+        .as_millis());
 
     Ok(WorkspaceSnapshot {
         id,
@@ -106,6 +122,21 @@ pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<Wor
 #[tauri::command]
 pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppError> {
     for window in &snapshot.windows {
+        let safe_app = match sanitize_applescript_string(&window.app_name) {
+            Ok(s) => s,
+            Err(_) => {
+                log::warn!("restore_snapshot: skipping window with invalid app_name: {:?}", window.app_name);
+                continue;
+            }
+        };
+        let safe_title = match sanitize_applescript_string(&window.title) {
+            Ok(s) => s,
+            Err(_) => {
+                log::warn!("restore_snapshot: skipping window with invalid title: {:?}", window.title);
+                continue;
+            }
+        };
+
         let script = format!(
             r#"tell application "System Events"
                 try
@@ -115,8 +146,8 @@ pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppErro
                     end tell
                 end try
             end tell"#,
-            app = window.app_name,
-            title = window.title,
+            app = safe_app,
+            title = safe_title,
             x = window.x,
             y = window.y,
             w = window.width,
