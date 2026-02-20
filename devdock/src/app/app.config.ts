@@ -3,6 +3,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
   APP_INITIALIZER,
+  inject,
 } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { provideHttpClient } from "@angular/common/http";
@@ -18,8 +19,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     {
       provide: APP_INITIALIZER,
-      useFactory: (auth: AuthService) => () => auth.initialize(),
-      deps: [AuthService],
+      useFactory: () => {
+        const auth = inject(AuthService);
+        return () => auth.initialize();
+      },
       multi: true,
     },
   ],

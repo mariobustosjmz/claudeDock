@@ -104,15 +104,17 @@ export class AuthService {
         .eq('user_id', this._user()?.id)
         .maybeSingle();
       if (error) return;
+      const rawTier = data?.tier;
+      const tier: SubscriptionTier = rawTier === 'pro' ? 'pro' : 'free';
       const state: SubscriptionState = {
-        tier: (data?.tier as SubscriptionTier) ?? 'free',
+        tier,
         validUntil: data?.valid_until ? new Date(data.valid_until).getTime() : null,
         checkedAt: Date.now(),
       };
       this._subscription.set(state);
       await this.storage.set(STORE, SUB_KEY, state);
-    } catch {
-      // keep cached state on network error
+    } catch (err) {
+      this._error.set(String(err));
     }
   }
 }

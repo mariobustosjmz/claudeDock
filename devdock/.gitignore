@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment variables (never commit secrets)
+.env
+
+# Rust build artifacts
+src-tauri/target/

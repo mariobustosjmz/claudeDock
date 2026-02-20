@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
+import { STRIPE_CHECKOUT_URL } from '../../core/config/supabase.config';
 
 @Component({
   selector: 'app-auth',
@@ -132,7 +133,7 @@ export class AuthComponent {
   }
 
   protected async upgrade(): Promise<void> {
-    await this.tauri.invoke('open_url', { url: 'https://buy.stripe.com/PLACEHOLDER' });
+    await this.tauri.invoke('open_url', { url: STRIPE_CHECKOUT_URL });
   }
 
   protected async refreshSub(): Promise<void> {
