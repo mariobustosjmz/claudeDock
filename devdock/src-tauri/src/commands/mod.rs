@@ -25,6 +25,8 @@ pub enum AppError {
     Audio(String),
     #[error("Process operation failed: {0}")]
     Process(String),
+    #[error("Updater operation failed: {0}")]
+    Updater(String),
 }
 
 impl From<std::io::Error> for AppError {

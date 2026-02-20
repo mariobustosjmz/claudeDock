@@ -8,7 +8,7 @@ use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_
 use commands::preview::{apply_css_change, close_preview_window, inject_inspector, open_preview_window};
 use commands::snapshot::{get_open_windows, restore_snapshot, save_snapshot};
 use commands::shell::{execute_shell, open_url};
-use commands::update::{check_update, install_update};
+use commands::update::{check_update, install_update, PendingUpdate};
 use commands::window::{
     get_dock_position, set_always_on_top, set_dock_position, toggle_dock_visibility,
 };
@@ -23,6 +23,7 @@ use tauri::{
 pub fn run() {
     tauri::Builder::default()
         .manage(RecordingState::default())
+        .manage(PendingUpdate(std::sync::Mutex::new(None)))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_global_shortcut::Builder::default().build())

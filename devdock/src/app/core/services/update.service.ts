@@ -29,6 +29,9 @@ export class UpdateService {
     this._isInstalling.set(true);
     try {
       await this.tauri.invoke<void>('install_update');
+      // App will restart on success; reset state in case it doesn't.
+      this._isInstalling.set(false);
+      this._available.set(null);
     } catch {
       this._isInstalling.set(false);
     }
