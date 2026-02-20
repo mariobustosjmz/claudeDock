@@ -61,12 +61,12 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   output: 'static',
-  site: 'https://YOUR_GITHUB_USERNAME.github.io',
+  site: 'https://mariobustosjmz.github.io',
   base: '/devdock-site',
 });
 ```
 
-> Note: Replace `YOUR_GITHUB_USERNAME` with the actual GitHub username before deploying.
+> Note: Replace `mariobustosjmz` with the actual GitHub username before deploying.
 
 **Step 5: Create `tailwind.config.mjs`**
 
@@ -175,7 +175,7 @@ git commit -m "feat: scaffold astro project"
 
 ```astro
 ---
-const RELEASES_URL = 'https://github.com/YOUR_GITHUB_USERNAME/devdock/releases/latest';
+const RELEASES_URL = 'https://github.com/mariobustosjmz/claudeDock/releases/latest';
 ---
 
 <section class="relative min-h-screen flex flex-col items-center justify-center px-6 py-24 overflow-hidden">
@@ -233,7 +233,7 @@ const RELEASES_URL = 'https://github.com/YOUR_GITHUB_USERNAME/devdock/releases/l
 </section>
 ```
 
-> Replace `YOUR_GITHUB_USERNAME` with the actual value.
+> Replace `mariobustosjmz` with the actual value.
 
 **Step 2: Create `src/pages/index.astro`**
 
@@ -390,7 +390,7 @@ git commit -m "feat: features grid section"
 ```astro
 ---
 const STRIPE_URL = 'https://buy.stripe.com/PLACEHOLDER';
-const RELEASES_URL = 'https://github.com/YOUR_GITHUB_USERNAME/devdock/releases/latest';
+const RELEASES_URL = 'https://github.com/mariobustosjmz/claudeDock/releases/latest';
 
 const freeTier = [
   'Smart Screenshot',
@@ -500,7 +500,7 @@ git commit -m "feat: pricing section"
 
 ```astro
 ---
-const RELEASES_URL = 'https://github.com/YOUR_GITHUB_USERNAME/devdock/releases/latest';
+const RELEASES_URL = 'https://github.com/mariobustosjmz/claudeDock/releases/latest';
 
 const steps = [
   {
@@ -583,7 +583,7 @@ git commit -m "feat: install section"
 
 ```astro
 ---
-const GITHUB_URL = 'https://github.com/YOUR_GITHUB_USERNAME/devdock';
+const GITHUB_URL = 'https://github.com/mariobustosjmz/claudeDock';
 const NIRBY_URL = 'https://nir.by/';
 ---
 
@@ -727,11 +727,11 @@ jobs:
 
 ```js
 // astro.config.mjs
-site: 'https://YOUR_GITHUB_USERNAME.github.io',
+site: 'https://mariobustosjmz.github.io',
 base: '/devdock-site',
 ```
 
-> Replace `YOUR_GITHUB_USERNAME` with actual username.
+> Replace `mariobustosjmz` with actual username.
 
 **Step 3: Commit**
 
@@ -751,7 +751,7 @@ Go to `https://github.com/new` and create a public repo named `devdock-site`. Do
 **Step 2: Add remote and push**
 
 ```bash
-git remote add origin https://github.com/YOUR_GITHUB_USERNAME/devdock-site.git
+git remote add origin https://github.com/mariobustosjmz/claudeDock-site.git
 git branch -M main
 git push -u origin main
 ```
@@ -766,7 +766,7 @@ In the repo on GitHub:
 **Step 4: Verify deploy**
 
 Wait ~1 minute, then open:
-`https://YOUR_GITHUB_USERNAME.github.io/devdock-site/`
+`https://mariobustosjmz.github.io/devdock-site/`
 
 Expected: Landing page loads with all 5 sections.
 
@@ -781,6 +781,6 @@ Expected: Landing page loads with all 5 sections.
 
 - [ ] Record `demo.mp4` screen capture of dock in use
 - [ ] Create `favicon.svg`
-- [ ] Replace `YOUR_GITHUB_USERNAME` in all files with actual GitHub username
+- [ ] Replace `mariobustosjmz` in all files with actual GitHub username
 - [ ] Replace Stripe `PLACEHOLDER` URL with real checkout URL
 - [ ] Set up GitHub repo for the main `devdock` app and push (needed for the `.dmg` download link to work)
