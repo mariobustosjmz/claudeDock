@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from '../config/supabase.config';
+import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_CONFIGURED } from '../config/supabase.config';
 import { StorageService } from './storage.service';
 import { AuthUser, SubscriptionState, SubscriptionTier } from '../models/auth.model';
 
@@ -12,7 +12,10 @@ const GRACE_DAYS = 7;
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly storage = inject(StorageService);
-  private readonly supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  private readonly supabase: SupabaseClient = createClient(
+    SUPABASE_URL || 'https://placeholder.supabase.co',
+    SUPABASE_ANON_KEY || 'placeholder',
+  );
 
   private readonly _user = signal<AuthUser | null>(null);
   private readonly _isLoading = signal(false);
@@ -37,6 +40,7 @@ export class AuthService {
   });
 
   async initialize(): Promise<void> {
+    if (!SUPABASE_CONFIGURED) return;
     const cached = await this.storage.get<{ access_token: string; refresh_token: string }>(STORE, SESSION_KEY);
     if (cached) {
       const { data } = await this.supabase.auth.setSession(cached);
