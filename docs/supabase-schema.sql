@@ -3,13 +3,15 @@
 create table public.subscriptions (
   id uuid primary key default gen_random_uuid(),
   user_id uuid references auth.users not null unique,
-  tier text not null default 'free',
+  tier text not null default 'free' check (tier in ('free', 'pro')),
   stripe_customer_id text,
   stripe_subscription_id text,
   valid_until timestamptz,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
+
+create index on public.subscriptions (stripe_customer_id);
 
 alter table public.subscriptions enable row level security;
 
@@ -29,4 +31,4 @@ $$;
 
 create trigger on_auth_user_created
   after insert on auth.users
-  for each row execute procedure public.handle_new_user();
+  for each row execute function public.handle_new_user();

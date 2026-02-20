@@ -44,8 +44,10 @@ Deno.serve(async (req: Request) => {
       .eq('stripe_customer_id', customerId)
       .maybeSingle();
 
-    if (existing?.user_id) {
-      await supabase
+    if (!existing?.user_id) {
+      console.warn('No subscription row found for customerId:', customerId, '— skipping');
+    } else {
+      const { error } = await supabase
         .from('subscriptions')
         .update({
           tier: 'pro',
@@ -54,6 +56,11 @@ Deno.serve(async (req: Request) => {
           updated_at: new Date().toISOString(),
         })
         .eq('user_id', existing.user_id);
+
+      if (error) {
+        console.error('Failed to upgrade subscription:', error.message);
+        return new Response('DB write failed', { status: 500 });
+      }
     }
   }
 
@@ -67,8 +74,10 @@ Deno.serve(async (req: Request) => {
       .eq('stripe_customer_id', customerId)
       .maybeSingle();
 
-    if (existing?.user_id) {
-      await supabase
+    if (!existing?.user_id) {
+      console.warn('No subscription row found for customerId:', customerId, '— skipping');
+    } else {
+      const { error } = await supabase
         .from('subscriptions')
         .update({
           tier: 'free',
@@ -76,6 +85,11 @@ Deno.serve(async (req: Request) => {
           updated_at: new Date().toISOString(),
         })
         .eq('user_id', existing.user_id);
+
+      if (error) {
+        console.error('Failed to downgrade subscription:', error.message);
+        return new Response('DB write failed', { status: 500 });
+      }
     }
   }
 
@@ -87,10 +101,27 @@ Deno.serve(async (req: Request) => {
     if (userEmail) {
       const { data: authData } = await supabase.auth.admin.getUserByEmail(userEmail);
       if (authData?.user) {
-        await supabase
+        const { data: updated, error: updateError } = await supabase
           .from('subscriptions')
           .update({ stripe_customer_id: customerId })
-          .eq('user_id', authData.user.id);
+          .eq('user_id', authData.user.id)
+          .select('user_id');
+
+        if (updateError) {
+          console.error('Failed to link stripe_customer_id:', updateError.message);
+          return new Response('DB write failed', { status: 500 });
+        }
+
+        if (!updated || updated.length === 0) {
+          const { error: upsertError } = await supabase
+            .from('subscriptions')
+            .upsert({ user_id: authData.user.id, stripe_customer_id: customerId, tier: 'free' });
+
+          if (upsertError) {
+            console.error('Failed to upsert subscription:', upsertError.message);
+            return new Response('DB write failed', { status: 500 });
+          }
+        }
       }
     }
   }
