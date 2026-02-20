@@ -1,6 +1,7 @@
 pub mod commands;
 pub mod services;
 
+use commands::context::get_project_context;
 use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_info, open_screenshot_overlay};
 use commands::shell::{execute_shell, open_url};
 use commands::window::{
@@ -102,6 +103,7 @@ pub fn run() {
             get_screen_info,
             open_screenshot_overlay,
             close_screenshot_overlay,
+            get_project_context,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -1,3 +1,4 @@
+pub mod context;
 pub mod screenshot;
 pub mod shell;
 pub mod window;
