@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ScreenshotEntry } from './models/screenshot.model';
 import { ScreenshotService } from './screenshot.service';
+import { ContextMenuService } from '../../core/services/context-menu.service';
 
 @Component({
   selector: 'app-screenshot',
@@ -41,7 +42,10 @@ import { ScreenshotService } from './screenshot.service';
       } @else {
         <div class="flex-1 overflow-y-auto space-y-2">
           @for (entry of service.screenshots(); track entry.id) {
-            <div class="group relative rounded-lg overflow-hidden border border-white/10 hover:border-indigo-400/40 transition-colors">
+            <div
+              class="group relative rounded-lg overflow-hidden border border-white/10 hover:border-indigo-400/40 transition-colors cursor-context-menu"
+              (contextmenu)="onScreenshotRightClick($event, entry)"
+            >
               <img
                 [src]="'data:image/png;base64,' + entry.imageBase64"
                 [alt]="entry.width + 'x' + entry.height"
@@ -69,6 +73,7 @@ import { ScreenshotService } from './screenshot.service';
 })
 export class ScreenshotComponent {
   readonly service = inject(ScreenshotService);
+  private readonly contextMenu = inject(ContextMenuService);
 
   async capture(): Promise<void> {
     await this.service.openOverlay();
@@ -80,5 +85,15 @@ export class ScreenshotComponent {
 
   delete(id: string): void {
     this.service.deleteEntry(id);
+  }
+
+  protected onScreenshotRightClick(event: MouseEvent, entry: ScreenshotEntry): void {
+    event.preventDefault();
+    this.contextMenu
+      .showScreenshotMenu(
+        () => this.copy(entry).catch(console.error),
+        () => this.delete(entry.id),
+      )
+      .catch(console.error);
   }
 }

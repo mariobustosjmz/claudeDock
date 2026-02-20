@@ -38,6 +38,36 @@ export class ActionsService {
     this.buttons.update((list) => list.filter((b) => b.id !== id));
   }
 
+  moveButtonUp(id: string): void {
+    this.buttons.update((list) => {
+      const idx = list.findIndex((b) => b.id === id);
+      if (idx <= 0) return list;
+      const next = [...list];
+      [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+      return next;
+    });
+  }
+
+  moveButtonDown(id: string): void {
+    this.buttons.update((list) => {
+      const idx = list.findIndex((b) => b.id === id);
+      if (idx < 0 || idx >= list.length - 1) return list;
+      const next = [...list];
+      [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+      return next;
+    });
+  }
+
+  startEdit(id: string): void {
+    // Emits an event for the component layer to open the edit form
+    const btn = this.buttons().find((b) => b.id === id);
+    if (btn) {
+      this._editingButton.set(btn);
+    }
+  }
+
+  readonly _editingButton = signal<import('../../core/models/action-button.model').ActionButton | null>(null);
+
   async executeAction(btn: ActionButton): Promise<void> {
     if (!btn.enabled) return;
 

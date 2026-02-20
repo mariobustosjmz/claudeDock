@@ -7,6 +7,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { ActionsService } from '../actions.service';
 import { ActionButton, ActionType } from '../../../core/models/action-button.model';
+import { ContextMenuService } from '../../../core/services/context-menu.service';
 
 function generateId(): string {
   return `btn_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
@@ -24,7 +25,10 @@ function generateId(): string {
       <!-- Existing buttons -->
       <div class="space-y-2">
         @for (btn of actionsService.buttons(); track btn.id) {
-          <div class="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/8">
+          <div
+            class="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/8 cursor-context-menu"
+            (contextmenu)="onActionRightClick($event, btn.id)"
+          >
             <span class="text-lg">{{ btn.icon }}</span>
             <div class="flex-1 min-w-0">
               <p class="text-sm font-medium text-white/90 truncate">{{ btn.name }}</p>
@@ -40,6 +44,49 @@ function generateId(): string {
           <p class="text-xs text-white/40 text-center py-2">No actions yet. Add one below.</p>
         }
       </div>
+
+      <!-- Edit form (opens when context menu → Edit is selected) -->
+      @if (editingId()) {
+        <div class="space-y-3 p-3 rounded-xl bg-white/5 border border-indigo-500/30">
+          <p class="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Edit Action</p>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="text-xs text-white/50 mb-1 block">Icon (emoji)</label>
+              <input
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                type="text"
+                [(ngModel)]="editIcon"
+              />
+            </div>
+            <div>
+              <label class="text-xs text-white/50 mb-1 block">Name</label>
+              <input
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+                type="text"
+                [(ngModel)]="editName"
+              />
+            </div>
+          </div>
+          <div>
+            <label class="text-xs text-white/50 mb-1 block">Command / URL</label>
+            <input
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-indigo-500"
+              type="text"
+              [(ngModel)]="editPayload"
+            />
+          </div>
+          <div class="flex gap-2">
+            <button
+              class="flex-1 py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-medium transition-colors"
+              (click)="saveEdit()"
+            >Save</button>
+            <button
+              class="py-1.5 px-3 rounded-lg bg-white/10 hover:bg-white/15 text-white/70 text-sm transition-colors"
+              (click)="cancelEdit()"
+            >Cancel</button>
+          </div>
+        </div>
+      }
 
       <!-- Add new button form -->
       @if (showForm()) {
@@ -106,12 +153,58 @@ function generateId(): string {
 })
 export class ActionsSettingsComponent {
   protected readonly actionsService = inject(ActionsService);
+  private readonly contextMenu = inject(ContextMenuService);
 
   protected readonly showForm = signal(false);
+  protected readonly editingId = signal<string | null>(null);
+
   protected newIcon = '⚡';
   protected newName = '';
   protected newType: ActionType = ActionType.SHELL;
   protected newPayload = '';
+
+  protected editIcon = '';
+  protected editName = '';
+  protected editPayload = '';
+
+  protected onActionRightClick(event: MouseEvent, id: string): void {
+    event.preventDefault();
+    this.contextMenu
+      .showActionButtonMenu(
+        () => this.openEdit(id),
+        () => this.actionsService.removeButton(id),
+        () => this.actionsService.moveButtonUp(id),
+        () => this.actionsService.moveButtonDown(id),
+      )
+      .catch(console.error);
+  }
+
+  private openEdit(id: string): void {
+    const btn = this.actionsService.buttons().find((b) => b.id === id);
+    if (!btn) return;
+    this.editingId.set(id);
+    this.editIcon = btn.icon;
+    this.editName = btn.name;
+    this.editPayload = btn.payload;
+  }
+
+  protected saveEdit(): void {
+    const id = this.editingId();
+    if (!id || !this.editName.trim() || !this.editPayload.trim()) return;
+    this.actionsService.updateButton(id, {
+      icon: this.editIcon || '⚡',
+      name: this.editName.trim(),
+      payload: this.editPayload.trim(),
+    });
+    this.cancelEdit();
+  }
+
+  protected cancelEdit(): void {
+    this.editingId.set(null);
+    this.editIcon = '';
+    this.editName = '';
+    this.editPayload = '';
+  }
 
   protected addButton(): void {
     if (!this.newName.trim() || !this.newPayload.trim()) return;

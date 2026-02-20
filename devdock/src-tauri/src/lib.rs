@@ -3,6 +3,7 @@ pub mod services;
 
 use commands::audio::RecordingState;
 use commands::context::get_project_context;
+use commands::menu::show_context_menu;
 use commands::process::{get_agent_metrics, get_running_agents};
 use commands::screenshot::{capture_region, close_screenshot_overlay, copy_image_to_clipboard, get_screen_info, open_screenshot_overlay};
 use commands::preview::{apply_css_change, close_preview_window, inject_inspector, open_preview_window};
@@ -174,6 +175,7 @@ pub fn run() {
             copy_image_to_clipboard,
             check_update,
             install_update,
+            show_context_menu,
         ])
         .run(tauri::generate_context!())
         .unwrap_or_else(|e| log::error!("tauri application error: {e}"));
