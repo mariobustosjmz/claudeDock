@@ -28,8 +28,8 @@ export class SnapshotsService {
       if (saved) {
         this._snapshots.set(saved);
       }
-    } catch (err) {
-      this._error.set(String(err));
+    } catch {
+      // Storage unavailable (e.g. browser context) — start with empty list
     }
   }
 

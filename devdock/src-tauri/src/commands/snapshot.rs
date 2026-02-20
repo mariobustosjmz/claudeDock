@@ -162,7 +162,14 @@ fn get_open_windows_windows() -> Result<Vec<WindowInfo>, AppError> {
 
 #[cfg(target_os = "macos")]
 fn sanitize_applescript_string(s: &str) -> Result<String, AppError> {
-    if s.contains('"') || s.contains('\n') || s.contains('\r') || s.contains('\\') {
+    let has_invalid = s.contains('"')
+        || s.contains('\'')
+        || s.contains('\\')
+        || s.contains('\n')
+        || s.contains('\r')
+        || s.contains('\0')
+        || s.chars().any(|c| c.is_control());
+    if has_invalid {
         return Err(AppError::Window(
             "Invalid characters in window identifier: rejected".to_string(),
         ));

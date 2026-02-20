@@ -50,6 +50,8 @@ export class AgentsService implements OnDestroy {
       this._agents.set(agents);
       this._lastError.set(null);
     } catch (err) {
+      // Suppress TypeError when running outside Tauri (browser dev context)
+      if (err instanceof TypeError) return;
       this._lastError.set(String(err));
     }
   }

@@ -83,10 +83,11 @@ pub fn run() {
                     .unwrap_or_default()
                     .join("icons/32x32.png"),
             )
-            .unwrap_or_else(|_| {
-                Image::from_bytes(include_bytes!("../icons/32x32.png"))
-                    .expect("failed to load tray icon")
-            });
+            .or_else(|_| Image::from_bytes(include_bytes!("../icons/32x32.png")))
+            .map_err(|e| {
+                log::error!("failed to load tray icon: {e}");
+                e
+            })?;
 
             let _tray = TrayIconBuilder::new()
                 .icon(icon)
@@ -165,5 +166,5 @@ pub fn run() {
             install_update,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .unwrap_or_else(|e| log::error!("tauri application error: {e}"));
 }
