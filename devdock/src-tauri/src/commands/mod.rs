@@ -1,3 +1,4 @@
+pub mod screenshot;
 pub mod shell;
 pub mod window;
 
@@ -12,6 +13,8 @@ pub enum AppError {
     Shell(String),
     #[error("IO error: {0}")]
     Io(String),
+    #[error("Screenshot operation failed: {0}")]
+    Screenshot(String),
 }
 
 impl From<std::io::Error> for AppError {
