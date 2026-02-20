@@ -40,6 +40,12 @@ import { RecordingState } from './models/voice.model';
           }
         </p>
 
+        @if (micDeviceName() && voiceState() === 'recording') {
+          <p class="text-xs text-white/25 truncate max-w-full px-2 text-center">
+            🎙 {{ micDeviceName() }}
+          </p>
+        }
+
         @if (lastError()) {
           <p class="text-xs text-red-400 bg-red-400/10 rounded px-2 py-1 w-full text-center">
             {{ lastError() }}
@@ -95,6 +101,7 @@ export class VoiceComponent {
   protected readonly lastError = this.voiceService.lastError;
   protected readonly duration = this.voiceService.duration;
   protected readonly hasText = this.voiceService.hasText;
+  protected readonly micDeviceName = this.voiceService.micDeviceName;
   protected readonly isPro = this.authService.isPro;
   protected readonly sentToOptimizer = this._sentToOptimizer.asReadonly();
 

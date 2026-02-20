@@ -15,4 +15,6 @@ export interface AgentMetrics {
   logLines: string[];
   tokenEstimate: number | null;
   costEstimate: number | null;
+  logPath: string | null;
+  metricsAvailable: boolean;
 }

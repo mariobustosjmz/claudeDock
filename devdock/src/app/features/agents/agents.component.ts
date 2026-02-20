@@ -64,7 +64,9 @@ import { AgentsService } from './agents.service';
               </div>
 
               @if (service.metrics()[agent.pid]; as m) {
-                @if (m.tokenEstimate || m.costEstimate) {
+                @if (!m.metricsAvailable) {
+                  <span class="text-xs text-white/20 italic">metrics unavailable</span>
+                } @else if (m.tokenEstimate || m.costEstimate) {
                   <div class="flex gap-3 text-xs">
                     @if (m.tokenEstimate) {
                       <span class="text-indigo-400">~{{ m.tokenEstimate | number }} tokens</span>
