@@ -28,8 +28,8 @@ export class SnapshotsService {
       if (saved) {
         this._snapshots.set(saved);
       }
-    } catch {
-      // start fresh if storage fails
+    } catch (err) {
+      this._error.set(String(err));
     }
   }
 
@@ -66,14 +66,17 @@ export class SnapshotsService {
 
   async deleteSnapshot(id: string): Promise<void> {
     this._snapshots.update(list => list.filter(s => s.id !== id));
-    await this.persist();
+    try {
+      await this.persist();
+    } catch (err) {
+      this._error.set(String(err));
+    }
   }
 
   private async persist(): Promise<void> {
     try {
       await this.storage.set(STORE_NAME, STORE_KEY, this._snapshots());
     } catch {
-      // best-effort persistence
     }
   }
 }

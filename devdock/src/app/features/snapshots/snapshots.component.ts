@@ -20,7 +20,6 @@ import { WorkspaceSnapshot } from './models/snapshot.model';
         Workspace Snapshots
       </div>
 
-      <!-- Capture -->
       <div class="flex gap-2">
         <input
           class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/25"
@@ -31,24 +30,23 @@ import { WorkspaceSnapshot } from './models/snapshot.model';
         />
         <button
           class="px-3 py-2 rounded-lg text-sm font-medium transition-all"
-          [class]="snapshots.isCapturing() ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-500 text-white'"
-          [disabled]="snapshots.isCapturing() || !snapName()"
+          [class]="isCapturing() ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-500 text-white'"
+          [disabled]="isCapturing() || !snapName()"
           (click)="capture()"
         >
-          {{ snapshots.isCapturing() ? '…' : 'Save' }}
+          {{ isCapturing() ? '…' : 'Save' }}
         </button>
       </div>
 
-      @if (snapshots.error()) {
-        <p class="text-xs text-red-400">{{ snapshots.error() }}</p>
+      @if (error()) {
+        <p class="text-xs text-red-400">{{ error() }}</p>
       }
 
-      <!-- Snapshot list -->
-      @if (snapshots.count() === 0) {
+      @if (count() === 0) {
         <p class="text-xs text-white/30 text-center py-2">No snapshots yet</p>
       } @else {
         <div class="flex flex-col gap-1.5 max-h-64 overflow-y-auto">
-          @for (snap of snapshots.snapshots(); track snap.id) {
+          @for (snap of snapshotList(); track snap.id) {
             <div class="flex items-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/8 group">
               <div class="flex-1 min-w-0">
                 <p class="text-sm text-white truncate">{{ snap.name }}</p>
@@ -59,7 +57,7 @@ import { WorkspaceSnapshot } from './models/snapshot.model';
               <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   class="px-2 py-1 rounded text-xs bg-violet-600/80 hover:bg-violet-500 text-white"
-                  [disabled]="snapshots.isRestoring()"
+                  [disabled]="isRestoring()"
                   (click)="restore(snap)"
                 >
                   Restore
@@ -79,11 +77,16 @@ import { WorkspaceSnapshot } from './models/snapshot.model';
   `,
 })
 export class SnapshotsComponent implements OnInit {
-  protected readonly snapshots = inject(SnapshotsService);
+  private readonly snapshotsService = inject(SnapshotsService);
+  protected readonly isCapturing = this.snapshotsService.isCapturing;
+  protected readonly isRestoring = this.snapshotsService.isRestoring;
+  protected readonly error = this.snapshotsService.error;
+  protected readonly count = this.snapshotsService.count;
+  protected readonly snapshotList = this.snapshotsService.snapshots;
   protected readonly snapName = signal('');
 
   ngOnInit(): void {
-    this.snapshots.loadSnapshots();
+    void this.snapshotsService.loadSnapshots();
   }
 
   protected onNameInput(event: Event): void {
@@ -93,15 +96,15 @@ export class SnapshotsComponent implements OnInit {
   protected async capture(): Promise<void> {
     const name = this.snapName().trim();
     if (!name) return;
-    await this.snapshots.captureSnapshot(name);
+    await this.snapshotsService.captureSnapshot(name);
     this.snapName.set('');
   }
 
   protected async restore(snap: WorkspaceSnapshot): Promise<void> {
-    await this.snapshots.restoreSnapshot(snap);
+    await this.snapshotsService.restoreSnapshot(snap);
   }
 
   protected async delete(id: string): Promise<void> {
-    await this.snapshots.deleteSnapshot(id);
+    await this.snapshotsService.deleteSnapshot(id);
   }
 }
