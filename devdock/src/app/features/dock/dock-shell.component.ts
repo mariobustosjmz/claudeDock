@@ -9,9 +9,11 @@ import {
 } from '@angular/core';
 import { DockStateService } from '../../core/services/dock-state.service';
 import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
+import { UpdateService } from '../../core/services/update.service';
 import { PanelType } from '../../core/models/dock.model';
 import { DockButtonComponent } from './components/dock-button.component';
 import { DockPanelComponent } from './components/dock-panel.component';
+import { UpdateBannerComponent } from '../../shared/components/update-banner.component';
 
 interface DockItem {
   readonly icon: string;
@@ -36,13 +38,16 @@ const DOCK_ITEMS: DockItem[] = [
   selector: 'app-dock-shell',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DockButtonComponent, DockPanelComponent],
+  imports: [DockButtonComponent, DockPanelComponent, UpdateBannerComponent],
   template: `
     <div
       class="dock-wrapper fixed"
       [class.invisible]="!dockState.isVisible()"
       [class.auto-hide]="isAutoHiding()"
     >
+      <!-- Update notification banner -->
+      <app-update-banner />
+
       <!-- Panel above dock -->
       @if (dockState.activePanel() !== 'NONE') {
         <app-dock-panel [panelType]="dockState.activePanel()" />
@@ -118,6 +123,7 @@ const DOCK_ITEMS: DockItem[] = [
 export class DockShellComponent implements OnInit, OnDestroy {
   protected readonly dockState = inject(DockStateService);
   private readonly tauri = inject(TauriBridgeService);
+  private readonly updateService = inject(UpdateService);
 
   protected readonly dockItems = DOCK_ITEMS;
   protected readonly isAutoHiding = signal(false);
@@ -131,6 +137,7 @@ export class DockShellComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     document.addEventListener('mousemove', this.boundMouseMove);
     document.addEventListener('mouseup', this.boundMouseUp);
+    void this.updateService.checkForUpdate();
   }
 
   ngOnDestroy(): void {

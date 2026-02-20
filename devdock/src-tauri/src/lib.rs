@@ -8,6 +8,7 @@ use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_
 use commands::preview::{apply_css_change, close_preview_window, inject_inspector, open_preview_window};
 use commands::snapshot::{get_open_windows, restore_snapshot, save_snapshot};
 use commands::shell::{execute_shell, open_url};
+use commands::update::{check_update, install_update};
 use commands::window::{
     get_dock_position, set_always_on_top, set_dock_position, toggle_dock_visibility,
 };
@@ -31,6 +32,7 @@ pub fn run() {
             None,
         ))
         .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .setup(|app| {
             let toggle_item = MenuItem::with_id(app, "toggle", "Show / Hide Dock", true, None::<&str>)?;
             let settings_item = MenuItem::with_id(app, "settings", "Settings", true, None::<&str>)?;
@@ -120,6 +122,8 @@ pub fn run() {
             get_open_windows,
             save_snapshot,
             restore_snapshot,
+            check_update,
+            install_update,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
