@@ -1,4 +1,3 @@
-use std::process::Command;
 use std::time::{SystemTime, UNIX_EPOCH};
 use serde::{Deserialize, Serialize};
 use crate::commands::AppError;
@@ -23,6 +22,23 @@ pub struct WorkspaceSnapshot {
 
 #[tauri::command]
 pub async fn get_open_windows() -> Result<Vec<WindowInfo>, AppError> {
+    #[cfg(target_os = "macos")]
+    return get_open_windows_macos();
+
+    #[cfg(target_os = "windows")]
+    return get_open_windows_windows();
+
+    #[cfg(target_os = "linux")]
+    return get_open_windows_linux();
+
+    #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "linux")))]
+    return Ok(vec![]);
+}
+
+#[cfg(target_os = "macos")]
+fn get_open_windows_macos() -> Result<Vec<WindowInfo>, AppError> {
+    use std::process::Command;
+
     let script = r#"
         set windowList to {}
         tell application "System Events"
@@ -56,15 +72,116 @@ pub async fn get_open_windows() -> Result<Vec<WindowInfo>, AppError> {
     Ok(windows)
 }
 
+#[cfg(target_os = "linux")]
+fn get_open_windows_linux() -> Result<Vec<WindowInfo>, AppError> {
+    use std::process::Command;
+
+    let output = Command::new("wmctrl")
+        .arg("-lG")
+        .output()
+        .map_err(|_| AppError::Window(
+            "wmctrl not found. Install with: sudo apt install wmctrl".to_string(),
+        ))?;
+
+    if !output.status.success() {
+        return Ok(vec![]);
+    }
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let mut windows = Vec::new();
+
+    for line in stdout.lines() {
+        // wmctrl -lG format: ID DESKTOP X Y W H HOST TITLE...
+        let parts: Vec<&str> = line.split_whitespace().collect();
+        if parts.len() >= 8 {
+            let Ok(x) = parts[2].parse::<i32>() else { continue };
+            let Ok(y) = parts[3].parse::<i32>() else { continue };
+            let Ok(w) = parts[4].parse::<i32>() else { continue };
+            let Ok(h) = parts[5].parse::<i32>() else { continue };
+            let title = parts[7..].join(" ");
+            if w > 10 && h > 10 && !title.is_empty() {
+                windows.push(WindowInfo {
+                    app_name: String::new(),
+                    title,
+                    x,
+                    y,
+                    width: w,
+                    height: h,
+                });
+            }
+        }
+    }
+    Ok(windows)
+}
+
+#[cfg(target_os = "windows")]
+fn get_open_windows_windows() -> Result<Vec<WindowInfo>, AppError> {
+    use std::sync::Mutex;
+    use windows::Win32::Foundation::{BOOL, HWND, LPARAM, RECT};
+    use windows::Win32::UI::WindowsAndMessaging::{
+        EnumWindows, GetWindowRect, GetWindowTextW, IsWindowVisible,
+    };
+
+    static WINDOWS_ACC: Mutex<Vec<WindowInfo>> = Mutex::new(Vec::new());
+
+    unsafe extern "system" fn enum_proc(hwnd: HWND, _: LPARAM) -> BOOL {
+        if !IsWindowVisible(hwnd).as_bool() {
+            return BOOL(1);
+        }
+        let mut buf = [0u16; 512];
+        let len = GetWindowTextW(hwnd, &mut buf);
+        if len == 0 {
+            return BOOL(1);
+        }
+        let title = String::from_utf16_lossy(&buf[..len as usize]);
+        let mut rect = RECT::default();
+        if GetWindowRect(hwnd, &mut rect).is_ok() {
+            let w = rect.right - rect.left;
+            let h = rect.bottom - rect.top;
+            if w > 10 && h > 10 {
+                if let Ok(mut acc) = WINDOWS_ACC.lock() {
+                    acc.push(WindowInfo {
+                        app_name: String::new(),
+                        title,
+                        x: rect.left,
+                        y: rect.top,
+                        width: w,
+                        height: h,
+                    });
+                }
+            }
+        }
+        BOOL(1)
+    }
+
+    {
+        let mut acc = WINDOWS_ACC
+            .lock()
+            .map_err(|e| AppError::Window(e.to_string()))?;
+        acc.clear();
+    }
+
+    unsafe {
+        let _ = EnumWindows(Some(enum_proc), LPARAM(0));
+    }
+
+    let acc = WINDOWS_ACC
+        .lock()
+        .map_err(|e| AppError::Window(e.to_string()))?;
+    Ok(acc.clone())
+}
+
+#[cfg(target_os = "macos")]
 fn sanitize_applescript_string(s: &str) -> Result<String, AppError> {
     if s.contains('"') || s.contains('\n') || s.contains('\r') || s.contains('\\') {
         return Err(AppError::Window(
-            format!("Invalid characters in window identifier: rejected")
+            "Invalid characters in window identifier: rejected".to_string(),
         ));
     }
     Ok(s.to_string())
 }
 
+#[cfg(target_os = "macos")]
 fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
     let mut windows = Vec::new();
     if output.is_empty() {
@@ -83,9 +200,18 @@ fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
             i += 6;
             continue;
         };
-        let Ok(y) = values[i + 3].trim().parse::<i32>() else { i += 6; continue; };
-        let Ok(width) = values[i + 4].trim().parse::<i32>() else { i += 6; continue; };
-        let Ok(height) = values[i + 5].trim_matches('}').trim().parse::<i32>() else { i += 6; continue; };
+        let Ok(y) = values[i + 3].trim().parse::<i32>() else {
+            i += 6;
+            continue;
+        };
+        let Ok(width) = values[i + 4].trim().parse::<i32>() else {
+            i += 6;
+            continue;
+        };
+        let Ok(height) = values[i + 5].trim_matches('}').trim().parse::<i32>() else {
+            i += 6;
+            continue;
+        };
 
         if !app_name.is_empty() && width > 0 && height > 0 {
             windows.push(WindowInfo { app_name, title, x, y, width, height });
@@ -106,10 +232,13 @@ pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<Wor
         .map_err(|e| AppError::Window(e.to_string()))?
         .as_secs();
 
-    let id = format!("snapshot-{}", SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .map_err(|e| AppError::Window(e.to_string()))?
-        .as_millis());
+    let id = format!(
+        "snapshot-{}",
+        SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .map_err(|e| AppError::Window(e.to_string()))?
+            .as_millis()
+    );
 
     Ok(WorkspaceSnapshot {
         id,
@@ -121,56 +250,74 @@ pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<Wor
 
 #[tauri::command]
 pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppError> {
-    for window in &snapshot.windows {
-        let safe_app = match sanitize_applescript_string(&window.app_name) {
-            Ok(s) => s,
-            Err(_) => {
-                log::warn!("restore_snapshot: skipping window with invalid app_name: {:?}", window.app_name);
-                continue;
-            }
-        };
-        let safe_title = match sanitize_applescript_string(&window.title) {
-            Ok(s) => s,
-            Err(_) => {
-                log::warn!("restore_snapshot: skipping window with invalid title: {:?}", window.title);
-                continue;
-            }
-        };
+    #[cfg(target_os = "macos")]
+    {
+        use std::process::Command;
 
-        let script = format!(
-            r#"tell application "System Events"
-                try
-                    tell process "{app}"
-                        set position of window "{title}" to {{{x}, {y}}}
-                        set size of window "{title}" to {{{w}, {h}}}
-                    end tell
-                end try
-            end tell"#,
-            app = safe_app,
-            title = safe_title,
-            x = window.x,
-            y = window.y,
-            w = window.width,
-            h = window.height,
-        );
+        for window in &snapshot.windows {
+            let safe_app = match sanitize_applescript_string(&window.app_name) {
+                Ok(s) => s,
+                Err(_) => {
+                    log::warn!(
+                        "restore_snapshot: skipping window with invalid app_name: {:?}",
+                        window.app_name
+                    );
+                    continue;
+                }
+            };
+            let safe_title = match sanitize_applescript_string(&window.title) {
+                Ok(s) => s,
+                Err(_) => {
+                    log::warn!(
+                        "restore_snapshot: skipping window with invalid title: {:?}",
+                        window.title
+                    );
+                    continue;
+                }
+            };
 
-        // Best-effort: skip failures for individual windows
-        match Command::new("osascript").arg("-e").arg(&script).output() {
-            Ok(out) if !out.status.success() => {
-                log::warn!(
-                    "restore_snapshot: failed to reposition '{}' in '{}'",
-                    window.title,
-                    window.app_name
-                );
+            let script = format!(
+                r#"tell application "System Events"
+                    try
+                        tell process "{app}"
+                            set position of window "{title}" to {{{x}, {y}}}
+                            set size of window "{title}" to {{{w}, {h}}}
+                        end tell
+                    end try
+                end tell"#,
+                app = safe_app,
+                title = safe_title,
+                x = window.x,
+                y = window.y,
+                w = window.width,
+                h = window.height,
+            );
+
+            match Command::new("osascript").arg("-e").arg(&script).output() {
+                Ok(out) if !out.status.success() => {
+                    log::warn!(
+                        "restore_snapshot: failed to reposition '{}' in '{}'",
+                        window.title,
+                        window.app_name
+                    );
+                }
+                Err(e) => {
+                    log::warn!(
+                        "restore_snapshot: osascript spawn failed for '{}': {e}",
+                        window.app_name
+                    );
+                }
+                _ => {}
             }
-            Err(e) => {
-                log::warn!(
-                    "restore_snapshot: osascript spawn failed for '{}': {e}",
-                    window.app_name
-                );
-            }
-            _ => {}
         }
     }
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        // Window restore via system APIs is not yet implemented for this platform.
+        // Snapshot data is preserved; repositioning is a no-op.
+        let _ = snapshot;
+    }
+
     Ok(())
 }
