@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dock-bg: rgba(0, 0, 0, 0.65);
+  --dock-border: rgba(255, 255, 255, 0.08);
+  --dock-text: rgba(255, 255, 255, 0.9);
+  --dock-text-muted: rgba(255, 255, 255, 0.5);
+  --dock-accent: #6366f1;
+  --dock-accent-hover: #818cf8;
+  --dock-surface: rgba(255, 255, 255, 0.05);
+  --dock-surface-hover: rgba(255, 255, 255, 0.1);
+  --dock-radius: 1rem;
+  --dock-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  color: var(--dock-text);
+  user-select: none;
+}

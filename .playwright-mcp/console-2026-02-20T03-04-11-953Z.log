@@ -1,0 +1,583 @@
+[      82ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=06c596ab:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=06c596ab:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=06c596ab:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=06c596ab:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=06c596ab:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=06c596ab:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=06c596ab:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=06c596ab:333
+[  367733ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370249ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370257ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370265ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370274ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370283ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370291ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370299ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370316ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370324ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370332ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370339ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370349ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370366ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370382ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370391ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370407ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370424ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370433ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370440ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370457ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370527ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370711ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370724ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370732ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370741ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370749ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370757ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370765ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370773ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370782ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370790ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370798ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370807ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370815ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370824ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370832ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370841ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370849ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370857ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370866ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370874ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370882ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370899ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370907ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370915ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370932ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370941ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370949ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370957ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370966ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333
+[  370982ms] [ERROR] AppError: Storage set failed for key "config"
+    at _StorageService.<anonymous> (http://localhost:1420/chunk-IYATLFJK.js:86:15)
+    at Generator.throw (<anonymous>)
+    at rejected (http://localhost:1420/chunk-IYATLFJK.js:31:29)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:158)
+    at Object.onInvoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10610:25)
+    at _ZoneDelegate.invoke (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:334:46)
+    at ZoneImpl.run (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:103:35)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:2016:30
+    at _ZoneDelegate.invokeTask (http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:360:171)
+    at http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/chunk-IMIK22YP.js?v=4c8705f7:10395:49 @ http://localhost:1420/@fs/Users/mariobustosjmz/Desktop/claude/dock/devdock/.angular/cache/20.3.16/devdock/vite/deps/zone__js.js?v=96c6960c:333

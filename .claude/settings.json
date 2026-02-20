@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "postEditFile": {
+      "command": "if echo \"$FILE\" | grep -q '\\.ts$'; then npx prettier --write \"$FILE\" 2>/dev/null; fi",
+      "description": "Auto-format TypeScript files after editing"
+    },
+    "preCommit": {
+      "command": "pnpm lint --quiet && cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings",
+      "description": "Run linters before every commit"
+    }
+  }
+}
