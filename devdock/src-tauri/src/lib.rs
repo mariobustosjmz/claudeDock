@@ -3,6 +3,7 @@ pub mod services;
 
 use commands::audio::RecordingState;
 use commands::context::get_project_context;
+use commands::process::{get_agent_metrics, get_running_agents};
 use commands::screenshot::{capture_region, close_screenshot_overlay, get_screen_info, open_screenshot_overlay};
 use commands::shell::{execute_shell, open_url};
 use commands::window::{
@@ -108,6 +109,8 @@ pub fn run() {
             get_project_context,
             commands::audio::start_recording,
             commands::audio::stop_recording,
+            get_running_agents,
+            get_agent_metrics,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
