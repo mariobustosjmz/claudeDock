@@ -29,6 +29,7 @@ const DOCK_ITEMS: DockItem[] = [
   { icon: '💾', label: 'Snapshots', panel: PanelType.SNAPSHOTS },
   { icon: '⚙️', label: 'Settings', panel: PanelType.SETTINGS },
   { icon: '🎬', label: 'Shorts', panel: PanelType.SHORTS },
+  { icon: '👤', label: 'Account', panel: PanelType.AUTH },
 ];
 
 @Component({

@@ -13,12 +13,13 @@ import { AgentsComponent } from '../../agents/agents.component';
 import { PreviewComponent } from '../../preview/preview.component';
 import { SnapshotsComponent } from '../../snapshots/snapshots.component';
 import { ShortsComponent } from '../../shorts/shorts.component';
+import { AuthComponent } from '../../auth/auth.component';
 
 @Component({
   selector: 'app-dock-panel',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent, AgentsComponent, PreviewComponent, SnapshotsComponent, ShortsComponent],
+  imports: [ActionsComponent, SettingsComponent, ScreenshotComponent, PromptComponent, VoiceComponent, AgentsComponent, PreviewComponent, SnapshotsComponent, ShortsComponent, AuthComponent],
   template: `
     <div class="dock-panel rounded-2xl overflow-hidden mb-2">
       @switch (panelType()) {
@@ -48,6 +49,9 @@ import { ShortsComponent } from '../../shorts/shorts.component';
         }
         @case ('SHORTS') {
           <app-shorts />
+        }
+        @case ('AUTH') {
+          <app-auth />
         }
         @default {
           <div class="p-4">

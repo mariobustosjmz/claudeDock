@@ -31,6 +31,7 @@ export enum PanelType {
   SNAPSHOTS = 'SNAPSHOTS',
   SETTINGS = 'SETTINGS',
   SHORTS = 'SHORTS',
+  AUTH = 'AUTH',
   NONE = 'NONE',
 }
 
