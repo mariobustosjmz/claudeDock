@@ -20,7 +20,7 @@ import { PreviewService } from './preview.service';
           class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/25"
           placeholder="https://example.com"
           [value]="urlInput()"
-          (input)="urlInput.set($any($event.target).value)"
+          (input)="onUrlInput($event)"
           (keydown.enter)="openPreview()"
         />
         @if (!preview.isOpen()) {
@@ -65,7 +65,7 @@ import { PreviewService } from './preview.service';
               class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
               placeholder="selector (e.g. h1)"
               [value]="cssSelector()"
-              (input)="cssSelector.set($any($event.target).value)"
+              (input)="onCssSelectorInput($event)"
             />
           </div>
           <div class="flex gap-2">
@@ -73,13 +73,13 @@ import { PreviewService } from './preview.service';
               class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
               placeholder="property (e.g. color)"
               [value]="cssProperty()"
-              (input)="cssProperty.set($any($event.target).value)"
+              (input)="onCssPropertyInput($event)"
             />
             <input
               class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
               placeholder="value (e.g. red)"
               [value]="cssValue()"
-              (input)="cssValue.set($any($event.target).value)"
+              (input)="onCssValueInput($event)"
             />
             <button
               class="px-2 py-1.5 rounded text-xs font-medium bg-violet-600/80 hover:bg-violet-500 text-white transition-all"
@@ -141,5 +141,21 @@ export class PreviewComponent {
     const next = !this.inspectorOn();
     await this.preview.toggleInspector(next);
     this.inspectorOn.set(next);
+  }
+
+  protected onUrlInput(event: Event): void {
+    this.urlInput.set((event.target as HTMLInputElement).value);
+  }
+
+  protected onCssSelectorInput(event: Event): void {
+    this.cssSelector.set((event.target as HTMLInputElement).value);
+  }
+
+  protected onCssPropertyInput(event: Event): void {
+    this.cssProperty.set((event.target as HTMLInputElement).value);
+  }
+
+  protected onCssValueInput(event: Event): void {
+    this.cssValue.set((event.target as HTMLInputElement).value);
   }
 }
