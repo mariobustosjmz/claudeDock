@@ -69,10 +69,10 @@ fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
     while i + 5 < values.len() {
         let app_name = values[i].trim_matches('{').trim().to_string();
         let title = values[i + 1].trim().to_string();
-        let x = values[i + 2].trim().parse::<i32>().unwrap_or(0);
-        let y = values[i + 3].trim().parse::<i32>().unwrap_or(0);
-        let width = values[i + 4].trim().parse::<i32>().unwrap_or(0);
-        let height = values[i + 5].trim_matches('}').trim().parse::<i32>().unwrap_or(0);
+        let Ok(x) = values[i + 2].trim().parse::<i32>() else { i += 6; continue; };
+        let Ok(y) = values[i + 3].trim().parse::<i32>() else { i += 6; continue; };
+        let Ok(width) = values[i + 4].trim().parse::<i32>() else { i += 6; continue; };
+        let Ok(height) = values[i + 5].trim_matches('}').trim().parse::<i32>() else { i += 6; continue; };
 
         if !app_name.is_empty() && width > 0 && height > 0 {
             windows.push(WindowInfo { app_name, title, x, y, width, height });
@@ -124,10 +124,22 @@ pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppErro
         );
 
         // Best-effort: skip failures for individual windows
-        let _ = Command::new("osascript")
-            .arg("-e")
-            .arg(&script)
-            .output();
+        match Command::new("osascript").arg("-e").arg(&script).output() {
+            Ok(out) if !out.status.success() => {
+                log::warn!(
+                    "restore_snapshot: failed to reposition '{}' in '{}'",
+                    window.title,
+                    window.app_name
+                );
+            }
+            Err(e) => {
+                log::warn!(
+                    "restore_snapshot: osascript spawn failed for '{}': {e}",
+                    window.app_name
+                );
+            }
+            _ => {}
+        }
     }
     Ok(())
 }

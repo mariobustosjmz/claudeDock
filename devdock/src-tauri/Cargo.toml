@@ -31,3 +31,4 @@ image = { version = "0.25", features = ["png"] }
 tokio = { version = "1", features = ["time"] }
 sysinfo = "0.33"
 url = "2"
+log = "0.4"
