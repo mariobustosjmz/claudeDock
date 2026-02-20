@@ -19,7 +19,11 @@ BEGIN
     created_at,
     updated_at,
     role,
-    aud
+    aud,
+    confirmation_token,
+    recovery_token,
+    email_change_token_new,
+    email_change
   ) VALUES (
     dev_user_id,
     '00000000-0000-0000-0000-000000000000'::uuid,
@@ -31,7 +35,11 @@ BEGIN
     now(),
     now(),
     'authenticated',
-    'authenticated'
+    'authenticated',
+    '',
+    '',
+    '',
+    ''
   ) ON CONFLICT (id) DO NOTHING;
 
   -- 2. Auth identity (required for email sign-in)
