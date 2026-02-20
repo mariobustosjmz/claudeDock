@@ -28,6 +28,7 @@ const DOCK_ITEMS: DockItem[] = [
   { icon: '⚡', label: 'Actions', panel: PanelType.ACTIONS },
   { icon: '💾', label: 'Snapshots', panel: PanelType.SNAPSHOTS },
   { icon: '⚙️', label: 'Settings', panel: PanelType.SETTINGS },
+  { icon: '🎬', label: 'Shorts', panel: PanelType.SHORTS },
 ];
 
 @Component({
@@ -81,9 +82,9 @@ const DOCK_ITEMS: DockItem[] = [
   styles: [`
     .dock-wrapper {
       position: fixed;
-      top: 50%;
+      bottom: 8px;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       width: fit-content;
       z-index: 9999;
       transition: opacity 250ms ease;

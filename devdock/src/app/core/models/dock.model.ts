@@ -30,6 +30,7 @@ export enum PanelType {
   ACTIONS = 'ACTIONS',
   SNAPSHOTS = 'SNAPSHOTS',
   SETTINGS = 'SETTINGS',
+  SHORTS = 'SHORTS',
   NONE = 'NONE',
 }
 
