@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { DockStateService } from '../../core/services/dock-state.service';
 import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
-import { UpdateService } from '../../core/services/update.service';
 import { PanelType } from '../../core/models/dock.model';
 import { DockButtonComponent } from './components/dock-button.component';
 import { DockPanelComponent } from './components/dock-panel.component';
@@ -123,7 +122,6 @@ const DOCK_ITEMS: DockItem[] = [
 export class DockShellComponent implements OnInit, OnDestroy {
   protected readonly dockState = inject(DockStateService);
   private readonly tauri = inject(TauriBridgeService);
-  private readonly updateService = inject(UpdateService);
 
   protected readonly dockItems = DOCK_ITEMS;
   protected readonly isAutoHiding = signal(false);
@@ -137,7 +135,6 @@ export class DockShellComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     document.addEventListener('mousemove', this.boundMouseMove);
     document.addEventListener('mouseup', this.boundMouseUp);
-    void this.updateService.checkForUpdate();
   }
 
   ngOnDestroy(): void {

@@ -26,7 +26,7 @@ pub async fn check_update(app: AppHandle) -> Result<Option<UpdateInfo>, AppError
             body: u.body.clone().unwrap_or_default(),
         };
         if let Some(state) = app.try_state::<PendingUpdate>() {
-            *state.0.lock().unwrap() = update;
+            *state.0.lock().map_err(|e| AppError::Updater(e.to_string()))? = update;
         }
         return Ok(Some(info));
     }
@@ -40,7 +40,9 @@ pub async fn install_update(app: AppHandle) -> Result<(), AppError> {
         .try_state::<PendingUpdate>()
         .ok_or_else(|| AppError::Updater("No pending update in state".to_string()))?;
 
-    let update = pending.0.lock().unwrap().take();
+    let update = pending.0.lock()
+        .map_err(|e| AppError::Updater(e.to_string()))?
+        .take();
 
     if let Some(u) = update {
         u.download_and_install(|_, _| {}, || {})

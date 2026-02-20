@@ -10,6 +10,7 @@ import { provideHttpClient } from "@angular/common/http";
 
 import { routes } from "./app.routes";
 import { AuthService } from "./core/services/auth.service";
+import { UpdateService } from "./core/services/update.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,14 @@ export const appConfig: ApplicationConfig = {
       useFactory: () => {
         const auth = inject(AuthService);
         return () => auth.initialize();
+      },
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => {
+        const update = inject(UpdateService);
+        return () => update.checkForUpdate();
       },
       multi: true,
     },

@@ -24,7 +24,7 @@ import { UpdateService } from '../../core/services/update.service';
 export class UpdateBannerComponent {
   protected readonly updateService = inject(UpdateService);
 
-  protected async install(): Promise<void> {
-    await this.updateService.installUpdate();
+  protected install(): void {
+    void this.updateService.installUpdate();
   }
 }
