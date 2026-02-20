@@ -85,6 +85,13 @@ Branch: `feat/phase4-polish-launch`
 - Rust build: PASSED (2.60s)
 
 ## Current Status
-**Active Phase**: Phase 4 Complete
-**Last Completed**: Phase 4 — Auth, Stripe, Auto-update, Cross-platform, Performance, CI/CD (2026-02-20)
-**Next Task**: Ship beta — push branch to GitHub, trigger release workflow with v0.2.0-beta tag
+**Active Phase**: v0.2.0-beta Shipped
+**Last Completed**: Beta release shipped 2026-02-20 — tag `v0.2.0-beta` pushed, GitHub Actions CI building all platform artifacts
+**MCP Smoke Test**: 35 PASS / 0 FAIL / 2 WARN (see `docs/mcp-smoke-test-report-2026-02-20.md`)
+
+## Post-Beta Tasks
+- [ ] Monitor GitHub Actions release run for artifact availability
+- [ ] Add TAURI_SIGNING_PRIVATE_KEY secret to repo for signed updater bundles
+- [ ] Landing page at nir.by (see `docs/plans/2026-02-20-landing-page.md`)
+- [ ] Add unit test coverage — 0 `.spec.ts` files exist (target: 80% services)
+- [ ] Fix remaining 2 MCP smoke test WARNs (NSPanel accessibility tree, ipc_execute_command stub)

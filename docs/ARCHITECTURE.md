@@ -3,41 +3,46 @@
 ## System Architecture
 
 ```
-┌──────────────────────────────────────────────────────┐
-│                   DevDock Application                 │
-├───────────────────────┬──────────────────────────────┤
-│   Angular Frontend    │     Tauri Rust Backend        │
-│   (System WebView)    │     (Native Process)          │
-│                       │                               │
-│  ┌─────────────────┐  │  ┌────────────────────────┐  │
-│  │  Dock Shell      │  │  │  commands/              │  │
-│  │  (Main Layout)   │◄─┼──┤  ├─ screenshot.rs       │  │
-│  │                  │  │  │  ├─ process.rs          │  │
-│  │  ┌────────────┐  │  │  │  ├─ shell.rs            │  │
-│  │  │ Feature    │  │  │  │  ├─ window.rs           │  │
-│  │  │ Panels     │  │  │  │  └─ audio.rs            │  │
-│  │  │            │  │  │  ├────────────────────────┤  │
-│  │  │ Screenshot │──┼──┼──┤  services/              │  │
-│  │  │ Prompt     │  │  │  │  ├─ capture_service.rs  │  │
-│  │  │ Voice      │  │  │  │  ├─ process_service.rs  │  │
-│  │  │ Agents     │  │  │  │  ├─ window_service.rs   │  │
-│  │  │ Preview    │  │  │  │  └─ audio_service.rs    │  │
-│  │  │ Actions    │  │  │  └────────────────────────┘  │
-│  │  │ Snapshots  │  │  │                               │
-│  │  └────────────┘  │  │  Tauri Plugins:               │
-│  └─────────────────┘  │  ├─ global-shortcut            │
-│                       │  ├─ shell                       │
-│                       │  ├─ store                       │
-│                       │  ├─ notification                │
-│                       │  ├─ autostart                   │
-│                       │  └─ window-state                │
-├───────────────────────┴──────────────────────────────┤
-│                    External APIs                      │
-│  ┌──────────┐  ┌──────────┐  ┌────────────────────┐  │
-│  │ Groq API │  │ Whisper/ │  │ Stripe (payments)  │  │
-│  │ (prompts)│  │ Deepgram │  │                    │  │
-│  └──────────┘  └──────────┘  └────────────────────┘  │
-└──────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                      DevDock Application                      │
+├─────────────────────────┬────────────────────────────────────┤
+│    Angular Frontend      │       Tauri Rust Backend           │
+│    (System WebView)      │       (Native Process)             │
+│                          │                                    │
+│  ┌──────────────────┐   │  ┌─────────────────────────────┐  │
+│  │  DockShellComponent│  │  │  commands/                   │  │
+│  │  (Main Layout)    │◄─┼──┤  ├─ screenshot.rs             │  │
+│  │                   │  │  │  ├─ process.rs                │  │
+│  │  Feature Panels:  │  │  │  ├─ shell.rs                  │  │
+│  │  ├─ Screenshot    │  │  │  ├─ audio.rs                  │  │
+│  │  ├─ Prompt        │  │  │  ├─ context.rs                │  │
+│  │  ├─ Voice         │  │  │  ├─ preview.rs                │  │
+│  │  ├─ Agents        │  │  │  ├─ snapshot.rs               │  │
+│  │  ├─ Preview       │  │  │  └─ update.rs                 │  │
+│  │  ├─ Actions       │  │  ├─────────────────────────────  │  │
+│  │  ├─ Snapshots     │  │  │  services/                    │  │
+│  │  ├─ Shorts        │  │  │  ├─ context_service.rs        │  │
+│  │  ├─ Settings      │  │  │  ├─ process_service.rs        │  │
+│  │  └─ Account/Auth  │  │  │  └─ window_service.rs         │  │
+│  └──────────────────┘   │  └─────────────────────────────  │  │
+│                          │                                    │
+│  core/services/          │  Tauri Plugins (v2):              │
+│  ├─ AuthService          │  ├─ tauri-plugin-mcp-bridge       │
+│  ├─ UpdateService        │  ├─ tauri-plugin-global-shortcut  │
+│  └─ PermissionsService   │  ├─ tauri-plugin-shell            │
+│                          │  ├─ tauri-plugin-store            │
+│                          │  ├─ tauri-plugin-updater          │
+│                          │  ├─ tauri-plugin-notification     │
+│                          │  ├─ tauri-plugin-autostart        │
+│                          │  ├─ tauri-nspanel                 │
+│                          │  └─ tauri-plugin-prevent-default  │
+├─────────────────────────┴────────────────────────────────────┤
+│                       External Services                        │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌─────────────┐ │
+│  │ Groq API │  │ Whisper  │  │ Supabase │  │   Stripe    │ │
+│  │ (prompts)│  │ (STT)    │  │ (auth/db)│  │ (payments)  │ │
+│  └──────────┘  └──────────┘  └──────────┘  └─────────────┘ │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ## IPC Communication Pattern
@@ -48,75 +53,109 @@ Frontend (Angular) communicates with Backend (Rust) via Tauri's IPC:
 // Frontend: invoke Tauri command
 import { invoke } from '@tauri-apps/api/core';
 
-const result = await invoke<ScreenshotResult>('capture_screenshot', {
-  region: { x: 0, y: 0, width: 800, height: 600 }
-});
+const result = await invoke<AgentProcess[]>('get_running_agents');
 ```
 
 ```rust
-// Backend: Tauri command handler (thin controller)
+// Backend: thin command handler calling service
 #[tauri::command]
-async fn capture_screenshot(region: CaptureRegion) -> Result<ScreenshotResult, AppError> {
-    let service = CaptureService::new();
-    service.capture(region).await
+async fn get_running_agents() -> Result<Vec<AgentProcess>, String> {
+    process_service::scan_agents()
 }
 ```
 
 ## State Management Strategy
 
 ```
-Angular Signals (frontend-only state)
-├── DockStateService        → dock position, visibility, size
-├── ScreenshotStateService  → captured images, annotations
-├── PromptStateService      → prompt history, current prompt
-├── AgentStateService       → running agents, metrics
-├── VoiceStateService       → recording status, transcription
-├── PreviewStateService     → preview URL, CSS changes
-├── SnapshotStateService    → saved/loaded snapshots
-├── ActionStateService      → custom buttons config
-└── SettingsService         → app preferences, API keys
+Angular Signals (frontend-only reactive state)
+├── DockShellComponent    → active panel, dock position/visibility
+├── ScreenshotService     → captured images, overlay state
+├── PromptService         → current prompt, history, Groq responses
+├── VoiceService          → recording state, transcription, mic device
+├── AgentsService         → running agents, metrics polling
+├── PreviewService        → preview URL, CSS inspector state
+├── SnapshotsService      → saved snapshots, restore state
+├── ShortsService         → catalog, active short, category filter
+├── AuthService           → session, user tier (Free/Pro)
+└── UpdateService         → updater state, install progress
 
-Tauri Store (persistent, cross-session)
-├── settings.json           → user preferences
-├── actions.json            → custom button configs
-├── snapshots.json          → workspace snapshot data
-├── prompt-history.json     → saved prompts
-└── api-keys.enc            → encrypted API credentials
-```
+Tauri Store (persistent, cross-session JSON)
+├── settings              → user preferences, API keys
+├── actions               → custom button configs
+├── snapshots             → workspace snapshot data
+└── prompt-history        → saved prompts with metadata
 
-## Feature Module Pattern
-
-Each feature follows this structure:
-```
-features/screenshot/
-├── screenshot.component.ts     # Standalone component (thin, OnPush)
-├── screenshot.service.ts       # Business logic, Tauri IPC calls
-├── screenshot.state.ts         # Signals-based state
-├── models/
-│   ├── screenshot.model.ts     # Interfaces & types
-│   └── annotation.model.ts
-├── components/                 # Child components if needed
-│   ├── region-selector.component.ts
-│   └── annotation-overlay.component.ts
-└── screenshot.routes.ts        # Lazy-loaded route config
+Supabase (remote, auth + subscription state)
+├── auth.users            → email/password auth
+└── public.subscribers    → Stripe subscription tier
 ```
 
 ## Window Configuration
 
-DevDock uses multiple Tauri windows:
-1. **Main Dock** — Frameless, transparent, always-on-top, resizable strip
-2. **Preview Window** — Secondary window with WebView for localhost preview
-3. **Settings** — Standard window for configuration
-4. **Screenshot Overlay** — Fullscreen transparent window for region selection
+| Window | Type | Config |
+|--------|------|--------|
+| `main` | NSPanel (macOS) | Frameless, transparent, always-on-top, non-activating |
+| `screenshot-overlay` | Fullscreen transparent | Captures region selection input |
+| Preview window | Standard WebView | Opens localhost:PORT for CSS inspection |
+
+**macOS NSPanel**: Uses `tauri-nspanel` with `NSNonactivatingPanelMask` so the dock never steals focus from the user's editor.
+
+**`withGlobalTauri: true`**: Set in `tauri.conf.json` to expose `window.__TAURI__` globally — required for `tauri-plugin-mcp-bridge` JS execution.
 
 ## Security Model (Tauri v2 Capabilities)
 
-Capabilities are declared per-window. The main dock window gets:
-- `core:default` — Base Tauri APIs
-- `shell:allow-execute` — Run user-configured commands
-- `global-shortcut:allow-register` — Register hotkeys
-- `store:default` — Persistent storage
-- `notification:default` — System notifications
+```
+capabilities/
+├── default.json          → main window permissions
+│   ├── core:default
+│   ├── shell:allow-execute
+│   ├── global-shortcut:allow-register
+│   ├── store:default
+│   ├── notification:default
+│   ├── macos-permissions:allow-*
+│   └── mcp-bridge:default
+└── screenshot-overlay.json → overlay window (minimal)
+    └── core:default
+```
 
-Screenshot overlay window gets minimal permissions:
-- `core:default` only
+## MCP Testing Integration
+
+`tauri-plugin-mcp-bridge` exposes a WebSocket server on port 9223 for AI agent automation:
+
+```
+AI Agent (Claude Code, etc.)
+    ↓ MCP stdio JSON-RPC
+mcp-server-tauri (Node.js binary)
+    ↓ WebSocket on port 9223
+tauri-plugin-mcp-bridge (Rust plugin)
+    ↓ Tauri IPC
+DevDock Webview / Rust Backend
+```
+
+**Smoke test baseline (2026-02-20):** 35 PASS / 0 FAIL / 2 WARN across all 17 tools.
+See `docs/mcp-smoke-test-report-2026-02-20.md` for full results.
+
+## Feature Module Pattern
+
+Each feature follows this exact structure:
+
+```
+features/[feature]/
+├── [feature].component.ts      # Standalone, OnPush, inject() DI, @if/@for templates
+├── [feature].service.ts        # All business logic, Tauri invoke calls, Signals state
+└── models/
+    └── [feature].model.ts      # Interfaces & types only — no logic
+```
+
+Child components only when there are 2+ reusable sub-views (e.g. `screenshot-overlay.component.ts`).
+
+## Auth & Subscription Flow
+
+```
+User opens Account panel
+    → AuthService.signIn(email, password) → Supabase Auth
+    → Session stored in Tauri Store
+    → AuthService.refreshSubscription() → reads public.subscribers
+    → PermissionsService.canAccess(feature) → checks tier
+    → Pro features: Voice (full), Snapshot restore, Preview CSS editing
+```
