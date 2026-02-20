@@ -27,6 +27,13 @@ use tauri_nspanel::cocoa::appkit::NSWindowCollectionBehavior;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    #[cfg(not(debug_assertions))]
+    let _sentry_guard = sentry::init(("__SENTRY_DSN_RUST__", sentry::ClientOptions {
+        release: sentry::release_name!(),
+        traces_sample_rate: 0.1,
+        ..Default::default()
+    }));
+
     tauri::Builder::default()
         .manage(RecordingState::default())
         .manage(PendingUpdate(std::sync::Mutex::new(None)))
