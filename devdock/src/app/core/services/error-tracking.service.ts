@@ -1,4 +1,4 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { ErrorHandler, Injectable, inject } from '@angular/core';
 import * as Sentry from '@sentry/angular';
 import { environment } from '../../../environments/environment';
 
@@ -23,17 +23,17 @@ export class ErrorTrackingService {
   }
 
   captureError(error: unknown): void {
+    if (!environment.sentryDsn) return;
     Sentry.captureException(error);
   }
 }
 
+@Injectable()
 export class SentryErrorHandler implements ErrorHandler {
-  private readonly sentry = new ErrorTrackingService();
+  private readonly sentry = inject(ErrorTrackingService);
 
   handleError(error: unknown): void {
     console.error(error);
-    if (environment.sentryDsn) {
-      this.sentry.captureError(error);
-    }
+    this.sentry.captureError(error);
   }
 }
