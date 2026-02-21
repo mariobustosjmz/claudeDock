@@ -1,16 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { AppTheme } from '../../features/settings/models/settings.model';
 
 export type ResolvedTheme = 'dark' | 'light';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private readonly mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  private readonly document = inject(DOCUMENT);
+
+  private get mediaQuery(): MediaQueryList {
+    return (this.document.defaultView ?? window).matchMedia('(prefers-color-scheme: dark)');
+  }
 
   apply(theme: AppTheme): void {
     const resolved: ResolvedTheme = theme === 'system' ? this.getOsTheme() : theme;
-    document.documentElement.classList.toggle('dark', resolved === 'dark');
-    document.documentElement.classList.toggle('light', resolved === 'light');
+    this.document.documentElement.classList.toggle('dark', resolved === 'dark');
+    this.document.documentElement.classList.toggle('light', resolved === 'light');
   }
 
   getOsTheme(): ResolvedTheme {

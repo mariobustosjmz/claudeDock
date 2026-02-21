@@ -41,9 +41,8 @@ export class SettingsService {
     }
 
     if (key === 'launchAtLogin') {
-      this.tauri
-        .invoke('plugin:autostart|enable', {})
-        .catch(console.error);
+      const command = value ? 'plugin:autostart|enable' : 'plugin:autostart|disable';
+      this.tauri.invoke(command, {}).catch(console.error);
     }
   }
 

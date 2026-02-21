@@ -25,13 +25,9 @@ import { AppTheme } from './models/settings.model';
           <div class="flex gap-2">
             @for (option of themeOptions; track option.value) {
               <button
+                type="button"
                 class="px-3 py-1 rounded text-sm transition-colors"
-                [class.bg-violet-600]="settings().theme === option.value"
-                [class.text-white]="settings().theme === option.value"
-                [class.bg-white]="settings().theme !== option.value"
-                [class.bg-opacity-10]="settings().theme !== option.value"
-                [class.text-white]="settings().theme !== option.value"
-                [class.text-opacity-60]="settings().theme !== option.value"
+                [class]="settings().theme === option.value ? 'bg-violet-600 text-white' : 'bg-white/10 text-white/60'"
                 (click)="onThemeChange(option.value)">
                 {{ option.label }}
               </button>
