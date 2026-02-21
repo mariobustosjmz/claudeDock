@@ -1,7 +1,8 @@
-import { Injectable, signal, inject, effect } from '@angular/core';
+import { Injectable, signal, inject, effect, DestroyRef } from '@angular/core';
 import { StorageService } from '../../core/services/storage.service';
 import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
-import { AppSettings, DEFAULT_SETTINGS } from './models/settings.model';
+import { ThemeService } from '../../core/services/theme.service';
+import { AppSettings, AppTheme, DEFAULT_SETTINGS } from './models/settings.model';
 
 const SETTINGS_STORE = 'settings';
 const SETTINGS_KEY = 'app_settings';
@@ -10,19 +11,34 @@ const SETTINGS_KEY = 'app_settings';
 export class SettingsService {
   private readonly storage = inject(StorageService);
   private readonly tauri = inject(TauriBridgeService);
+  private readonly themeService = inject(ThemeService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly settings = signal<AppSettings>(DEFAULT_SETTINGS);
 
   constructor() {
     this.loadSettings();
+
     effect(() => {
       const s = this.settings();
       this.storage.set(SETTINGS_STORE, SETTINGS_KEY, s).catch(console.error);
     });
+
+    const removeOsListener = this.themeService.listenForOsChanges(() => {
+      if (this.settings().theme === 'system') {
+        this.themeService.apply('system');
+      }
+    });
+
+    this.destroyRef.onDestroy(removeOsListener);
   }
 
   updateSetting<K extends keyof AppSettings>(key: K, value: AppSettings[K]): void {
     this.settings.update((s) => ({ ...s, [key]: value }));
+
+    if (key === 'theme') {
+      this.themeService.apply(value as AppTheme);
+    }
 
     if (key === 'launchAtLogin') {
       this.tauri
@@ -43,7 +59,11 @@ export class SettingsService {
       .get<AppSettings>(SETTINGS_STORE, SETTINGS_KEY)
       .catch(() => null);
     if (saved) {
-      this.settings.set({ ...DEFAULT_SETTINGS, ...saved });
+      const merged: AppSettings = { ...DEFAULT_SETTINGS, ...saved };
+      this.settings.set(merged);
+      this.themeService.apply(merged.theme);
+    } else {
+      this.themeService.apply(DEFAULT_SETTINGS.theme);
     }
   }
 }

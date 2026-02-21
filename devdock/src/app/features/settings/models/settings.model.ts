@@ -1,11 +1,13 @@
 import { DockPosition } from '../../../core/models/dock.model';
 
+export type AppTheme = 'dark' | 'light' | 'system';
+
 export interface AppSettings {
   readonly dockPosition: DockPosition;
   readonly autoHide: boolean;
   readonly autoHideDelay: number;
   readonly launchAtLogin: boolean;
-  readonly theme: 'dark' | 'light';
+  readonly theme: AppTheme;
   readonly apiKeys: Readonly<Record<string, string>>;
 }
 
@@ -14,6 +16,6 @@ export const DEFAULT_SETTINGS: AppSettings = {
   autoHide: false,
   autoHideDelay: 1000,
   launchAtLogin: false,
-  theme: 'dark',
+  theme: 'system',
   apiKeys: {},
 };

@@ -2,11 +2,11 @@ import {
   Component,
   ChangeDetectionStrategy,
   inject,
-  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SettingsService } from './settings.service';
 import { DockStateService } from '../../core/services/dock-state.service';
+import { AppTheme } from './models/settings.model';
 
 @Component({
   selector: 'app-settings',
@@ -16,6 +16,29 @@ import { DockStateService } from '../../core/services/dock-state.service';
   template: `
     <div class="p-4 space-y-5 overflow-y-auto max-h-80">
       <h3 class="text-sm font-semibold text-white/80 uppercase tracking-wider">Settings</h3>
+
+      <!-- Appearance -->
+      <section class="space-y-3">
+        <h4 class="text-xs font-medium text-white/50 uppercase tracking-wider">Appearance</h4>
+        <div>
+          <label class="text-xs text-white/50 mb-2 block">Theme</label>
+          <div class="flex gap-2">
+            @for (option of themeOptions; track option.value) {
+              <button
+                class="px-3 py-1 rounded text-sm transition-colors"
+                [class.bg-violet-600]="settings().theme === option.value"
+                [class.text-white]="settings().theme === option.value"
+                [class.bg-white]="settings().theme !== option.value"
+                [class.bg-opacity-10]="settings().theme !== option.value"
+                [class.text-white]="settings().theme !== option.value"
+                [class.text-opacity-60]="settings().theme !== option.value"
+                (click)="onThemeChange(option.value)">
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        </div>
+      </section>
 
       <!-- Dock Behavior -->
       <section class="space-y-3">
@@ -92,6 +115,12 @@ export class SettingsComponent {
 
   protected readonly settings = this.settingsService.settings;
 
+  protected readonly themeOptions: ReadonlyArray<{ value: AppTheme; label: string }> = [
+    { value: 'system', label: 'System' },
+    { value: 'dark', label: 'Dark' },
+    { value: 'light', label: 'Light' },
+  ];
+
   protected readonly apiProviders = [
     { key: 'groq', label: 'Groq API Key', placeholder: 'gsk_...' },
     { key: 'openai', label: 'OpenAI API Key', placeholder: 'sk-...' },
@@ -101,5 +130,9 @@ export class SettingsComponent {
   protected onAutoHideChange(value: boolean): void {
     this.settingsService.updateSetting('autoHide', value);
     this.dockState.updateConfig({ autoHide: value });
+  }
+
+  protected onThemeChange(theme: AppTheme): void {
+    this.settingsService.updateSetting('theme', theme);
   }
 }
