@@ -1,10 +1,12 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
+import { PromptService } from '../prompt/prompt.service';
 import { CssChange } from './models/preview.model';
 
 @Injectable({ providedIn: 'root' })
 export class PreviewService {
   private readonly tauri = inject(TauriBridgeService);
+  private readonly promptService = inject(PromptService);
 
   private readonly _url = signal('');
   private readonly _isOpen = signal(false);
@@ -66,5 +68,16 @@ export class PreviewService {
 
   clearChanges(): void {
     this._cssChanges.set([]);
+  }
+
+  addChangesToPrompt(): void {
+    const changes = this._cssChanges();
+    if (!changes.length) return;
+    const url = this._url();
+    const lines = changes.map(
+      (c) => `Set ${c.selector} { ${c.property}: ${c.value} }`
+    );
+    const text = `Apply these CSS changes to ${url}:\n${lines.join('\n')}`;
+    this.promptService.setPendingInput(text);
   }
 }

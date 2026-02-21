@@ -35,12 +35,22 @@ export class PromptService {
   private readonly _lastError = signal<string | null>(null);
   private readonly _currentResult = signal<StructuredPrompt | null>(null);
   private readonly _responseTime = signal<number | null>(null);
+  private readonly _pendingInput = signal<string | null>(null);
 
   readonly isOptimizing = this._isOptimizing.asReadonly();
   readonly lastError = this._lastError.asReadonly();
   readonly currentResult = this._currentResult.asReadonly();
   readonly responseTime = this._responseTime.asReadonly();
   readonly hasResult = computed(() => this._currentResult() !== null);
+  readonly pendingInput = this._pendingInput.asReadonly();
+
+  setPendingInput(text: string): void {
+    this._pendingInput.set(text);
+  }
+
+  clearPendingInput(): void {
+    this._pendingInput.set(null);
+  }
 
   async optimize(request: OptimizeRequest): Promise<StructuredPrompt | null> {
     this._isOptimizing.set(true);

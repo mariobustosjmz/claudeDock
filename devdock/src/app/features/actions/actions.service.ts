@@ -7,6 +7,33 @@ import { ShortcutService } from '../../core/services/shortcut.service';
 const ACTIONS_STORE = 'actions';
 const BUTTONS_KEY = 'buttons';
 
+const DEFAULT_BUTTONS: readonly ActionButton[] = [
+  {
+    id: 'default-vscode',
+    name: 'VS Code',
+    icon: '💻',
+    actionType: ActionType.SHELL,
+    payload: 'code .',
+    enabled: true,
+  },
+  {
+    id: 'default-claude',
+    name: 'Claude Code',
+    icon: '🤖',
+    actionType: ActionType.SHELL,
+    payload: 'claude',
+    enabled: true,
+  },
+  {
+    id: 'default-cursor',
+    name: 'Cursor',
+    icon: '⚡',
+    actionType: ActionType.APP_LAUNCH,
+    payload: 'cursor .',
+    enabled: true,
+  },
+];
+
 @Injectable({ providedIn: 'root' })
 export class ActionsService {
   private readonly storage = inject(StorageService);
@@ -91,6 +118,8 @@ export class ActionsService {
       .catch(() => null);
     if (saved?.length) {
       this.buttons.set(saved);
+    } else {
+      this.buttons.set([...DEFAULT_BUTTONS]);
     }
   }
 

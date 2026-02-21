@@ -254,6 +254,35 @@ pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppErro
     {
         use std::process::Command;
 
+        // Collect unique app names to launch, preserving order
+        let mut seen_apps = std::collections::HashSet::new();
+        for window in &snapshot.windows {
+            if window.app_name.is_empty() || !seen_apps.insert(window.app_name.clone()) {
+                continue;
+            }
+            let safe_app = match sanitize_applescript_string(&window.app_name) {
+                Ok(s) => s,
+                Err(_) => continue,
+            };
+            // Launch the app if it is not already running
+            let launch_script = format!(
+                r#"tell application "System Events"
+                    if not (exists process "{app}") then
+                        do shell script "open -a " & quoted form of "{app}"
+                    end if
+                end tell"#,
+                app = safe_app,
+            );
+            if let Err(e) = Command::new("osascript").arg("-e").arg(&launch_script).output() {
+                log::warn!("restore_snapshot: failed to launch '{}': {e}", window.app_name);
+            }
+        }
+
+        // Brief pause to let newly launched apps create their windows
+        if !snapshot.windows.is_empty() {
+            std::thread::sleep(std::time::Duration::from_millis(800));
+        }
+
         for window in &snapshot.windows {
             let safe_app = match sanitize_applescript_string(&window.app_name) {
                 Ok(s) => s,

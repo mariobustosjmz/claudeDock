@@ -27,6 +27,19 @@ import { PromptService } from './prompt.service';
       </div>
 
       @if (activeTab() === 'optimizer') {
+        @if (service.pendingInput()) {
+          <div class="flex items-center gap-2 mb-2 p-2 rounded-lg bg-emerald-600/15 border border-emerald-500/30">
+            <span class="text-xs text-emerald-400 flex-1 truncate">CSS changes ready to optimize</span>
+            <button
+              class="text-xs bg-emerald-600/70 hover:bg-emerald-500 text-white px-2 py-0.5 rounded shrink-0"
+              (click)="loadPending()"
+            >Load</button>
+            <button
+              class="text-xs text-white/30 hover:text-white/60 shrink-0"
+              (click)="service.clearPendingInput()"
+            >✕</button>
+          </div>
+        }
         <textarea
           class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-white/30 resize-none focus:outline-none focus:border-indigo-400/50 transition-colors"
           rows="3"
@@ -156,6 +169,14 @@ export class PromptComponent {
   reuseEntry(entry: PromptHistoryEntry): void {
     this.rawPrompt.set(entry.rawInput);
     this.activeTab.set('optimizer');
+  }
+
+  loadPending(): void {
+    const text = this.service.pendingInput();
+    if (text) {
+      this.rawPrompt.set(text);
+      this.service.clearPendingInput();
+    }
   }
 
   formatDate(ts: number): string {

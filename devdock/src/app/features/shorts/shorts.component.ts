@@ -22,8 +22,16 @@ const CATEGORIES: readonly CategoryFilter[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="shorts-panel p-3 flex flex-col gap-3">
-      <div class="text-xs font-semibold text-white/40 uppercase tracking-wider">
-        Learn · AI Coding Tips
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold text-white/40 uppercase tracking-wider">Learn · AI Coding Tips</span>
+        @if (agentActivityBadge()) {
+          <button
+            class="flex items-center gap-1 px-2 py-0.5 rounded-full text-xs bg-violet-600/80 text-white animate-pulse"
+            (click)="dismissBadge()"
+          >
+            ⚡ Agent active
+          </button>
+        }
       </div>
 
       <div class="flex gap-1.5 flex-wrap">
@@ -99,6 +107,7 @@ export class ShortsComponent {
   protected readonly currentShort = this.shortsService.currentShort;
   protected readonly currentIndex = this.shortsService.currentIndex;
   protected readonly totalCount = this.shortsService.totalCount;
+  protected readonly agentActivityBadge = this.shortsService.agentActivityBadge;
 
   protected readonly formattedDuration = computed(() => {
     const s = this.shortsService.currentShort();
@@ -118,5 +127,9 @@ export class ShortsComponent {
 
   protected next(): void {
     this.shortsService.next();
+  }
+
+  protected dismissBadge(): void {
+    this.shortsService.clearActivityBadge();
   }
 }
