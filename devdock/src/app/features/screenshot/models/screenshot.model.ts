@@ -1,3 +1,9 @@
+export interface AnnotationMarker {
+  x: number;
+  y: number;
+  label: number;
+}
+
 export interface ScreenshotEntry {
   id: string;
   imageBase64: string;
@@ -6,6 +12,7 @@ export interface ScreenshotEntry {
   x: number;
   y: number;
   capturedAt: number;
+  annotations?: AnnotationMarker[];
 }
 
 export interface CaptureResult {
