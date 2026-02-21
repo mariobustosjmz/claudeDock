@@ -1,8 +1,9 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use crate::commands::AppError;
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Type)]
 pub struct WindowInfo {
     pub app_name: String,
     pub title: String,
@@ -12,7 +13,7 @@ pub struct WindowInfo {
     pub height: i32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Type)]
 pub struct WorkspaceSnapshot {
     pub id: String,
     pub name: String,
@@ -20,6 +21,7 @@ pub struct WorkspaceSnapshot {
     pub windows: Vec<WindowInfo>,
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn get_open_windows() -> Result<Vec<WindowInfo>, AppError> {
     #[cfg(target_os = "macos")]
@@ -217,6 +219,7 @@ fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
     windows
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<WorkspaceSnapshot, AppError> {
     if name.trim().is_empty() {
@@ -244,6 +247,7 @@ pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<Wor
     })
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppError> {
     #[cfg(target_os = "macos")]

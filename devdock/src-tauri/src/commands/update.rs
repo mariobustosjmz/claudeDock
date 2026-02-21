@@ -5,7 +5,7 @@ use crate::commands::AppError;
 
 pub struct UpdaterEnabled(pub bool);
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, specta::Type)]
 pub struct UpdateInfo {
     pub version: String,
     pub body: String,
@@ -13,6 +13,7 @@ pub struct UpdateInfo {
 
 pub struct PendingUpdate(pub Mutex<Option<tauri_plugin_updater::Update>>);
 
+#[specta::specta]
 #[tauri::command]
 pub async fn check_update(app: AppHandle) -> Result<Option<UpdateInfo>, AppError> {
     if !app.state::<UpdaterEnabled>().0 {
@@ -39,6 +40,7 @@ pub async fn check_update(app: AppHandle) -> Result<Option<UpdateInfo>, AppError
     Ok(None)
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn install_update(app: AppHandle) -> Result<(), AppError> {
     let pending = app

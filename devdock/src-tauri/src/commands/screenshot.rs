@@ -3,12 +3,13 @@ use base64::{engine::general_purpose, Engine as _};
 use screenshots::Screen;
 use screenshots::image::ImageFormat;
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use std::borrow::Cow;
 use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 
 use super::AppError;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct CaptureResult {
     pub image_base64: String,
     pub width: u32,
@@ -17,7 +18,7 @@ pub struct CaptureResult {
     pub y: i32,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct ScreenInfo {
     pub id: u32,
     pub x: i32,
@@ -27,6 +28,7 @@ pub struct ScreenInfo {
     pub scale_factor: f32,
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn capture_region(
     _app: AppHandle,
@@ -75,6 +77,7 @@ pub async fn capture_region(
     })
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn get_screen_info(_app: AppHandle) -> Result<Vec<ScreenInfo>, AppError> {
     let screens = Screen::all().map_err(|e| AppError::Screenshot(e.to_string()))?;
@@ -92,6 +95,7 @@ pub async fn get_screen_info(_app: AppHandle) -> Result<Vec<ScreenInfo>, AppErro
         .collect())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn open_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
     if let Some(existing) = app.get_webview_window("screenshot-overlay") {
@@ -118,6 +122,7 @@ pub async fn open_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn close_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
     if let Some(window) = app.get_webview_window("screenshot-overlay") {
@@ -128,6 +133,7 @@ pub async fn close_screenshot_overlay(app: AppHandle) -> Result<(), AppError> {
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn copy_image_to_clipboard(image_base64: String) -> Result<(), AppError> {
     let bytes = general_purpose::STANDARD

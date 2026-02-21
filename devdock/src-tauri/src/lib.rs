@@ -187,3 +187,48 @@ pub fn run() {
         .run(tauri::generate_context!())
         .unwrap_or_else(|e| log::error!("tauri application error: {e}"));
 }
+
+#[cfg(test)]
+mod specta_tests {
+    use tauri_specta::{collect_commands, Builder};
+    use specta_typescript::{BigIntExportBehavior, Typescript};
+    use crate::commands::*;
+
+    #[test]
+    fn export_bindings() {
+        let ts = Typescript::default().bigint(BigIntExportBehavior::Number);
+
+        Builder::<tauri::Wry>::new()
+            .commands(collect_commands![
+                audio::validate_microphone,
+                audio::start_recording,
+                audio::stop_recording,
+                context::get_project_context,
+                menu::show_context_menu,
+                preview::open_preview_window,
+                preview::close_preview_window,
+                preview::inject_inspector,
+                preview::apply_css_change,
+                process::get_running_agents,
+                process::get_agent_metrics,
+                screenshot::capture_region,
+                screenshot::get_screen_info,
+                screenshot::open_screenshot_overlay,
+                screenshot::close_screenshot_overlay,
+                screenshot::copy_image_to_clipboard,
+                shell::execute_shell,
+                shell::open_url,
+                snapshot::get_open_windows,
+                snapshot::save_snapshot,
+                snapshot::restore_snapshot,
+                update::check_update,
+                update::install_update,
+                window::set_dock_position,
+                window::get_dock_position,
+                window::toggle_dock_visibility,
+                window::set_always_on_top,
+            ])
+            .export(ts, "../src/bindings.ts")
+            .expect("Failed to export bindings");
+    }
+}

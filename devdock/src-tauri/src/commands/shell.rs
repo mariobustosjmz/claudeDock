@@ -3,6 +3,7 @@ use tauri_plugin_shell::ShellExt;
 use tauri_plugin_opener::OpenerExt;
 use crate::commands::AppError;
 
+#[specta::specta]
 #[tauri::command]
 pub async fn execute_shell(app: AppHandle, command: String) -> Result<String, AppError> {
     let shell = app.shell();
@@ -30,6 +31,7 @@ pub async fn execute_shell(app: AppHandle, command: String) -> Result<String, Ap
     }
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn open_url(app: AppHandle, url: String) -> Result<(), AppError> {
     app.opener()

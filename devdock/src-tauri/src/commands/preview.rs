@@ -1,6 +1,7 @@
 use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 use crate::commands::AppError;
 
+#[specta::specta]
 #[tauri::command]
 pub async fn open_preview_window(app: AppHandle, url: String) -> Result<(), AppError> {
     if let Some(window) = app.get_webview_window("preview") {
@@ -30,6 +31,7 @@ pub async fn open_preview_window(app: AppHandle, url: String) -> Result<(), AppE
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn close_preview_window(app: AppHandle) -> Result<(), AppError> {
     if let Some(window) = app.get_webview_window("preview") {
@@ -38,6 +40,7 @@ pub async fn close_preview_window(app: AppHandle) -> Result<(), AppError> {
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn inject_inspector(app: AppHandle, enable: bool) -> Result<(), AppError> {
     let window = app
@@ -57,6 +60,7 @@ pub async fn inject_inspector(app: AppHandle, enable: bool) -> Result<(), AppErr
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn apply_css_change(
     app: AppHandle,

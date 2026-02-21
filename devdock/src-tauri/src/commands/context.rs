@@ -1,11 +1,12 @@
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use std::path::PathBuf;
 use tauri::AppHandle;
 
 use super::AppError;
 use crate::services::context_service;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct ProjectContext {
     pub git_root: Option<String>,
     pub project_name: Option<String>,
@@ -14,7 +15,7 @@ pub struct ProjectContext {
     pub current_branch: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct PackageInfo {
     pub name: String,
     pub version: String,
@@ -22,6 +23,7 @@ pub struct PackageInfo {
     pub main_dependencies: Vec<String>,
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn get_project_context(
     _app: AppHandle,

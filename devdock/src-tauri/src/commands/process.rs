@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use std::time::{SystemTime, UNIX_EPOCH};
 use sysinfo::{ProcessRefreshKind, RefreshKind, System};
 use tauri::AppHandle;
@@ -6,7 +7,7 @@ use tauri::AppHandle;
 use super::AppError;
 use crate::services::process_service;
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Type)]
 pub struct AgentProcess {
     pub pid: u32,
     pub name: String,
@@ -19,7 +20,7 @@ pub struct AgentProcess {
     pub status: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct AgentMetrics {
     pub pid: u32,
     pub log_lines: Vec<String>,
@@ -29,6 +30,7 @@ pub struct AgentMetrics {
     pub metrics_available: bool,
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn get_running_agents(_app: AppHandle) -> Result<Vec<AgentProcess>, AppError> {
     let mut sys = System::new_with_specifics(
@@ -50,6 +52,7 @@ pub async fn get_running_agents(_app: AppHandle) -> Result<Vec<AgentProcess>, Ap
     Ok(agents)
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn get_agent_metrics(
     _app: AppHandle,

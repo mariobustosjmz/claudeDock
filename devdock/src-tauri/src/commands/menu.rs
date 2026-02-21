@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
     AppHandle, Manager,
@@ -6,7 +7,7 @@ use tauri::{
 
 use super::AppError;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 #[serde(rename_all = "camelCase")]
 pub struct ContextMenuItemDef {
     pub id: String,
@@ -19,6 +20,7 @@ pub struct ContextMenuItemDef {
 /// Selection events are handled globally in lib.rs via `app.on_menu_event`,
 /// which emits `context-menu-selected` to the frontend. This command only
 /// builds the menu and calls popup_menu — no per-call listener is registered.
+#[specta::specta]
 #[tauri::command]
 pub async fn show_context_menu(
     app: AppHandle,
