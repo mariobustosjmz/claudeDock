@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SettingsService } from './settings.service';
 import { DockStateService } from '../../core/services/dock-state.service';
 import { AppTheme } from './models/settings.model';
+import { LLM_PROVIDERS, LlmProviderId, STT_PROVIDERS } from '../../core/models/llm-provider.model';
 
 @Component({
   selector: 'app-settings',
@@ -82,6 +83,37 @@ import { AppTheme } from './models/settings.model';
         </label>
       </section>
 
+      <!-- AI Providers -->
+      <section class="space-y-3">
+        <h4 class="text-xs font-medium text-white/50 uppercase tracking-wider">AI Providers</h4>
+
+        <!-- Prompt AI Provider -->
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-white/60">Prompt AI Provider</label>
+          <select
+            class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white"
+            [value]="settings().llmProvider"
+            (change)="onLlmProviderChange($event)">
+            @for (p of llmProviderOptions; track p.id) {
+              <option [value]="p.id">{{ p.name }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Voice STT Provider -->
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-white/60">Voice Provider</label>
+          <select
+            class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white"
+            [value]="settings().sttProvider"
+            (change)="onSttProviderChange($event)">
+            @for (p of sttProviderOptions; track p.id) {
+              <option [value]="p.id">{{ p.name }}</option>
+            }
+          </select>
+        </div>
+      </section>
+
       <!-- API Keys -->
       <section class="space-y-3">
         <h4 class="text-xs font-medium text-white/50 uppercase tracking-wider">API Keys</h4>
@@ -120,8 +152,11 @@ export class SettingsComponent {
   protected readonly apiProviders = [
     { key: 'groq', label: 'Groq API Key', placeholder: 'gsk_...' },
     { key: 'openai', label: 'OpenAI API Key', placeholder: 'sk-...' },
-    { key: 'deepgram', label: 'Deepgram API Key', placeholder: 'dg_...' },
+    { key: 'anthropic', label: 'Anthropic API Key', placeholder: 'sk-ant-...' },
   ] as const;
+
+  protected readonly llmProviderOptions = Object.values(LLM_PROVIDERS);
+  protected readonly sttProviderOptions = STT_PROVIDERS;
 
   protected onAutoHideChange(value: boolean): void {
     this.settingsService.updateSetting('autoHide', value);
@@ -130,5 +165,15 @@ export class SettingsComponent {
 
   protected onThemeChange(theme: AppTheme): void {
     this.settingsService.updateSetting('theme', theme);
+  }
+
+  protected onLlmProviderChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.settingsService.updateSetting('llmProvider', select.value as LlmProviderId);
+  }
+
+  protected onSttProviderChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.settingsService.updateSetting('sttProvider', select.value as LlmProviderId);
   }
 }

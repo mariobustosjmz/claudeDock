@@ -1,4 +1,5 @@
 import { DockPosition } from '../../../core/models/dock.model';
+import { LlmProviderId } from '../../../core/models/llm-provider.model';
 
 export type AppTheme = 'dark' | 'light' | 'system';
 
@@ -9,6 +10,8 @@ export interface AppSettings {
   readonly launchAtLogin: boolean;
   readonly theme: AppTheme;
   readonly apiKeys: Readonly<Record<string, string>>;
+  readonly llmProvider: LlmProviderId;
+  readonly sttProvider: LlmProviderId;
 }
 
 export const DEFAULT_SETTINGS: AppSettings = {
@@ -18,4 +21,6 @@ export const DEFAULT_SETTINGS: AppSettings = {
   launchAtLogin: false,
   theme: 'system',
   apiKeys: {},
+  llmProvider: 'groq',
+  sttProvider: 'groq',
 };

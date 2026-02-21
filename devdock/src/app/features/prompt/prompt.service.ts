@@ -1,20 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
-import { firstValueFrom } from 'rxjs';
 import { AnalyticsService } from '../../core/services/analytics.service';
-import { SettingsService } from '../settings/settings.service';
+import { LlmService } from '../../core/services/llm.service';
 import {
-  GroqRequest,
-  GroqResponse,
   OptimizeRequest,
   ProjectContext,
   StructuredPrompt,
 } from './models/prompt.model';
 import { PromptHistoryService } from './services/prompt-history.service';
-
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL = 'llama-3.3-70b-versatile';
 
 const SYSTEM_PROMPT = `You are a developer assistant that restructures rough developer prompts into precise, structured instructions for AI coding agents.
 
@@ -35,8 +28,7 @@ Rules:
 @Injectable({ providedIn: 'root' })
 export class PromptService {
   private readonly analytics = inject(AnalyticsService);
-  private readonly http = inject(HttpClient);
-  private readonly settings = inject(SettingsService);
+  private readonly llm = inject(LlmService);
   private readonly history = inject(PromptHistoryService);
 
   private readonly _isOptimizing = signal(false);
@@ -51,12 +43,6 @@ export class PromptService {
   readonly hasResult = computed(() => this._currentResult() !== null);
 
   async optimize(request: OptimizeRequest): Promise<StructuredPrompt | null> {
-    const apiKey = this.getGroqApiKey();
-    if (!apiKey) {
-      this._lastError.set('Groq API key not configured. Set it in Settings.');
-      return null;
-    }
-
     this._isOptimizing.set(true);
     this._lastError.set(null);
     const startTime = performance.now();
@@ -67,26 +53,7 @@ export class PromptService {
         ? `Developer prompt: "${request.rawPrompt}"\n\nProject context:\n${projectContext}`
         : `Developer prompt: "${request.rawPrompt}"`;
 
-      const body: GroqRequest = {
-        model: MODEL,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: userContent },
-        ],
-        temperature: 0.3,
-        max_tokens: 512,
-      };
-
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      });
-
-      const response = await firstValueFrom(
-        this.http.post<GroqResponse>(GROQ_API_URL, body, { headers })
-      );
-
-      const rawJson = response.choices[0]?.message?.content ?? '';
+      const rawJson = await this.llm.chatCompletion(SYSTEM_PROMPT, userContent);
       const structured = this.parseStructuredResponse(rawJson);
       this._currentResult.set(structured);
       this._responseTime.set(Math.round(performance.now() - startTime));
@@ -106,10 +73,6 @@ export class PromptService {
     this._currentResult.set(null);
     this._lastError.set(null);
     this._responseTime.set(null);
-  }
-
-  private getGroqApiKey(): string | undefined {
-    return this.settings.settings().apiKeys['groq'] || undefined;
   }
 
   private async buildProjectContext(): Promise<string> {
