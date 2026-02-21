@@ -33,10 +33,10 @@ export class ContextMenuService {
 
     const selected = await this.showAndWait(items);
 
-    if (selected === 'edit') onEdit();
-    else if (selected === 'move_up') onMoveUp();
-    else if (selected === 'move_down') onMoveDown();
-    else if (selected === 'delete') onDelete();
+    if (selected === 'ctx_edit') onEdit();
+    else if (selected === 'ctx_move_up') onMoveUp();
+    else if (selected === 'ctx_move_down') onMoveDown();
+    else if (selected === 'ctx_delete') onDelete();
   }
 
   /**
@@ -54,8 +54,8 @@ export class ContextMenuService {
 
     const selected = await this.showAndWait(items);
 
-    if (selected === 'copy') onCopy();
-    else if (selected === 'delete') onDelete();
+    if (selected === 'ctx_copy') onCopy();
+    else if (selected === 'ctx_delete') onDelete();
   }
 
   /**
@@ -66,13 +66,24 @@ export class ContextMenuService {
   private async showAndWait(items: ContextMenuItemDef[]): Promise<string | null> {
     return new Promise<string | null>((resolve) => {
       let unlisten: (() => void) | null = null;
+      let timer: ReturnType<typeof setTimeout> | null = null;
 
       const cleanup = (): void => {
+        if (timer !== null) {
+          clearTimeout(timer);
+          timer = null;
+        }
         if (unlisten) {
           unlisten();
           unlisten = null;
         }
       };
+
+      const DISMISS_TIMEOUT_MS = 30_000;
+      timer = setTimeout(() => {
+        cleanup();
+        resolve(null);
+      }, DISMISS_TIMEOUT_MS);
 
       listen<string>('context-menu-selected', (event) => {
         cleanup();

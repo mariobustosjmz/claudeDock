@@ -43,16 +43,11 @@ export class AnalyticsService {
     environment.production &&
     !!environment.aptabaseKey &&
     !environment.aptabaseKey.startsWith('__');
-  private readonly ingestUrl: string | null;
-
-  constructor() {
-    if (this.enabled) {
-      const host = resolveIngestHost(environment.aptabaseKey);
-      this.ingestUrl = host ? `https://${host}/api/v0/event` : null;
-    } else {
-      this.ingestUrl = null;
-    }
-  }
+  private readonly ingestUrl: string | null = (() => {
+    if (!this.enabled) return null;
+    const host = resolveIngestHost(environment.aptabaseKey);
+    return host ? `https://${host}/api/v0/event` : null;
+  })();
 
   track(event: AnalyticsEvent, props?: EventProps): void {
     if (!this.enabled || !this.ingestUrl) return;

@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ErrorTrackingService {
   initialize(): void {
-    if (!environment.sentryDsn) return;
+    if (!environment.sentryDsn || environment.sentryDsn.startsWith('__')) return;
     Sentry.init({
       dsn: environment.sentryDsn,
       environment: environment.production ? 'production' : 'development',

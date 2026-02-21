@@ -39,7 +39,8 @@ pub async fn show_context_menu(
             menu.append(&sep)
                 .map_err(|e| AppError::Window(e.to_string()))?;
         } else {
-            let menu_item = MenuItem::with_id(&app, &item.id, &item.label, true, None::<&str>)
+            let prefixed_id = format!("ctx_{}", item.id);
+            let menu_item = MenuItem::with_id(&app, &prefixed_id, &item.label, true, None::<&str>)
                 .map_err(|e| AppError::Window(e.to_string()))?;
             menu.append(&menu_item)
                 .map_err(|e| AppError::Window(e.to_string()))?;

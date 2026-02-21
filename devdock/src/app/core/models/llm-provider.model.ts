@@ -30,7 +30,7 @@ export const LLM_PROVIDERS: Readonly<Record<LlmProviderId, LlmProvider>> = {
     id: 'anthropic',
     name: 'Anthropic',
     baseUrl: 'https://api.anthropic.com/v1',
-    chatModel: 'claude-haiku-4-5-20251001',
+    chatModel: 'claude-haiku-3-5-20241022',
     whisperModel: null,
     apiKeyEnvName: 'anthropic',
   },
