@@ -73,7 +73,7 @@ export class VoiceService {
       const audioResult = await invoke<AudioResult>('stop_recording');
       this._duration.set(audioResult.duration_seconds);
 
-      const text = await this.llm.transcribeAudio(audioResult.wav_base64, audioResult.duration_seconds);
+      const text = await this.llm.transcribeAudio(audioResult.wav_base64);
       this._transcription.set(text);
       this._state.set('done');
       this.analytics.track('voice_transcribed', { duration_seconds: audioResult.duration_seconds });

@@ -56,7 +56,7 @@ export class LlmService {
       : ((data as { choices: { message: { content: string } }[] }).choices[0]?.message?.content ?? '');
   }
 
-  async transcribeAudio(wavBase64: string, durationSeconds: number): Promise<string> {
+  async transcribeAudio(wavBase64: string): Promise<string> {
     const provider = this.sttProvider();
     if (!provider.whisperModel) {
       throw new Error(`${provider.name} does not support speech-to-text`);

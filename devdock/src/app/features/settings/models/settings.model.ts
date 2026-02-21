@@ -9,7 +9,7 @@ export interface AppSettings {
   readonly autoHideDelay: number;
   readonly launchAtLogin: boolean;
   readonly theme: AppTheme;
-  readonly apiKeys: Readonly<Record<string, string>>;
+  readonly apiKeys: Readonly<Partial<Record<LlmProviderId, string>>>;
   readonly llmProvider: LlmProviderId;
   readonly sttProvider: LlmProviderId;
 }

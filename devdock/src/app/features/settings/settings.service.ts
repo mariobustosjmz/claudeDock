@@ -3,6 +3,7 @@ import { StorageService } from '../../core/services/storage.service';
 import { TauriBridgeService } from '../../core/services/tauri-bridge.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { AppSettings, AppTheme, DEFAULT_SETTINGS } from './models/settings.model';
+import { LlmProviderId } from '../../core/models/llm-provider.model';
 
 const SETTINGS_STORE = 'settings';
 const SETTINGS_KEY = 'app_settings';
@@ -46,7 +47,7 @@ export class SettingsService {
     }
   }
 
-  updateApiKey(provider: string, key: string): void {
+  updateApiKey(provider: LlmProviderId, key: string): void {
     this.settings.update((s) => ({
       ...s,
       apiKeys: { ...s.apiKeys, [provider]: key },
