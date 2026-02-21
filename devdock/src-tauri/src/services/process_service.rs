@@ -49,22 +49,29 @@ pub fn try_read_agent_logs(pid: u32) -> (Vec<String>, Option<String>) {
     let candidates = vec![
         format!("{}/.claude/logs/claude-{}.log", home, pid),
         format!("{}/.config/claude/logs/{}.log", home, pid),
+        // Claude Code stores JSONL session logs here
+        format!("{}/.claude/projects/current/session.jsonl", home),
+        format!("{}/.claude/session.jsonl", home),
         format!("/tmp/claude-{}.log", pid),
+        format!("/tmp/claude-code-{}.jsonl", pid),
         format!("{}/.cursor/logs/extension-host-{}.log", home, pid),
+        format!("{}/.aider.log", home),
     ];
 
     for path in candidates {
         if let Ok(content) = std::fs::read_to_string(&path) {
-            let lines = content
+            let lines: Vec<String> = content
                 .lines()
                 .rev()
-                .take(50)
+                .take(100)
                 .map(|s| s.to_string())
                 .collect::<Vec<_>>()
                 .into_iter()
                 .rev()
                 .collect();
-            return (lines, Some(path));
+            if !lines.is_empty() {
+                return (lines, Some(path));
+            }
         }
     }
     (vec![], None)
@@ -73,6 +80,7 @@ pub fn try_read_agent_logs(pid: u32) -> (Vec<String>, Option<String>) {
 pub fn parse_token_count_structured(lines: &[String]) -> Option<u64> {
     for line in lines.iter().rev() {
         if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
+            // Claude API standard format
             if let Some(tokens) = json
                 .get("usage")
                 .and_then(|u| u.get("total_tokens"))
@@ -80,7 +88,23 @@ pub fn parse_token_count_structured(lines: &[String]) -> Option<u64> {
             {
                 return Some(tokens);
             }
+            // Claude Code JSONL session format: input_tokens + output_tokens
+            if let Some(usage) = json.get("usage") {
+                let input = usage.get("input_tokens").and_then(|v| v.as_u64()).unwrap_or(0);
+                let output = usage.get("output_tokens").and_then(|v| v.as_u64()).unwrap_or(0);
+                if input + output > 0 {
+                    return Some(input + output);
+                }
+            }
+            // Flat tokens field
             if let Some(tokens) = json.get("tokens").and_then(|t| t.as_u64()) {
+                return Some(tokens);
+            }
+            // Aider format: total_cost entry with token fields
+            if let Some(tokens) = json
+                .get("token_count")
+                .and_then(|t| t.as_u64())
+            {
                 return Some(tokens);
             }
         }

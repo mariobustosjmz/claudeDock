@@ -1,8 +1,9 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use crate::commands::AppError;
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Type)]
 pub struct WindowInfo {
     pub app_name: String,
     pub title: String,
@@ -12,7 +13,7 @@ pub struct WindowInfo {
     pub height: i32,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Type)]
 pub struct WorkspaceSnapshot {
     pub id: String,
     pub name: String,
@@ -20,6 +21,7 @@ pub struct WorkspaceSnapshot {
     pub windows: Vec<WindowInfo>,
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn get_open_windows() -> Result<Vec<WindowInfo>, AppError> {
     #[cfg(target_os = "macos")]
@@ -217,6 +219,7 @@ fn parse_applescript_windows(output: &str) -> Vec<WindowInfo> {
     windows
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<WorkspaceSnapshot, AppError> {
     if name.trim().is_empty() {
@@ -244,11 +247,41 @@ pub async fn save_snapshot(name: String, windows: Vec<WindowInfo>) -> Result<Wor
     })
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn restore_snapshot(snapshot: WorkspaceSnapshot) -> Result<(), AppError> {
     #[cfg(target_os = "macos")]
     {
         use std::process::Command;
+
+        // Collect unique app names to launch, preserving order
+        let mut seen_apps = std::collections::HashSet::new();
+        for window in &snapshot.windows {
+            if window.app_name.is_empty() || !seen_apps.insert(window.app_name.clone()) {
+                continue;
+            }
+            let safe_app = match sanitize_applescript_string(&window.app_name) {
+                Ok(s) => s,
+                Err(_) => continue,
+            };
+            // Launch the app if it is not already running
+            let launch_script = format!(
+                r#"tell application "System Events"
+                    if not (exists process "{app}") then
+                        do shell script "open -a " & quoted form of "{app}"
+                    end if
+                end tell"#,
+                app = safe_app,
+            );
+            if let Err(e) = Command::new("osascript").arg("-e").arg(&launch_script).output() {
+                log::warn!("restore_snapshot: failed to launch '{}': {e}", window.app_name);
+            }
+        }
+
+        // Brief pause to let newly launched apps create their windows
+        if !snapshot.windows.is_empty() {
+            std::thread::sleep(std::time::Duration::from_millis(800));
+        }
 
         for window in &snapshot.windows {
             let safe_app = match sanitize_applescript_string(&window.app_name) {

@@ -1,6 +1,7 @@
 use base64::{engine::general_purpose, Engine as _};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use serde::{Deserialize, Serialize};
+use specta::Type;
 use std::sync::{Arc, Mutex};
 use tauri::{AppHandle, Emitter, State};
 
@@ -24,13 +25,14 @@ impl Default for RecordingState {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Type)]
 pub struct AudioResult {
     pub wav_base64: String,
     pub duration_seconds: f32,
     pub sample_rate: u32,
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn validate_microphone() -> Result<String, AppError> {
     let host = cpal::default_host();
@@ -48,6 +50,7 @@ pub async fn validate_microphone() -> Result<String, AppError> {
     Ok(name)
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn start_recording(
     app: AppHandle,
@@ -154,6 +157,7 @@ pub async fn start_recording(
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn stop_recording(
     _app: AppHandle,

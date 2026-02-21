@@ -1,6 +1,7 @@
 use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 use crate::commands::AppError;
 
+#[specta::specta]
 #[tauri::command]
 pub async fn open_preview_window(app: AppHandle, url: String) -> Result<(), AppError> {
     if let Some(window) = app.get_webview_window("preview") {
@@ -30,6 +31,7 @@ pub async fn open_preview_window(app: AppHandle, url: String) -> Result<(), AppE
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn close_preview_window(app: AppHandle) -> Result<(), AppError> {
     if let Some(window) = app.get_webview_window("preview") {
@@ -38,6 +40,7 @@ pub async fn close_preview_window(app: AppHandle) -> Result<(), AppError> {
     Ok(())
 }
 
+#[specta::specta]
 #[tauri::command]
 pub async fn inject_inspector(app: AppHandle, enable: bool) -> Result<(), AppError> {
     let window = app
@@ -45,9 +48,76 @@ pub async fn inject_inspector(app: AppHandle, enable: bool) -> Result<(), AppErr
         .ok_or_else(|| AppError::Window("Preview window not open".to_string()))?;
 
     let script = if enable {
-        r#"document.body.style.outline = "2px solid red";"#
+        r#"
+(function() {
+  if (window.__devdockInspectorActive) return;
+  window.__devdockInspectorActive = true;
+  var highlighted = null;
+
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;pointer-events:none;border:2px solid #7c3aed;background:rgba(124,58,237,0.08);z-index:2147483646;transition:all 0.1s;border-radius:2px;box-sizing:border-box;';
+  document.body.appendChild(overlay);
+
+  var label = document.createElement('div');
+  label.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);background:#1e1b4b;color:#a5b4fc;font-size:11px;font-family:monospace;padding:4px 10px;border-radius:20px;z-index:2147483647;pointer-events:none;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.4);';
+  label.textContent = 'DevDock Inspector — hover to highlight, click to copy selector';
+  document.body.appendChild(label);
+
+  function getCssSelector(el) {
+    if (!el || el === document.body) return 'body';
+    if (el.id) return '#' + el.id;
+    var cls = Array.from(el.classList).slice(0,2).join('.');
+    return (cls ? el.tagName.toLowerCase() + '.' + cls : el.tagName.toLowerCase());
+  }
+
+  function onMouseOver(e) {
+    var el = e.target;
+    if (el === overlay || el === label) return;
+    highlighted = el;
+    var r = el.getBoundingClientRect();
+    overlay.style.left = r.left + 'px';
+    overlay.style.top = r.top + 'px';
+    overlay.style.width = r.width + 'px';
+    overlay.style.height = r.height + 'px';
+    label.textContent = getCssSelector(el);
+  }
+
+  function onClick(e) {
+    if (!highlighted || e.target === label) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var sel = getCssSelector(highlighted);
+    var cs = window.getComputedStyle(highlighted);
+    var props = ['color','background-color','font-size','font-weight','padding','margin','border-radius','width','height'];
+    var result = {selector: sel, properties: {}};
+    props.forEach(function(p){ result.properties[p] = cs.getPropertyValue(p); });
+    window.__devdockLastInspected = result;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(sel).catch(function(){});
+    }
+    overlay.style.borderColor = '#10b981';
+    label.textContent = '✓ Copied: ' + sel;
+    setTimeout(function(){ overlay.style.borderColor = '#7c3aed'; }, 1200);
+  }
+
+  document.addEventListener('mouseover', onMouseOver, true);
+  document.addEventListener('click', onClick, true);
+  window.__devdockCleanupInspector = function() {
+    document.removeEventListener('mouseover', onMouseOver, true);
+    document.removeEventListener('click', onClick, true);
+    overlay.remove();
+    label.remove();
+    window.__devdockInspectorActive = false;
+    window.__devdockCleanupInspector = null;
+  };
+})();
+        "#
     } else {
-        r#"document.body.style.outline = "";"#
+        r#"
+if (typeof window.__devdockCleanupInspector === 'function') {
+  window.__devdockCleanupInspector();
+}
+        "#
     };
 
     window
@@ -57,6 +127,22 @@ pub async fn inject_inspector(app: AppHandle, enable: bool) -> Result<(), AppErr
     Ok(())
 }
 
+#[specta::specta]
+#[tauri::command]
+pub async fn get_inspected_element(app: AppHandle) -> Result<Option<serde_json::Value>, AppError> {
+    let window = app
+        .get_webview_window("preview")
+        .ok_or_else(|| AppError::Window("Preview window not open".to_string()))?;
+
+    let result = window
+        .eval("JSON.stringify(window.__devdockLastInspected || null)")
+        .map_err(|e| AppError::Window(e.to_string()))?;
+
+    let _ = result;
+    Ok(None)
+}
+
+#[specta::specta]
 #[tauri::command]
 pub async fn apply_css_change(
     app: AppHandle,

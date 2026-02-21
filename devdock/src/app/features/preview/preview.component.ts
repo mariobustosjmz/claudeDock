@@ -3,10 +3,22 @@ import {
   ChangeDetectionStrategy,
   inject,
   signal,
+  computed,
 } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { PreviewService } from './preview.service';
 import { UpgradePromptComponent } from '../../shared/components/upgrade-prompt.component';
+
+const COLOR_PROPERTIES = new Set([
+  'color', 'background-color', 'backgroundColor', 'border-color',
+  'borderColor', 'outline-color', 'outlineColor', 'text-decoration-color',
+]);
+
+const NUMERIC_PROPERTIES = new Set([
+  'font-size', 'fontSize', 'padding', 'margin', 'width', 'height',
+  'border-radius', 'borderRadius', 'line-height', 'lineHeight',
+  'letter-spacing', 'letterSpacing', 'opacity',
+]);
 
 @Component({
   selector: 'app-preview',
@@ -79,12 +91,33 @@ import { UpgradePromptComponent } from '../../shared/components/upgrade-prompt.c
                 [value]="cssProperty()"
                 (input)="onCssPropertyInput($event)"
               />
-              <input
-                class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
-                placeholder="value (e.g. red)"
-                [value]="cssValue()"
-                (input)="onCssValueInput($event)"
-              />
+              @if (isColorProperty()) {
+                <input
+                  type="color"
+                  class="h-7 w-10 rounded cursor-pointer bg-transparent border border-white/20 p-0.5"
+                  [value]="cssValue() || '#000000'"
+                  (input)="onCssValueInput($event)"
+                />
+              } @else if (isNumericProperty()) {
+                <div class="flex gap-1 items-center flex-1">
+                  <input
+                    type="range"
+                    class="flex-1 accent-violet-500"
+                    min="0"
+                    max="100"
+                    [value]="numericValue()"
+                    (input)="onRangeInput($event)"
+                  />
+                  <span class="text-xs text-white/50 w-10 text-right">{{ cssValue() }}</span>
+                </div>
+              } @else {
+                <input
+                  class="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/20"
+                  placeholder="value (e.g. red)"
+                  [value]="cssValue()"
+                  (input)="onCssValueInput($event)"
+                />
+              }
               <button
                 class="px-2 py-1.5 rounded text-xs font-medium bg-violet-600/80 hover:bg-violet-500 text-white transition-all"
                 [disabled]="!cssSelector() || !cssProperty() || !cssValue()"
@@ -107,6 +140,12 @@ import { UpgradePromptComponent } from '../../shared/components/upgrade-prompt.c
                   </div>
                 }
               </div>
+              <button
+                class="w-full py-1.5 rounded-lg text-xs font-medium bg-emerald-600/70 hover:bg-emerald-500/80 text-white transition-all"
+                (click)="addToPrompt()"
+              >
+                ✦ Add to Prompt
+              </button>
             }
           </div>
         } @else {
@@ -125,6 +164,13 @@ export class PreviewComponent {
   protected readonly cssValue = signal('');
   protected readonly inspectorOn = signal(false);
   protected readonly isPro = this.authService.isPro;
+
+  protected readonly isColorProperty = computed(() => COLOR_PROPERTIES.has(this.cssProperty()));
+  protected readonly isNumericProperty = computed(() => NUMERIC_PROPERTIES.has(this.cssProperty()));
+  protected readonly numericValue = computed(() => {
+    const v = parseInt(this.cssValue(), 10);
+    return isNaN(v) ? 0 : v;
+  });
 
   protected async openPreview(): Promise<void> {
     const url = this.urlInput().trim();
@@ -158,6 +204,10 @@ export class PreviewComponent {
     this.preview.clearChanges();
   }
 
+  protected addToPrompt(): void {
+    this.preview.addChangesToPrompt();
+  }
+
   protected onUrlInput(event: Event): void {
     this.urlInput.set((event.target as HTMLInputElement).value);
   }
@@ -172,5 +222,12 @@ export class PreviewComponent {
 
   protected onCssValueInput(event: Event): void {
     this.cssValue.set((event.target as HTMLInputElement).value);
+  }
+
+  protected onRangeInput(event: Event): void {
+    const val = (event.target as HTMLInputElement).value;
+    const prop = this.cssProperty();
+    const unit = prop === 'opacity' ? '' : prop === 'letter-spacing' ? 'em' : 'px';
+    this.cssValue.set(`${val}${unit}`);
   }
 }

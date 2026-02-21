@@ -3,9 +3,10 @@ pub mod services;
 
 use commands::audio::RecordingState;
 use commands::context::get_project_context;
+use commands::menu::show_context_menu;
 use commands::process::{get_agent_metrics, get_running_agents};
 use commands::screenshot::{capture_region, close_screenshot_overlay, copy_image_to_clipboard, get_screen_info, open_screenshot_overlay};
-use commands::preview::{apply_css_change, close_preview_window, inject_inspector, open_preview_window};
+use commands::preview::{apply_css_change, close_preview_window, get_inspected_element, inject_inspector, open_preview_window};
 use commands::snapshot::{get_open_windows, restore_snapshot, save_snapshot};
 use commands::shell::{execute_shell, open_url};
 use commands::update::{check_update, install_update, PendingUpdate, UpdaterEnabled};
@@ -27,10 +28,20 @@ use tauri_nspanel::cocoa::appkit::NSWindowCollectionBehavior;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    #[cfg(not(debug_assertions))]
+    let _sentry_guard = {
+        let dsn = std::option_env!("SENTRY_DSN").unwrap_or("");
+        sentry::init((dsn, sentry::ClientOptions {
+            release: sentry::release_name!(),
+            traces_sample_rate: 0.1,
+            ..Default::default()
+        }))
+    };
+
     tauri::Builder::default()
         .manage(RecordingState::default())
         .manage(PendingUpdate(std::sync::Mutex::new(None)))
-        .manage(UpdaterEnabled(false)) // set to true when updater plugin is registered
+        .manage(UpdaterEnabled(true))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_global_shortcut::Builder::default().build())
@@ -41,8 +52,7 @@ pub fn run() {
             None,
         ))
         .plugin(tauri_plugin_notification::init())
-        // updater disabled in dev — enable with a real signing key before release
-        // .plugin(tauri_plugin_updater::Builder::new().build())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         // .plugin(tauri_plugin_nosleep::init())  — disabled: panics on macOS 15
         .plugin(tauri_plugin_prevent_default::Builder::new().build())
         .setup(|app| {
@@ -136,6 +146,17 @@ pub fn run() {
                 })
                 .build(app)?;
 
+            // Single global handler for context-menu popup events (popup_menu).
+            // Registered once at startup so listeners never accumulate across calls.
+            // Only ctx_ prefixed IDs are forwarded to avoid leaking tray menu events.
+            let app_handle_for_menu = app.handle().clone();
+            app.on_menu_event(move |_app, event| {
+                let id = event.id().0.as_str();
+                if id.starts_with("ctx_") {
+                    let _ = app_handle_for_menu.emit("context-menu-selected", id);
+                }
+            });
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -158,6 +179,7 @@ pub fn run() {
             open_preview_window,
             close_preview_window,
             inject_inspector,
+            get_inspected_element,
             apply_css_change,
             get_open_windows,
             save_snapshot,
@@ -165,7 +187,53 @@ pub fn run() {
             copy_image_to_clipboard,
             check_update,
             install_update,
+            show_context_menu,
         ])
         .run(tauri::generate_context!())
         .unwrap_or_else(|e| log::error!("tauri application error: {e}"));
+}
+
+#[cfg(test)]
+mod specta_tests {
+    use tauri_specta::{collect_commands, Builder};
+    use specta_typescript::{BigIntExportBehavior, Typescript};
+    use crate::commands::*;
+
+    #[test]
+    fn export_bindings() {
+        let ts = Typescript::default().bigint(BigIntExportBehavior::Number);
+
+        Builder::<tauri::Wry>::new()
+            .commands(collect_commands![
+                audio::validate_microphone,
+                audio::start_recording,
+                audio::stop_recording,
+                context::get_project_context,
+                menu::show_context_menu,
+                preview::open_preview_window,
+                preview::close_preview_window,
+                preview::inject_inspector,
+                preview::apply_css_change,
+                process::get_running_agents,
+                process::get_agent_metrics,
+                screenshot::capture_region,
+                screenshot::get_screen_info,
+                screenshot::open_screenshot_overlay,
+                screenshot::close_screenshot_overlay,
+                screenshot::copy_image_to_clipboard,
+                shell::execute_shell,
+                shell::open_url,
+                snapshot::get_open_windows,
+                snapshot::save_snapshot,
+                snapshot::restore_snapshot,
+                update::check_update,
+                update::install_update,
+                window::set_dock_position,
+                window::get_dock_position,
+                window::toggle_dock_visibility,
+                window::set_always_on_top,
+            ])
+            .export(ts, "../src/bindings.ts")
+            .expect("Failed to export bindings");
+    }
 }

@@ -1,6 +1,8 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ActionsService } from './actions.service';
 import { ActionsSettingsComponent } from './components/actions-settings.component';
+import { ContextMenuService } from '../../core/services/context-menu.service';
+import { ActionButton } from '../../core/models/action-button.model';
 
 @Component({
   selector: 'app-actions',
@@ -18,6 +20,7 @@ import { ActionsSettingsComponent } from './components/actions-settings.componen
                 class="flex flex-col items-center gap-1 p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/15 transition-all active:scale-95"
                 [title]="btn.name"
                 (click)="actionsService.executeAction(btn)"
+                (contextmenu)="onButtonRightClick($event, btn)"
               >
                 <span class="text-xl">{{ btn.icon }}</span>
                 <span class="text-[10px] text-white/60 truncate w-full text-center">{{ btn.name }}</span>
@@ -33,4 +36,17 @@ import { ActionsSettingsComponent } from './components/actions-settings.componen
 })
 export class ActionsComponent {
   protected readonly actionsService = inject(ActionsService);
+  private readonly contextMenu = inject(ContextMenuService);
+
+  protected onButtonRightClick(event: MouseEvent, btn: ActionButton): void {
+    event.preventDefault();
+    this.contextMenu
+      .showActionButtonMenu(
+        () => this.actionsService.startEdit(btn.id),
+        () => this.actionsService.removeButton(btn.id),
+        () => this.actionsService.moveButtonUp(btn.id),
+        () => this.actionsService.moveButtonDown(btn.id),
+      )
+      .catch(console.error);
+  }
 }

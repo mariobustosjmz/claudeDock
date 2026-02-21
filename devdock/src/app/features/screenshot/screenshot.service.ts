@@ -1,12 +1,14 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { AnalyticsService } from '../../core/services/analytics.service';
 import { PermissionsService } from '../../core/services/permissions.service';
 import { StorageService } from '../../core/services/storage.service';
-import { CaptureResult, ScreenRegion, ScreenshotEntry } from './models/screenshot.model';
+import { AnnotationMarker, CaptureResult, ScreenRegion, ScreenshotEntry } from './models/screenshot.model';
 
 @Injectable({ providedIn: 'root' })
 export class ScreenshotService {
+  private readonly analytics = inject(AnalyticsService);
   private readonly storage = inject(StorageService);
   private readonly permissions = inject(PermissionsService);
   private readonly STORE_NAME = 'screenshots';
@@ -61,6 +63,62 @@ export class ScreenshotService {
     this.persistToStorage();
   }
 
+  addAnnotation(id: string, x: number, y: number): void {
+    this._screenshots.update((list) =>
+      list.map((e) => {
+        if (e.id !== id) return e;
+        const existing = e.annotations ?? [];
+        const marker: AnnotationMarker = { x, y, label: existing.length + 1 };
+        return { ...e, annotations: [...existing, marker] };
+      })
+    );
+    this.persistToStorage();
+  }
+
+  clearAnnotations(id: string): void {
+    this._screenshots.update((list) =>
+      list.map((e) => (e.id === id ? { ...e, annotations: [] } : e))
+    );
+    this.persistToStorage();
+  }
+
+  async copyAnnotated(entry: ScreenshotEntry): Promise<void> {
+    if (!entry.annotations?.length) {
+      await this.copyToClipboard(entry);
+      return;
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = entry.width;
+    canvas.height = entry.height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = new Image();
+    img.src = `data:image/png;base64,${entry.imageBase64}`;
+    await new Promise<void>((res) => { img.onload = () => res(); });
+    ctx.drawImage(img, 0, 0);
+
+    for (const marker of entry.annotations) {
+      const r = 14;
+      ctx.beginPath();
+      ctx.arc(marker.x, marker.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = '#7c3aed';
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `bold ${r}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(marker.label), marker.x, marker.y);
+    }
+
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, 'image/png'));
+    if (blob) {
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+      this._copied.set(true);
+      setTimeout(() => this._copied.set(false), 2000);
+    }
+  }
+
   private listenForRegionSelection(): void {
     listen<ScreenRegion>('screenshot-region-selected', async (event) => {
       await this.captureRegion(event.payload);
@@ -92,6 +150,7 @@ export class ScreenshotService {
 
       this._screenshots.update((list) => [entry, ...list].slice(0, this.MAX_ENTRIES));
       this.persistToStorage();
+      this.analytics.track('screenshot_taken');
       await this.copyToClipboard(entry);
     } catch (err) {
       this._lastError.set(String(err));

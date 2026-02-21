@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, computed, inject, effect } from '@angular/core';
 import { AgentsService } from '../agents/agents.service';
 import { Short, ShortCategory } from './models/short.model';
 import { SHORTS_CATALOG } from './shorts-catalog';
@@ -9,6 +9,25 @@ export class ShortsService {
 
   private readonly _currentIndex = signal(0);
   private readonly _filterCategory = signal<ShortCategory | null>(null);
+  private readonly _agentActivityBadge = signal(false);
+  private _prevAgentCount = 0;
+
+  readonly agentActivityBadge = this._agentActivityBadge.asReadonly();
+
+  constructor() {
+    effect(() => {
+      const count = this.agentsService.agentCount();
+      if (count > this._prevAgentCount) {
+        this._agentActivityBadge.set(true);
+        this._currentIndex.set(0);
+      }
+      this._prevAgentCount = count;
+    });
+  }
+
+  clearActivityBadge(): void {
+    this._agentActivityBadge.set(false);
+  }
 
   readonly filterCategory = this._filterCategory.asReadonly();
 

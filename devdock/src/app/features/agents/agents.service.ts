@@ -1,9 +1,11 @@
-import { Injectable, OnDestroy, computed, signal } from '@angular/core';
+import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
 import { invoke } from '@tauri-apps/api/core';
+import { AnalyticsService } from '../../core/services/analytics.service';
 import { AgentMetrics, AgentProcess } from './models/agent.model';
 
 @Injectable({ providedIn: 'root' })
 export class AgentsService implements OnDestroy {
+  private readonly analytics = inject(AnalyticsService);
   private readonly _agents = signal<AgentProcess[]>([]);
   private readonly _metrics = signal<Record<number, AgentMetrics>>({});
   private readonly _isPolling = signal(false);
@@ -47,8 +49,12 @@ export class AgentsService implements OnDestroy {
   private async poll(): Promise<void> {
     try {
       const agents = await invoke<AgentProcess[]>('get_running_agents');
+      const previousCount = this._agents().length;
       this._agents.set(agents);
       this._lastError.set(null);
+      if (previousCount === 0 && agents.length > 0) {
+        this.analytics.track('agent_detected', { count: agents.length });
+      }
     } catch (err) {
       // Suppress TypeError when running outside Tauri (browser dev context)
       if (err instanceof TypeError) return;
